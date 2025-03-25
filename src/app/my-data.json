@@ -1,0 +1,139 @@
+{
+    "report_date": "20/3/2025",
+    "report_period": "0600hrs 19/3/2025 - 0600hrs 20/3/2025",
+    "health_safety_environment": {
+      "performance_summary": {
+        "MHS": 17580,
+        "RWC": 0,
+        "LTI": 0,
+        "MTC": 0,
+        "FAC": 0,
+        "RTA": 0,
+        "NM": 0,
+        "SC": 0,
+        "TRC": 0,
+        "FC": 0,
+        "FIRE": 0,
+        "POB": 1533
+      },
+      "locations": {
+        "AFIESERE": { "this_day": 0, "YTD": 87 },
+        "EDJEBA": { "this_day": 0, "YTD": 440 },
+        "ERIEMU": { "this_day": 0, "YTD": 1 },
+        "EVWRENI": { "this_day": 0, "YTD": 0 },
+        "FLB": { "this_day": 0, "YTD": 0 },
+        "FRM_LACT": { "this_day": 0, "YTD": 0 },
+        "KOKORI": { "this_day": 0, "YTD": 0 },
+        "LAGOS": { "this_day": 0, "YTD": 0 },
+        "OLOMORO": { "this_day": 0, "YTD": 0 },
+        "ORONI": { "this_day": 0, "YTD": 0 },
+        "OWEH": { "this_day": 0, "YTD": 0 },
+        "UPC": { "this_day": 0, "YTD": 2 }
+      }
+    },
+    "production": {
+      "gross_actual": 156128.69,
+      "net_target": 48571.00,
+      "net_actual": 43162.42,
+      "deferment": -5909.35,
+      "OML": {
+        "OML_30": {
+          "gross": 11726179.06,
+          "net": 3193925.42,
+          "deferment": -644983.58
+        },
+        "OML_28": {
+          "gross": 929598.61,
+          "net": 315175.92,
+          "deferment": 315175.92
+        }
+      }
+    },
+    "daily_production_data": [
+      {
+        "station": "AFIESERE",
+        "target": 28506.00,
+        "actual": 28821.00,
+        "water": 20174.70,
+        "BSW_percent": 70.00,
+        "net_target": 7591.00,
+        "net_actual": 8646.30,
+        "deferment": 1055.30,
+        "strings_up": 32,
+        "chemical": 0.00,
+        "pump_line_pressure": 17.00,
+        "remarks": "Gross Increase= 142 bbls. Net Gain= 562 bbls. BS/W down by 1.81%."
+      },
+      {
+        "station": "ERIEMU",
+        "target": 15299.00,
+        "actual": 13071.00,
+        "water": 7875.28,
+        "BSW_percent": 60.25,
+        "net_target": 5877.00,
+        "net_actual": 5195.72,
+        "deferment": -681.28,
+        "strings_up": 20,
+        "chemical": 0.00,
+        "pump_line_pressure": 13.00,
+        "remarks": "Gross Increase= 1065 bbls. Net Gain= 391 bbls. BS/W up by 0.27%."
+      },
+      {
+        "station": "EVWRENI",
+        "target": 2153.00,
+        "actual": 0.00,
+        "water": 0.00,
+        "BSW_percent": 0.00,
+        "net_target": 997.00,
+        "net_actual": 0.00,
+        "deferment": -997.00,
+        "strings_up": 0,
+        "chemical": 0.00,
+        "pump_line_pressure": 0.00,
+        "remarks": "Station shut down due to intervention operation."
+      },
+      {
+        "station": "KOKORI",
+        "target": 27635.00,
+        "actual": 21857.00,
+        "water": 17282.33,
+        "BSW_percent": 79.07,
+        "net_target": 5960.00,
+        "net_actual": 4574.67,
+        "deferment": -1385.33,
+        "strings_up": 16,
+        "chemical": 0.00,
+        "pump_line_pressure": 13.00,
+        "remarks": "Gross Increase= 801 bbls. Net Gain= 123 bbls. BS/W up by 0.21%."
+      },
+      {
+        "station": "OLOMORO",
+        "target": 69981.00,
+        "actual": 62416.20,
+        "water": 46475.10,
+        "BSW_percent": 74.46,
+        "net_target": 17231.00,
+        "net_actual": 15941.10,
+        "deferment": -1289.90,
+        "strings_up": 34,
+        "chemical": 0.00,
+        "pump_line_pressure": 21.50,
+        "remarks": "Gross Increase= 1836 bbls. Net Loss= 1670 bbls. BS/W up by 3.53%."
+      },
+      {
+        "station": "ORONI",
+        "target": 4283.00,
+        "actual": 4289.50,
+        "water": 1771.13,
+        "BSW_percent": 41.29,
+        "net_target": 2699.00,
+        "net_actual": 2518.37,
+        "deferment": -180.63,
+        "strings_up": 7,
+        "chemical": 14.00,
+        "pump_line_pressure": 7.50,
+        "remarks": "Gross Decrease= 106 bbls. Net Loss= 203 bbls. BS/W up by 3.19%."
+      }
+    ]
+  }
+  

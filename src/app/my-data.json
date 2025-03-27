@@ -2,7 +2,7 @@
   "Morning & Narrative Report": [
       {
           
-          "This Day": NaN,
+          "This Day": "",
           "MHS": 17580,
           "RWC": 0,
           "LTI": 0,
@@ -16,1340 +16,109 @@
           "FIRE": 0,
           "POB": 1533
       },
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
       {
           
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
+          "This Day": "",
+          "MHS": "",
+          "RWC": "",
+          "LTI": "",
+          "MTC": "",
+          "FAC": "",
+          "RTA": "",
           "NM": "Net Actual",
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
+          "SC": "",
+          "TRC": "",
+          "FC": "",
+          "FIRE": "",
+          "POB": ""
       },
       {
-          "NaN": "deferment",
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
+          "": "deferment",
+          "This Day": "",
+          "MHS": "",
+          "RWC": "",
+          "LTI": "",
+          "MTC": "",
+          "FAC": "",
+          "RTA": "",
+          "NM": "",
+          "SC": "",
+          "TRC": "",
+          "FC": "",
+          "FIRE": "",
+          "POB": ""
       },
       {
           
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
+          "This Day": "",
+          "MHS": "",
+          "RWC": "",
+          "LTI": "",
+          "MTC": "",
+          "FAC": "",
+          "RTA": "",
           "NM": 43162.424593,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
+          "SC": "",
+          "TRC": "",
+          "FC": "",
+          "FIRE": "",
+          "POB": ""
       },
       {
-          "NaN": "(644,983.58)",
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
+          "": "(644,983.58)",
+          "This Day": "",
+          "MHS": "",
+          "RWC": "",
+          "LTI": "",
+          "MTC": "",
+          "FAC": "",
+          "RTA": "",
+          "NM": "",
+          "SC": "",
+          "TRC": "",
+          "FC": "",
+          "FIRE": "",
+          "POB": ""
       },
       {
-          "NaN": "315,175.92",
+          "": "315,175.92",
           "This Day": "NOTE: ONLY 14.695% OF UZERE EAST PRODUCTION IS ADDED TO THE TOTAL OML30 PRODUCTION TO REFLECT THE WORKING INTEREST OF OML30",
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
-      },
-      {
-          
-          "This Day": NaN,
-          "MHS": NaN,
-          "RWC": NaN,
-          "LTI": NaN,
-          "MTC": NaN,
-          "FAC": NaN,
-          "RTA": NaN,
-          "NM": NaN,
-          "SC": NaN,
-          "TRC": NaN,
-          "FC": NaN,
-          "FIRE": NaN,
-          "POB": NaN
+          "MHS": "",
+          "RWC": "",
+          "LTI": "",
+          "MTC": "",
+          "FAC": "",
+          "RTA": "",
+          "NM": "",
+          "SC": "",
+          "TRC": "",
+          "FC": "",
+          "FIRE": "",
+          "POB": ""
       }
   ],
   "2025 OML 30 Reports": [
       {
-          "date": NaN,
+          "date": "",
           "AFIESERE": "Strings Up",
-          "NaN": "Total Net",
+          "": "Total Net",
           "ERIEMU": "Strings Up",
           "EVWRENI": "Strings Up",
           "KOKORI": "Strings Up",
@@ -1362,7 +131,7 @@
       {
           "date": "1/1/2025",
           "AFIESERE": 26,
-          "NaN": 49471.024554,
+          "": 49471.024554,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1375,7 +144,7 @@
       {
           "date": "1/2/2025",
           "AFIESERE": 26,
-          "NaN": 50192.333933,
+          "": 50192.333933,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1388,7 +157,7 @@
       {
           "date": "1/3/2025",
           "AFIESERE": 26,
-          "NaN": 49423.217244,
+          "": 49423.217244,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1401,7 +170,7 @@
       {
           "date": "1/4/2025",
           "AFIESERE": 26,
-          "NaN": 48004.185194,
+          "": 48004.185194,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1414,7 +183,7 @@
       {
           "date": "1/5/2025",
           "AFIESERE": 27,
-          "NaN": 45126.457411,
+          "": 45126.457411,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1427,7 +196,7 @@
       {
           "date": "1/6/2025",
           "AFIESERE": 27,
-          "NaN": 48117.093138,
+          "": 48117.093138,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1440,7 +209,7 @@
       {
           "date": "1/7/2025",
           "AFIESERE": 28,
-          "NaN": 48973.793527,
+          "": 48973.793527,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1453,7 +222,7 @@
       {
           "date": "1/8/2025",
           "AFIESERE": 28,
-          "NaN": 46764.086713,
+          "": 46764.086713,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1466,7 +235,7 @@
       {
           "date": "1/9/2025",
           "AFIESERE": 28,
-          "NaN": 49526.585044,
+          "": 49526.585044,
           "ERIEMU": 18,
           "EVWRENI": 3,
           "KOKORI": 16,
@@ -1479,7 +248,7 @@
       {
           "date": "1/10/2025",
           "AFIESERE": 28,
-          "NaN": 50391.424853,
+          "": 50391.424853,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1492,7 +261,7 @@
       {
           "date": "1/11/2025",
           "AFIESERE": 28,
-          "NaN": 51688.493939,
+          "": 51688.493939,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1505,7 +274,7 @@
       {
           "date": "1/12/2025",
           "AFIESERE": 28,
-          "NaN": 49488.241014,
+          "": 49488.241014,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1518,7 +287,7 @@
       {
           "date": "1/13/2025",
           "AFIESERE": 29,
-          "NaN": 47254.128997,
+          "": 47254.128997,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1531,7 +300,7 @@
       {
           "date": "1/14/2025",
           "AFIESERE": 29,
-          "NaN": 45566.026145,
+          "": 45566.026145,
           "ERIEMU": 19,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1544,7 +313,7 @@
       {
           "date": "1/15/2025",
           "AFIESERE": 29,
-          "NaN": 48095.851081,
+          "": 48095.851081,
           "ERIEMU": 20,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1557,7 +326,7 @@
       {
           "date": "1/16/2025",
           "AFIESERE": 29,
-          "NaN": 50406.030355,
+          "": 50406.030355,
           "ERIEMU": 20,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1570,7 +339,7 @@
       {
           "date": "1/17/2025",
           "AFIESERE": 29,
-          "NaN": 48576.293419,
+          "": 48576.293419,
           "ERIEMU": 20,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1583,7 +352,7 @@
       {
           "date": "1/18/2025",
           "AFIESERE": 29,
-          "NaN": 48476.494016,
+          "": 48476.494016,
           "ERIEMU": 19,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1596,7 +365,7 @@
       {
           "date": "1/19/2025",
           "AFIESERE": 29,
-          "NaN": 48350.44559,
+          "": 48350.44559,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -1609,7 +378,7 @@
       {
           "date": "1/20/2025",
           "AFIESERE": 28,
-          "NaN": 47862.413315,
+          "": 47862.413315,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -1622,7 +391,7 @@
       {
           "date": "1/21/2025",
           "AFIESERE": 28,
-          "NaN": 50220.193069,
+          "": 50220.193069,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1635,7 +404,7 @@
       {
           "date": "1/22/2025",
           "AFIESERE": 28,
-          "NaN": 47814.390508,
+          "": 47814.390508,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1648,7 +417,7 @@
       {
           "date": "1/23/2025",
           "AFIESERE": 28,
-          "NaN": 45202.812485,
+          "": 45202.812485,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1661,7 +430,7 @@
       {
           "date": "1/24/2025",
           "AFIESERE": 28,
-          "NaN": 45826.601457,
+          "": 45826.601457,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1674,7 +443,7 @@
       {
           "date": "1/25/2025",
           "AFIESERE": 28,
-          "NaN": 48325.236191,
+          "": 48325.236191,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1687,7 +456,7 @@
       {
           "date": "1/26/2025",
           "AFIESERE": 28,
-          "NaN": 44524.886331,
+          "": 44524.886331,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1700,7 +469,7 @@
       {
           "date": "1/27/2025",
           "AFIESERE": 26,
-          "NaN": 45956.746418,
+          "": 45956.746418,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1713,7 +482,7 @@
       {
           "date": "1/28/2025",
           "AFIESERE": 26,
-          "NaN": 44500.370333,
+          "": 44500.370333,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1726,7 +495,7 @@
       {
           "date": "1/29/2025",
           "AFIESERE": 26,
-          "NaN": 43380.257195,
+          "": 43380.257195,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1739,7 +508,7 @@
       {
           "date": "1/30/2025",
           "AFIESERE": 26,
-          "NaN": 43899.135158,
+          "": 43899.135158,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 17,
@@ -1752,7 +521,7 @@
       {
           "date": "1/31/2025",
           "AFIESERE": 26,
-          "NaN": 45952.151124,
+          "": 45952.151124,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1765,7 +534,7 @@
       {
           "date": "2/1/2025",
           "AFIESERE": 26,
-          "NaN": 46400.757315,
+          "": 46400.757315,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1778,7 +547,7 @@
       {
           "date": "2/2/2025",
           "AFIESERE": 26,
-          "NaN": 47430.249536,
+          "": 47430.249536,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1791,7 +560,7 @@
       {
           "date": "2/3/2025",
           "AFIESERE": 26,
-          "NaN": 49355.7845,
+          "": 49355.7845,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1804,7 +573,7 @@
       {
           "date": "2/4/2025",
           "AFIESERE": 26,
-          "NaN": 49382.765805,
+          "": 49382.765805,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1817,7 +586,7 @@
       {
           "date": "2/5/2025",
           "AFIESERE": 26,
-          "NaN": 48389.86097,
+          "": 48389.86097,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1830,7 +599,7 @@
       {
           "date": "2/6/2025",
           "AFIESERE": 26,
-          "NaN": 52704.478746,
+          "": 52704.478746,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1843,7 +612,7 @@
       {
           "date": "2/7/2025",
           "AFIESERE": 26,
-          "NaN": 49488.506894,
+          "": 49488.506894,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1856,7 +625,7 @@
       {
           "date": "2/8/2025",
           "AFIESERE": 26,
-          "NaN": 48268.569199,
+          "": 48268.569199,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1869,7 +638,7 @@
       {
           "date": "2/9/2025",
           "AFIESERE": 27,
-          "NaN": 48315.196274,
+          "": 48315.196274,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1882,7 +651,7 @@
       {
           "date": "2/10/2025",
           "AFIESERE": 27,
-          "NaN": 37981.154874,
+          "": 37981.154874,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1895,7 +664,7 @@
       {
           "date": "2/11/2025",
           "AFIESERE": 12,
-          "NaN": 25590.629031,
+          "": 25590.629031,
           "ERIEMU": 8,
           "EVWRENI": 4,
           "KOKORI": 7,
@@ -1908,7 +677,7 @@
       {
           "date": "2/12/2025",
           "AFIESERE": 11,
-          "NaN": 25663.919352,
+          "": 25663.919352,
           "ERIEMU": 5,
           "EVWRENI": 4,
           "KOKORI": 7,
@@ -1921,7 +690,7 @@
       {
           "date": "2/13/2025",
           "AFIESERE": 11,
-          "NaN": 35990.344909,
+          "": 35990.344909,
           "ERIEMU": 16,
           "EVWRENI": 4,
           "KOKORI": 14,
@@ -1934,7 +703,7 @@
       {
           "date": "2/14/2025",
           "AFIESERE": 26,
-          "NaN": 48853.643699,
+          "": 48853.643699,
           "ERIEMU": 16,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1947,7 +716,7 @@
       {
           "date": "2/15/2025",
           "AFIESERE": 26,
-          "NaN": 47949.60146,
+          "": 47949.60146,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1960,7 +729,7 @@
       {
           "date": "2/16/2025",
           "AFIESERE": 27,
-          "NaN": 43924.67672,
+          "": 43924.67672,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 16,
@@ -1973,7 +742,7 @@
       {
           "date": "2/17/2025",
           "AFIESERE": 27,
-          "NaN": 43249.614071,
+          "": 43249.614071,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -1986,7 +755,7 @@
       {
           "date": "2/18/2025",
           "AFIESERE": 27,
-          "NaN": 44054.256442,
+          "": 44054.256442,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -1999,7 +768,7 @@
       {
           "date": "2/19/2025",
           "AFIESERE": 27,
-          "NaN": 43659.970906,
+          "": 43659.970906,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2012,7 +781,7 @@
       {
           "date": "2/20/2025",
           "AFIESERE": 27,
-          "NaN": 43589.681573,
+          "": 43589.681573,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2025,7 +794,7 @@
       {
           "date": "2/21/2025",
           "AFIESERE": 27,
-          "NaN": 43627.465079,
+          "": 43627.465079,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2038,7 +807,7 @@
       {
           "date": "2/22/2025",
           "AFIESERE": 27,
-          "NaN": 43916.524656,
+          "": 43916.524656,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2051,7 +820,7 @@
       {
           "date": "2/23/2025",
           "AFIESERE": 27,
-          "NaN": 46649.761582,
+          "": 46649.761582,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2064,7 +833,7 @@
       {
           "date": "2/24/2025",
           "AFIESERE": 27,
-          "NaN": 46058.617605,
+          "": 46058.617605,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2077,7 +846,7 @@
       {
           "date": "2/25/2025",
           "AFIESERE": 27,
-          "NaN": 44426.447967,
+          "": 44426.447967,
           "ERIEMU": 17,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2090,7 +859,7 @@
       {
           "date": "2/26/2025",
           "AFIESERE": 27,
-          "NaN": 46667.338842,
+          "": 46667.338842,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2103,7 +872,7 @@
       {
           "date": "2/27/2025",
           "AFIESERE": 27,
-          "NaN": 44395.737705,
+          "": 44395.737705,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2116,7 +885,7 @@
       {
           "date": "2/28/2025",
           "AFIESERE": 28,
-          "NaN": 46346.813936,
+          "": 46346.813936,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2129,7 +898,7 @@
       {
           "date": "3/1/2025",
           "AFIESERE": 28,
-          "NaN": 46817.154602,
+          "": 46817.154602,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2142,7 +911,7 @@
       {
           "date": "3/2/2025",
           "AFIESERE": 28,
-          "NaN": 47819.689124,
+          "": 47819.689124,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 15,
@@ -2155,7 +924,7 @@
       {
           "date": "3/3/2025",
           "AFIESERE": 28,
-          "NaN": 45959.193995,
+          "": 45959.193995,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 14,
@@ -2168,7 +937,7 @@
       {
           "date": "3/4/2025",
           "AFIESERE": 28,
-          "NaN": 46976.976919,
+          "": 46976.976919,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 14,
@@ -2181,7 +950,7 @@
       {
           "date": "3/5/2025",
           "AFIESERE": 28,
-          "NaN": 45629.386639,
+          "": 45629.386639,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 14,
@@ -2194,7 +963,7 @@
       {
           "date": "3/6/2025",
           "AFIESERE": 28,
-          "NaN": 45129.223719,
+          "": 45129.223719,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 14,
@@ -2207,7 +976,7 @@
       {
           "date": "3/7/2025",
           "AFIESERE": 28,
-          "NaN": 46913.707833,
+          "": 46913.707833,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 14,
@@ -2220,7 +989,7 @@
       {
           "date": "3/8/2025",
           "AFIESERE": 28,
-          "NaN": 48913.864886,
+          "": 48913.864886,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 14,
@@ -2233,7 +1002,7 @@
       {
           "date": "3/9/2025",
           "AFIESERE": 28,
-          "NaN": 45448.539136,
+          "": 45448.539136,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 14,
@@ -2246,7 +1015,7 @@
       {
           "date": "3/10/2025",
           "AFIESERE": 28,
-          "NaN": 46464.245332,
+          "": 46464.245332,
           "ERIEMU": 18,
           "EVWRENI": 4,
           "KOKORI": 14,
@@ -2259,7 +1028,7 @@
       {
           "date": "3/11/2025",
           "AFIESERE": 29,
-          "NaN": 45649.659637,
+          "": 45649.659637,
           "ERIEMU": 19,
           "EVWRENI": 4,
           "KOKORI": 14,
@@ -2272,7 +1041,7 @@
       {
           "date": "3/12/2025",
           "AFIESERE": 30,
-          "NaN": 47212.225664,
+          "": 47212.225664,
           "ERIEMU": 19,
           "EVWRENI": 7,
           "KOKORI": 15,
@@ -2285,7 +1054,7 @@
       {
           "date": "3/13/2025",
           "AFIESERE": 14,
-          "NaN": 24176.045423,
+          "": 24176.045423,
           "ERIEMU": 7,
           "EVWRENI": 7,
           "KOKORI": 4,
@@ -2298,7 +1067,7 @@
       {
           "date": "3/14/2025",
           "AFIESERE": 2,
-          "NaN": 12027.474719,
+          "": 12027.474719,
           "ERIEMU": 7,
           "EVWRENI": 7,
           "KOKORI": 2,
@@ -2311,7 +1080,7 @@
       {
           "date": "3/15/2025",
           "AFIESERE": 2,
-          "NaN": 8524.167724,
+          "": 8524.167724,
           "ERIEMU": 2,
           "EVWRENI": 0,
           "KOKORI": 2,
@@ -2324,7 +1093,7 @@
       {
           "date": "3/16/2025",
           "AFIESERE": 2,
-          "NaN": 10328.794535,
+          "": 10328.794535,
           "ERIEMU": 2,
           "EVWRENI": 0,
           "KOKORI": 1,
@@ -2337,7 +1106,7 @@
       {
           "date": "3/17/2025",
           "AFIESERE": 19,
-          "NaN": 34544.180482,
+          "": 34544.180482,
           "ERIEMU": 14,
           "EVWRENI": 0,
           "KOKORI": 10,
@@ -2350,7 +1119,7 @@
       {
           "date": "3/18/2025",
           "AFIESERE": 30,
-          "NaN": 48253.67656,
+          "": 48253.67656,
           "ERIEMU": 19,
           "EVWRENI": 0,
           "KOKORI": 15,
@@ -2363,7 +1132,7 @@
       {
           "date": "3/19/2025",
           "AFIESERE": 31,
-          "NaN": 46553.922062,
+          "": 46553.922062,
           "ERIEMU": 20,
           "EVWRENI": 0,
           "KOKORI": 15,
@@ -2376,7 +1145,7 @@
       {
           "date": "3/20/2025",
           "AFIESERE": 32,
-          "NaN": 46069.432196,
+          "": 46069.432196,
           "ERIEMU": 20,
           "EVWRENI": 0,
           "KOKORI": 16,
@@ -2387,22 +1156,22 @@
           "UZERE WEST": 11
       },
       {
-          "date": NaN,
-          "AFIESERE": NaN,
-          "NaN": 3509101.330586,
-          "ERIEMU": NaN,
-          "EVWRENI": NaN,
-          "KOKORI": NaN,
-          "OLOMORO": NaN,
-          "ORONI": NaN,
-          "OWEH": NaN,
-          "UZERE EAST": NaN,
-          "UZERE WEST": NaN
+          "date": "",
+          "AFIESERE": "",
+          "": 3509101.330586,
+          "ERIEMU": "",
+          "EVWRENI": "",
+          "KOKORI": "",
+          "OLOMORO": "",
+          "ORONI": "",
+          "OWEH": "",
+          "UZERE EAST": "",
+          "UZERE WEST": ""
       },
       {
           "date": "3/20/2025",
           "AFIESERE": 32,
-          "NaN": 46069.432196,
+          "": 46069.432196,
           "ERIEMU": 20,
           "EVWRENI": 0,
           "KOKORI": 16,
@@ -2421,168 +1190,168 @@
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 2",
           "Description": "Caterpillar G3412 / Sulzer OHH",
-          "Status": NaN,
+          "Status": "",
           "Run hours": 0,
           "Daily Availability": 0,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Defective pump(pump already  removed for repairs -awaiting  supply of parts  for pump rebuild). "
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 3",
           "Description": "Waukesha VGF F18 / Sulzer OHH",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 5",
           "Description": "Caterpillar G3408 / Sulzer OHH",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 6",
           "Description": "Waukesha VGF F18 GL / NOV",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 7",
           "Description": "Waukesha VGF F18 GL / NOV",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Diesel Set  ",
           "Description": "Caterpillar C9 / GEP275-3",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "GAS SET(NEW)",
           "Description": "Caterpillar G3412 ",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": " IAC 2(Former old IAC3)",
           "Description": "Ingersoll Rand UP-5",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 4",
           "Description": "Ingersoll Rand SH75-AC",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "AUTO SAMPLER",
           "Description": "JISKOOT(HEOSL)",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "UNIT 1",
           "Description": "Caterpillar G3516ULB/Ariel JGT/4",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "UNIT 2",
           "Description": "Caterpillar G3516ULB/Ariel JGT/4",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "UNIT 3",
           "Description": "Waukesha /Ariel JGT/4",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "UNIT 4",
           "Description": "Waukesha L5794GSI /Ariel JGT/4",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "UNIT 5",
           "Description": "Waukesha L7042GSI/Thomasson C203",
-          "Status": NaN,
+          "Status": "",
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "Programmed for overhaul (Engine).",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 3- NEW",
           "Description": "Ingersoll Rand UP5-18P-14",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
           "Station": "ERIEMU",
@@ -2591,108 +1360,108 @@
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 2",
           "Description": "Waukesha VGF F18/Weatherford W375L",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 3",
           "Description": "Caterpillar G3408 / National Oil Well ",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 4",
           "Description": "Caterpillar G3408 /NOV",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Gas Gen Set",
           "Description": "Caterpillar G3406 /SR4",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Diesel Gen Set",
           "Description": "CAT D3306/SR4",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
           "Fault reason": "Generator has low engine oil pressure. A CAT C13 or C15 is reccommended for replacememnt.",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Diesel Gen Set 2",
           "Description": "PERKINS 1100 SERIES (P-50)",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": " IAC 1",
           "Description": " Ingersoll Rand 15T",
           "Status": "RN",
           "Run hours": 6.33,
           "Daily Availability": 1,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Online at 23:40 hrs."
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 2",
           "Description": "Ingersoll Rand - Xe Pro",
           "Status": "SB",
           "Run hours": 17.67,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "WATER BATH",
-          "Description": NaN,
+          "Description": "",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "AUTO SAMPLER",
           "Description": "JISKOOT",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
           "Station": "ERIEMU LACT UNIT",
@@ -2701,58 +1470,58 @@
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "30-DG-01B",
           "Description": "Caterpillar CAT C7.1",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "DIESEL SET",
           "Description": "Caterpillar C-13/SR4",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC A",
-          "Description": NaN,
+          "Description": "",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC B",
-          "Description": NaN,
+          "Description": "",
           "Status": "DN",
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "No dryer.",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "AUTO SAMPLER",
-          "Description": NaN,
+          "Description": "",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
           "Station": "EVWRENI",
@@ -2761,67 +1530,67 @@
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 5",
           "Description": "Caterpillar G3304/National Oil Well ",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "DIESEL GEN SET 2",
           "Description": "PERKINS 1100 SERIES (P-50)",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "GAS GEN SET.",
           "Description": "Caterpillar G3406 /SR4 (from  Oroni FS)",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 1",
           "Description": "Lister Petter/Ingersoll Rand 15T",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 2 NEW",
           "Description": "Ingersoll Rand (7T)",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "AUTOSAMPLER",
           "Description": "Jiskoot",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Low flow."
       },
       {
@@ -2832,26 +1601,26 @@
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "Coolant in lube oil contamination, required overhaul.",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "DIESEL SET",
           "Description": "C15-2",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "DIESEL SET",
           "Description": "Caterpillar C13 UZERE",
           "Status": "       NA",
           "Run hours": 0,
           "Daily Availability": 0,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Inframe Overhaul of engine completed, started up and confirmed okay. To be taken to UPC on 20th January, 2024"
       },
       {
@@ -2861,127 +1630,127 @@
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Pump 7",
           "Description": "Waukesha VGF F18 / Sulzer OHH",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 8",
           "Description": "Waukesha VGF F18 / Sulzer OHH",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 3",
           "Description": "Ingersoll Rand UP5-18P-14",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Gas Gen Set ",
           "Description": "Caterpillar G3412 ",
-          "Status": NaN,
+          "Status": "",
           "Run hours": 0,
           "Daily Availability": 0,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Programmed for overhaul."
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Diesel Gen Set 2",
           "Description": "PERKINS 1100SERIES (50KVA)",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Diesel Gen Set 3",
           "Description": "Caterpillar C-13/SR4",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "AUTO SAMPLER",
           "Description": "JISKOOT",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": " UNIT1",
           "Description": "Caterpillar G3516ULB/Ariel JGT/4",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Unit 2",
           "Description": "Waukesha L7042GSI/DR 5.5RDS4",
-          "Status": NaN,
+          "Status": "",
           "Run hours": 0,
           "Daily Availability": 0,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Decommissioned. Evaluation is currently ongoing to recommend the replacement of this unit."
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Unit 3",
           "Description": "Caterpillar G3516ULB/Ariel JGT/4",
           "Status": "RN",
           "Run hours": 23.33,
           "Daily Availability": 1,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "On standby from 11:00 hrs - 11:43 hrs."
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 1",
           "Description": "Ingersoll Rand UP5-18P-14",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 2 (NEW)",
           "Description": "Ingersoll Rand 15T",
           "Status": "SB",
           "Run hours": 10,
           "Daily Availability": 1,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "On auto mode."
       },
       {
@@ -2991,8 +1760,8 @@
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
           "Station": "OLOMORO",
@@ -3001,217 +1770,217 @@
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Pump 4",
           "Description": "Caterpillar G3412 / Sulzer MSD ",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 5",
           "Description": "Caterpillar G3412 / Sulzer MSD PUMP 5",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Pump 7",
           "Description": "Caterpillar G3412 / Sulzer MSD PUMP7",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 8",
           "Description": "Caterpillar G3412 / Sulzer MSD PUMP 8",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP 9  ",
           "Description": "Caterpillar G3412 / Sulzer MSD ",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 1",
           "Description": "Ingersoll Rand UP5-18",
           "Status": "RN",
           "Run hours": 16.7,
           "Daily Availability": 1,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Auto mode. "
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 2",
           "Description": "Ingersoll Rand  UP5-18",
           "Status": "RN",
           "Run hours": 23.2,
           "Daily Availability": 1,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Auto mode. "
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "AUTOSAMPLER",
           "Description": "JISKOOT(HEOSL)",
           "Status": "RN",
           "Run hours": 19,
           "Daily Availability": 1,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Restored unit back online at 11:00 hrs. "
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "C- 100 ",
           "Description": "Caterpillar G3516ULB/Ariel JGT/4 C100",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "C-200",
           "Description": "CATERPILLAR G3516ULB/ARIEL JGT/4  C200",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "C-300",
           "Description": "Caterpillar G3516ULB/Ariel JGT/4         ",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": " C-  400",
           "Description": "Caterpillar G3516UL/Ariel JGT/4 C400",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 1",
           "Description": "Ingersoll Rand T-30 replaced by IR SH-75",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 2",
           "Description": "Ingersoll Rand UP5-18",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 3",
           "Description": "Ingersoll Rand  15 T",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "GAS GENSET",
           "Description": " Caterpillar G3516 EPG /E6Z00133",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Diesel Set ",
           "Description": "C-15",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "K-200",
           "Description": "Waukesha 7042 / DR 4RDS-3 K200",
           "Status": "RN",
           "Run hours": 14.33,
           "Daily Availability": 1,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Restored unit back online at 15:40 hrs. "
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "K-300",
           "Description": "Waukesha 7042 / DR 4RDS-3 K300",
           "Status": "SB",
           "Run hours": 9.67,
           "Daily Availability": 1,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Placed unit on standby at 15:40 hrs for K200. "
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC1(K700)",
           "Description": "Ingersoll Rand  UP5-18",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Gas Gen Set ",
           "Description": "Caterpillar G3512 / SR4",
-          "Status": NaN,
+          "Status": "",
           "Run hours": 0,
           "Daily Availability": 0,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Disconnected supply cable to HOLEC MCC CB to Bus bar."
       },
       {
@@ -3221,88 +1990,88 @@
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PUMP - 4",
           "Description": "New NOV Pump G3304 / National oil well.  PP4",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 1",
           "Description": "Ingersoll Rand 71T2",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC2",
           "Description": "Ingersoll Rand 7T2",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 2",
           "Description": "INGERSOLL RAND - 2545 (New)",
-          "Status": NaN,
+          "Status": "",
           "Run hours": 0,
           "Daily Availability": 0,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Air compressor moved to UPC work shop for CM on 16th February, 2025"
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "GAS GEN SET",
           "Description": "CAT G3406 200KVA ",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "DIESEL SET NEW",
           "Description": "CAT C9 DIESEL GEN SET",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "GAS Gen Set",
           "Description": "Caterpillar G3306 /SR4",
-          "Status": NaN,
+          "Status": "",
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "G3306: Decommissioned and conveyed G3306 gas gen set, complete exhaust and 2pcs 12volts 200AH CAT batteries/ jumper cable using a self-loading truck from Oroni FS to Evwreni FS for use.",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "AUTOSAMPLER",
           "Description": "Jiskoot0",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
           "Station": "OWEH",
@@ -3311,78 +2080,78 @@
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "New PD PUMP 6",
           "Description": "Waukesha VGF F18/Weatherford W375L. PP6",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "New PD PUMP 8",
           "Description": "Waukesha VGF F18/Weatherford W375L ",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "CAT GAS GEN SET",
           "Description": "Caterpillar G3306 / SR4",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC",
           "Description": "Ingersoll Rand 7T2",
-          "Status": NaN,
+          "Status": "",
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "Abnormal noise observed on compressor end.  Moved on 27/01/2025 to UPC maintenance workshop for repairs",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "UPC IAC",
           "Description": "INGERSOLL RAND",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "DIESEL SET ",
           "Description": "PERKINS 1103A/50KVA",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "AUTOSAMPLER",
           "Description": "JISKOOT(HEOSL)",
           "Status": "RN",
           "Run hours": 23.5,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
           "Station": "UZERE",
@@ -3391,158 +2160,158 @@
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "New PD PUMP 4",
           "Description": "Waukesha VGF F18 / Weatherford W375L.PP423",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "New PD PUMP 10",
           "Description": "Waukesha VGF F18/Weatherford W375L. PP10",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "IAC 1",
           "Description": "Ingersoll Rand 10T",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "1AC 2",
           "Description": "Ingersoll Rand UP5-18",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "1AC 3",
           "Description": "NEW IAC (IAC RSE18I)",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Diesel  Set",
           "Description": "PERKINS 1103A/50KVA",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Diesel  Set",
           "Description": "CAT C13 (OWEH FS)",
           "Status": "DN",
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "Low oil pressure shutdown.",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "CAT GAS SET",
           "Description": "New Caterpillar G3412/SR4",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "AUTOSAMPLER",
           "Description": "Jiskoot",
           "Status": "RN",
           "Run hours": 23.5,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "UNIT 1",
           "Description": "Caterpillar G3516ULB/Ariel JGT/4",
           "Status": "RN",
           "Run hours": 23.66,
           "Daily Availability": 0.9858333333333333,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Unit tripped on engine unexpected shut down from 10:50 hrs - 11:00 hrs, 14:20 hrs - 14:30 hrs."
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "UNIT 2",
           "Description": "Caterpillar G3516TALE/Ariel JGT/4",
           "Status": "DN",
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "Unit tripped on low engine speed shutdown. Damaged connecting rod on throw #3 and main bearing #3. Dismantling of compressor fram from skid ongoing.",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
           "Station": "UPC",
           "Equipment": "DIESEL GENSET  1 ",
           "Description": "Caterpillar C-15 /SR4",
-          "Status": NaN,
+          "Status": "",
           "Run hours": 0,
           "Daily Availability": 0,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "Under overhaul."
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "DIESEL GENSET  3",
           "Description": "Caterpillar C-13/SR4 (15791)",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "DIESEL GEN SET 2",
           "Description": "CAT D3406 / SR4    (from kokori fs )",
-          "Status": NaN,
+          "Status": "",
           "Run hours": 0,
           "Daily Availability": 0,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": "De-commissioned."
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "BEDC",
-          "Description": NaN,
+          "Description": "",
           "Status": "DN",
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "  ",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
           "Station": "UPS",
@@ -3551,154 +2320,154 @@
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "P-301B",
           "Description": "Loher Elect Motor/Byron Jackson/ ",
           "Status": "SB",
           "Run hours": 11,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "P-301C",
           "Description": "Loher Elect Motor/Byron Jackson/ ",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
+          "Fault reason": "",
           "Remarks": " "
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PT-101A",
           "Description": "Solar Turbine/UC Pump",
           "Status": "DN",
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "Down on high axial float clearance. Spare sourcing ongoing.  ",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PT-101B",
           "Description": "Solar Turbine/UC Pump",
           "Status": "DN",
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "Fail to crank troubleshooting ongoing.",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "PT-101C",
           "Description": "Solar Turbine/UC Pump",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "P-1220A",
           "Description": "WAUKESHA PUMP",
           "Status": "DN",
           "Run hours": 0,
           "Daily Availability": 0,
           "Fault reason": "Down on fan bearing - repair ongoing.",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "P-1220B",
           "Description": "WAUKESHA PUMP",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "I/R AC B",
           "Description": "Ingersoll Rand UP5-18",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "NEW AC C",
           "Description": "Ingersoll Rand A/Compr C SH7S",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Diesel Gen. Set",
-          "Description": NaN,
+          "Description": "",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "Gas Gen Set ",
           "Description": "D--3512 CAT",
           "Status": "SB",
           "Run hours": 0,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       },
       {
-          "Station": NaN,
+          "Station": "",
           "Equipment": "BEDC-33KV/415V",
           "Description": "CAT G3516 / SR4",
           "Status": "RN",
           "Run hours": 24,
           "Daily Availability": 1,
-          "Fault reason": NaN,
-          "Remarks": NaN
+          "Fault reason": "",
+          "Remarks": ""
       }
   ],
   "HSE Report": [
       {
           
           "MAN-HOURS TRACKING": "LAGOS",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "LAGOS OFFICE",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 90,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 8,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
@@ -3708,483 +2477,483 @@
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "LAGOS OFFICE",
           "PREVIOUS CUMM MHRS": "JAN 2025 YTD TOTAL",
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 83,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 407,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 1,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 1,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 1,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 4,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "LAGOS OFFICE",
           "PREVIOUS CUMM MHRS": "FROM JAN 2025 YTD TOTAL",
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 2480,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 29,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
-          "NaN": " ",
+          "": " ",
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 10,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 46,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 53,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 4,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 37,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 0,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": 0,
           "PREVIOUS CUMM MHRS": 22,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "PM on electrical & instrumentation system of Unit 1",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "1M checks on pump pulsation dampners",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "1M ITT barton recorder inspection",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "3M inspection of master valve actuator",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "3M integrity checks on station gauges",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "2 weekly greasing of gas compressor units fan hub",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "Troubleshoot & rectify cause of illumination failure on pole lighting system",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "Illumination improvement in pump house",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "General illumination improvement ",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "2 weekly greasing of power take off/fan hub of pumps",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "2 weekly inspection & cleaning of equipment engine radiator fin cores ",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "Replacement of Peco filter on Unit 2 gas compressor",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "1M inspection, cleaning & servicing of flame scanner lens on waterbath unit",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "Installation & commissioning of G3412 350KVA gas gen set (cont.)",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "Replacement of defective water pumping machine",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
           "MAN-HOURS TRACKING": "Replacement of defective fan belt on Pump 7",
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       },
       {
           
-          "MAN-HOURS TRACKING": NaN,
-          "PREVIOUS CUMM MHRS": NaN,
-          "JAN 2025 CUMM MHRS TILL DATE": NaN
+          "MAN-HOURS TRACKING": "",
+          "PREVIOUS CUMM MHRS": "",
+          "JAN 2025 CUMM MHRS TILL DATE": ""
       }
   ],
   "Cathodic Protection": [
@@ -4195,7 +2964,7 @@
           
           "Volts": "24.00",
           "Temperature (Deg)": "0.00",
-          "remarks": NaN
+          "remarks": ""
       },
       {
           "Field": "ERIEMU",
@@ -4204,7 +2973,7 @@
           
           "Volts": "0.00",
           "Temperature (Deg)": "27.00",
-          "remarks": NaN
+          "remarks": ""
       },
       {
           "Field": "EVWRENI",
@@ -4213,7 +2982,7 @@
           
           "Volts": "0.00",
           "Temperature (Deg)": "0.00",
-          "remarks": NaN
+          "remarks": ""
       },
       {
           "Field": "KOKORI",
@@ -4222,7 +2991,7 @@
           
           "Volts": "23.00",
           "Temperature (Deg)": "28.00",
-          "remarks": NaN
+          "remarks": ""
       },
       {
           "Field": "OLOMORO",
@@ -4231,7 +3000,7 @@
           
           "Volts": "23.00",
           "Temperature (Deg)": "30.00",
-          "remarks": NaN
+          "remarks": ""
       },
       {
           "Field": "OLOMORO",
@@ -4240,7 +3009,7 @@
           
           "Volts": "44.00",
           "Temperature (Deg)": "44.00",
-          "remarks": NaN
+          "remarks": ""
       },
       {
           "Field": "ORONI",
@@ -4249,7 +3018,7 @@
           
           "Volts": "14.00",
           "Temperature (Deg)": "27.00",
-          "remarks": NaN
+          "remarks": ""
       },
       {
           "Field": "OWEH",
@@ -4258,7 +3027,7 @@
           
           "Volts": "25.00",
           "Temperature (Deg)": "20.00",
-          "remarks": NaN
+          "remarks": ""
       },
       {
           "Field": "UZERE WEST",
@@ -4267,7 +3036,7 @@
           
           "Volts": "24.00",
           "Temperature (Deg)": "30.00",
-          "remarks": NaN
+          "remarks": ""
       }
   ],
   "Gas Production": [
@@ -4278,7 +3047,7 @@
           "Gas Flared (mmscfd)": "16.78000",
           "Fuel Gas (mmscfd)": "0.00000",
           "Gas Produced (mmscfd)": "16.78000",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
           "Location": "ERIEMU",
@@ -4287,7 +3056,7 @@
           "Gas Flared (mmscfd)": "4.89000",
           "Fuel Gas (mmscfd)": "0.00000",
           "Gas Produced (mmscfd)": "4.89000",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
           "Location": "EVWRENI",
@@ -4296,7 +3065,7 @@
           "Gas Flared (mmscfd)": "0.00000",
           "Fuel Gas (mmscfd)": "0.00000",
           "Gas Produced (mmscfd)": "0.00000",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
           "Location": "KOKORI",
@@ -4305,7 +3074,7 @@
           "Gas Flared (mmscfd)": "0.36480",
           "Fuel Gas (mmscfd)": "0.00000",
           "Gas Produced (mmscfd)": "0.36480",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
           "Location": "OLOMORO",
@@ -4314,7 +3083,7 @@
           "Gas Flared (mmscfd)": "4.03000",
           "Fuel Gas (mmscfd)": "0.00000",
           "Gas Produced (mmscfd)": "4.03000",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
           "Location": "ORONI",
@@ -4323,7 +3092,7 @@
           "Gas Flared (mmscfd)": "2.20100",
           "Fuel Gas (mmscfd)": "0.00000",
           "Gas Produced (mmscfd)": "2.20100",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
           "Location": "OWEH",
@@ -4332,7 +3101,7 @@
           "Gas Flared (mmscfd)": "4.55000",
           "Fuel Gas (mmscfd)": "0.00000",
           "Gas Produced (mmscfd)": "4.55000",
-          "Remarks": NaN
+          "Remarks": ""
       },
       {
           "Location": "UZERE WEST",
@@ -4341,7 +3110,7 @@
           "Gas Flared (mmscfd)": "1.58200",
           "Fuel Gas (mmscfd)": "0.00000",
           "Gas Produced (mmscfd)": "1.58200",
-          "Remarks": NaN
+          "Remarks": ""
       }
   ]
 } 

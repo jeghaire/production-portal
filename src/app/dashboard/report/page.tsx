@@ -46,7 +46,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Filter } from "./filters";
+import myData from "@/lib/data.json";
 
 const chartDataLine = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -160,182 +160,106 @@ const chartConfigX = {
   },
 } satisfies ChartConfig;
 
+// const chartData = [
+//   { date: "2024-04-01", desktop: 222, mobile: 150 },
+//   { date: "2024-04-02", desktop: 97, mobile: 180 },
+//   { date: "2024-04-03", desktop: 167, mobile: 120 },
+//   { date: "2024-04-04", desktop: 242, mobile: 260 },
+//   { date: "2024-04-05", desktop: 373, mobile: 290 },
+//   { date: "2024-04-06", desktop: 301, mobile: 340 },
+//   { date: "2024-04-07", desktop: 245, mobile: 180 },
+//   { date: "2024-04-08", desktop: 409, mobile: 320 },
+//   { date: "2024-04-09", desktop: 59, mobile: 110 },
+//   { date: "2024-04-10", desktop: 261, mobile: 190 },
+//   { date: "2024-04-11", desktop: 327, mobile: 350 },
+//   { date: "2024-04-12", desktop: 292, mobile: 210 },
+//   { date: "2024-04-13", desktop: 342, mobile: 380 },
+//   { date: "2024-04-14", desktop: 137, mobile: 220 },
+//   { date: "2024-04-15", desktop: 120, mobile: 170 },
+//   { date: "2024-04-16", desktop: 138, mobile: 190 },
+//   { date: "2024-04-17", desktop: 446, mobile: 360 },
+//   { date: "2024-04-18", desktop: 364, mobile: 410 },
+//   { date: "2024-04-19", desktop: 243, mobile: 180 },
+//   { date: "2024-04-20", desktop: 89, mobile: 150 },
+//   { date: "2024-04-21", desktop: 137, mobile: 200 },
+//   { date: "2024-04-22", desktop: 224, mobile: 170 },
+//   { date: "2024-04-23", desktop: 138, mobile: 230 },
+//   { date: "2024-04-24", desktop: 387, mobile: 290 },
+//   { date: "2024-04-25", desktop: 215, mobile: 250 },
+//   { date: "2024-04-26", desktop: 75, mobile: 130 },
+//   { date: "2024-04-27", desktop: 383, mobile: 420 },
+//   { date: "2024-04-28", desktop: 122, mobile: 180 },
+//   { date: "2024-04-29", desktop: 315, mobile: 240 },
+//   { date: "2024-04-30", desktop: 454, mobile: 380 },
+//   { date: "2024-05-01", desktop: 165, mobile: 220 },
+//   { date: "2024-05-02", desktop: 293, mobile: 310 },
+//   { date: "2024-05-03", desktop: 247, mobile: 190 },
+//   { date: "2024-05-04", desktop: 385, mobile: 420 },
+//   { date: "2024-05-05", desktop: 481, mobile: 390 },
+//   { date: "2024-05-06", desktop: 498, mobile: 520 },
+//   { date: "2024-05-07", desktop: 388, mobile: 300 },
+//   { date: "2024-05-08", desktop: 149, mobile: 210 },
+//   { date: "2024-05-09", desktop: 227, mobile: 180 },
+//   { date: "2024-05-10", desktop: 293, mobile: 330 },
+//   { date: "2024-05-11", desktop: 335, mobile: 270 },
+//   { date: "2024-05-12", desktop: 197, mobile: 240 },
+//   { date: "2024-05-13", desktop: 197, mobile: 160 },
+//   { date: "2024-05-14", desktop: 448, mobile: 490 },
+//   { date: "2024-05-15", desktop: 473, mobile: 380 },
+//   { date: "2024-05-16", desktop: 338, mobile: 400 },
+//   { date: "2024-05-17", desktop: 499, mobile: 420 },
+//   { date: "2024-05-18", desktop: 315, mobile: 350 },
+//   { date: "2024-05-19", desktop: 235, mobile: 180 },
+//   { date: "2024-05-20", desktop: 177, mobile: 230 },
+//   { date: "2024-05-21", desktop: 82, mobile: 140 },
+//   { date: "2024-05-22", desktop: 81, mobile: 120 },
+//   { date: "2024-05-23", desktop: 252, mobile: 290 },
+//   { date: "2024-05-24", desktop: 294, mobile: 220 },
+//   { date: "2024-05-25", desktop: 201, mobile: 250 },
+//   { date: "2024-05-26", desktop: 213, mobile: 170 },
+//   { date: "2024-05-27", desktop: 420, mobile: 460 },
+//   { date: "2024-05-28", desktop: 233, mobile: 190 },
+//   { date: "2024-05-29", desktop: 78, mobile: 130 },
+//   { date: "2024-05-30", desktop: 340, mobile: 280 },
+//   { date: "2024-05-31", desktop: 178, mobile: 230 },
+//   { date: "2024-06-01", desktop: 178, mobile: 200 },
+//   { date: "2024-06-02", desktop: 470, mobile: 410 },
+//   { date: "2024-06-03", desktop: 103, mobile: 160 },
+//   { date: "2024-06-04", desktop: 439, mobile: 380 },
+//   { date: "2024-06-05", desktop: 88, mobile: 140 },
+//   { date: "2024-06-06", desktop: 294, mobile: 250 },
+//   { date: "2024-06-07", desktop: 323, mobile: 370 },
+//   { date: "2024-06-08", desktop: 385, mobile: 320 },
+//   { date: "2024-06-09", desktop: 438, mobile: 480 },
+//   { date: "2024-06-10", desktop: 155, mobile: 200 },
+//   { date: "2024-06-11", desktop: 92, mobile: 150 },
+//   { date: "2024-06-12", desktop: 492, mobile: 420 },
+//   { date: "2024-06-13", desktop: 81, mobile: 130 },
+//   { date: "2024-06-14", desktop: 426, mobile: 380 },
+//   { date: "2024-06-15", desktop: 307, mobile: 350 },
+//   { date: "2024-06-16", desktop: 371, mobile: 310 },
+//   { date: "2024-06-17", desktop: 475, mobile: 520 },
+//   { date: "2024-06-18", desktop: 107, mobile: 170 },
+//   { date: "2024-06-19", desktop: 341, mobile: 290 },
+//   { date: "2024-06-20", desktop: 408, mobile: 450 },
+//   { date: "2024-06-21", desktop: 169, mobile: 210 },
+//   { date: "2024-06-22", desktop: 317, mobile: 270 },
+//   { date: "2024-06-23", desktop: 480, mobile: 530 },
+//   { date: "2024-06-24", desktop: 132, mobile: 180 },
+//   { date: "2024-06-25", desktop: 141, mobile: 190 },
+//   { date: "2024-06-26", desktop: 434, mobile: 380 },
+//   { date: "2024-06-27", desktop: 448, mobile: 490 },
+//   { date: "2024-06-28", desktop: 149, mobile: 200 },
+//   { date: "2024-06-29", desktop: 103, mobile: 160 },
+//   { date: "2024-06-30", desktop: 446, mobile: 400 },
+// ];
+
 const chartData = [
-  { date: "2024-04-01", desktop: 222, mobile: 150 },
-  { date: "2024-04-02", desktop: 97, mobile: 180 },
-  { date: "2024-04-03", desktop: 167, mobile: 120 },
-  { date: "2024-04-04", desktop: 242, mobile: 260 },
-  { date: "2024-04-05", desktop: 373, mobile: 290 },
-  { date: "2024-04-06", desktop: 301, mobile: 340 },
-  { date: "2024-04-07", desktop: 245, mobile: 180 },
-  { date: "2024-04-08", desktop: 409, mobile: 320 },
-  { date: "2024-04-09", desktop: 59, mobile: 110 },
-  { date: "2024-04-10", desktop: 261, mobile: 190 },
-  { date: "2024-04-11", desktop: 327, mobile: 350 },
-  { date: "2024-04-12", desktop: 292, mobile: 210 },
-  { date: "2024-04-13", desktop: 342, mobile: 380 },
-  { date: "2024-04-14", desktop: 137, mobile: 220 },
-  { date: "2024-04-15", desktop: 120, mobile: 170 },
-  { date: "2024-04-16", desktop: 138, mobile: 190 },
-  { date: "2024-04-17", desktop: 446, mobile: 360 },
-  { date: "2024-04-18", desktop: 364, mobile: 410 },
-  { date: "2024-04-19", desktop: 243, mobile: 180 },
-  { date: "2024-04-20", desktop: 89, mobile: 150 },
-  { date: "2024-04-21", desktop: 137, mobile: 200 },
-  { date: "2024-04-22", desktop: 224, mobile: 170 },
-  { date: "2024-04-23", desktop: 138, mobile: 230 },
-  { date: "2024-04-24", desktop: 387, mobile: 290 },
-  { date: "2024-04-25", desktop: 215, mobile: 250 },
-  { date: "2024-04-26", desktop: 75, mobile: 130 },
-  { date: "2024-04-27", desktop: 383, mobile: 420 },
-  { date: "2024-04-28", desktop: 122, mobile: 180 },
-  { date: "2024-04-29", desktop: 315, mobile: 240 },
-  { date: "2024-04-30", desktop: 454, mobile: 380 },
-  { date: "2024-05-01", desktop: 165, mobile: 220 },
-  { date: "2024-05-02", desktop: 293, mobile: 310 },
-  { date: "2024-05-03", desktop: 247, mobile: 190 },
-  { date: "2024-05-04", desktop: 385, mobile: 420 },
-  { date: "2024-05-05", desktop: 481, mobile: 390 },
-  { date: "2024-05-06", desktop: 498, mobile: 520 },
-  { date: "2024-05-07", desktop: 388, mobile: 300 },
-  { date: "2024-05-08", desktop: 149, mobile: 210 },
-  { date: "2024-05-09", desktop: 227, mobile: 180 },
-  { date: "2024-05-10", desktop: 293, mobile: 330 },
-  { date: "2024-05-11", desktop: 335, mobile: 270 },
-  { date: "2024-05-12", desktop: 197, mobile: 240 },
-  { date: "2024-05-13", desktop: 197, mobile: 160 },
-  { date: "2024-05-14", desktop: 448, mobile: 490 },
-  { date: "2024-05-15", desktop: 473, mobile: 380 },
-  { date: "2024-05-16", desktop: 338, mobile: 400 },
-  { date: "2024-05-17", desktop: 499, mobile: 420 },
-  { date: "2024-05-18", desktop: 315, mobile: 350 },
-  { date: "2024-05-19", desktop: 235, mobile: 180 },
-  { date: "2024-05-20", desktop: 177, mobile: 230 },
-  { date: "2024-05-21", desktop: 82, mobile: 140 },
-  { date: "2024-05-22", desktop: 81, mobile: 120 },
-  { date: "2024-05-23", desktop: 252, mobile: 290 },
-  { date: "2024-05-24", desktop: 294, mobile: 220 },
-  { date: "2024-05-25", desktop: 201, mobile: 250 },
-  { date: "2024-05-26", desktop: 213, mobile: 170 },
-  { date: "2024-05-27", desktop: 420, mobile: 460 },
-  { date: "2024-05-28", desktop: 233, mobile: 190 },
-  { date: "2024-05-29", desktop: 78, mobile: 130 },
-  { date: "2024-05-30", desktop: 340, mobile: 280 },
-  { date: "2024-05-31", desktop: 178, mobile: 230 },
-  { date: "2024-06-01", desktop: 178, mobile: 200 },
-  { date: "2024-06-02", desktop: 470, mobile: 410 },
-  { date: "2024-06-03", desktop: 103, mobile: 160 },
-  { date: "2024-06-04", desktop: 439, mobile: 380 },
-  { date: "2024-06-05", desktop: 88, mobile: 140 },
-  { date: "2024-06-06", desktop: 294, mobile: 250 },
-  { date: "2024-06-07", desktop: 323, mobile: 370 },
-  { date: "2024-06-08", desktop: 385, mobile: 320 },
-  { date: "2024-06-09", desktop: 438, mobile: 480 },
-  { date: "2024-06-10", desktop: 155, mobile: 200 },
-  { date: "2024-06-11", desktop: 92, mobile: 150 },
-  { date: "2024-06-12", desktop: 492, mobile: 420 },
-  { date: "2024-06-13", desktop: 81, mobile: 130 },
-  { date: "2024-06-14", desktop: 426, mobile: 380 },
-  { date: "2024-06-15", desktop: 307, mobile: 350 },
-  { date: "2024-06-16", desktop: 371, mobile: 310 },
-  { date: "2024-06-17", desktop: 475, mobile: 520 },
-  { date: "2024-06-18", desktop: 107, mobile: 170 },
-  { date: "2024-06-19", desktop: 341, mobile: 290 },
-  { date: "2024-06-20", desktop: 408, mobile: 450 },
-  { date: "2024-06-21", desktop: 169, mobile: 210 },
-  { date: "2024-06-22", desktop: 317, mobile: 270 },
-  { date: "2024-06-23", desktop: 480, mobile: 530 },
-  { date: "2024-06-24", desktop: 132, mobile: 180 },
-  { date: "2024-06-25", desktop: 141, mobile: 190 },
-  { date: "2024-06-26", desktop: 434, mobile: 380 },
-  { date: "2024-06-27", desktop: 448, mobile: 490 },
-  { date: "2024-06-28", desktop: 149, mobile: 200 },
-  { date: "2024-06-29", desktop: 103, mobile: 160 },
-  { date: "2024-06-30", desktop: 446, mobile: 400 },
-  { date: "2025-04-01", desktop: 245, mobile: 160 },
-  { date: "2025-04-02", desktop: 110, mobile: 190 },
-  { date: "2025-04-03", desktop: 178, mobile: 135 },
-  { date: "2025-04-04", desktop: 258, mobile: 275 },
-  { date: "2025-04-05", desktop: 390, mobile: 305 },
-  { date: "2025-04-06", desktop: 320, mobile: 355 },
-  { date: "2025-04-07", desktop: 260, mobile: 190 },
-  { date: "2025-04-08", desktop: 430, mobile: 330 },
-  { date: "2025-04-09", desktop: 70, mobile: 125 },
-  { date: "2025-04-10", desktop: 275, mobile: 205 },
-  { date: "2025-04-11", desktop: 345, mobile: 365 },
-  { date: "2025-04-12", desktop: 305, mobile: 225 },
-  { date: "2025-04-13", desktop: 355, mobile: 390 },
-  { date: "2025-04-14", desktop: 150, mobile: 230 },
-  { date: "2025-04-15", desktop: 130, mobile: 180 },
-  { date: "2025-04-16", desktop: 145, mobile: 200 },
-  { date: "2025-04-17", desktop: 460, mobile: 375 },
-  { date: "2025-04-18", desktop: 380, mobile: 425 },
-  { date: "2025-04-19", desktop: 255, mobile: 195 },
-  { date: "2025-04-20", desktop: 95, mobile: 160 },
-  { date: "2025-04-21", desktop: 145, mobile: 210 },
-  { date: "2025-04-22", desktop: 238, mobile: 185 },
-  { date: "2025-04-23", desktop: 150, mobile: 240 },
-  { date: "2025-04-24", desktop: 400, mobile: 305 },
-  { date: "2025-04-25", desktop: 225, mobile: 265 },
-  { date: "2025-04-26", desktop: 85, mobile: 140 },
-  { date: "2025-04-27", desktop: 395, mobile: 435 },
-  { date: "2025-04-28", desktop: 135, mobile: 190 },
-  { date: "2025-04-29", desktop: 325, mobile: 255 },
-  { date: "2025-04-30", desktop: 470, mobile: 390 },
-  { date: "2025-05-01", desktop: 175, mobile: 230 },
-  { date: "2025-05-02", desktop: 310, mobile: 320 },
-  { date: "2025-05-03", desktop: 260, mobile: 205 },
-  { date: "2025-05-04", desktop: 400, mobile: 435 },
-  { date: "2025-05-05", desktop: 495, mobile: 405 },
-  { date: "2025-05-06", desktop: 510, mobile: 540 },
-  { date: "2025-05-07", desktop: 400, mobile: 310 },
-  { date: "2025-05-08", desktop: 160, mobile: 220 },
-  { date: "2025-05-09", desktop: 240, mobile: 195 },
-  { date: "2025-05-10", desktop: 310, mobile: 345 },
-  { date: "2025-05-11", desktop: 350, mobile: 280 },
-  { date: "2025-05-12", desktop: 210, mobile: 255 },
-  { date: "2025-05-13", desktop: 205, mobile: 170 },
-  { date: "2025-05-14", desktop: 460, mobile: 505 },
-  { date: "2025-05-15", desktop: 490, mobile: 390 },
-  { date: "2025-05-16", desktop: 350, mobile: 415 },
-  { date: "2025-05-17", desktop: 510, mobile: 435 },
-  { date: "2025-05-18", desktop: 330, mobile: 365 },
-  { date: "2025-05-19", desktop: 245, mobile: 195 },
-  { date: "2025-05-20", desktop: 185, mobile: 245 },
-  { date: "2025-05-21", desktop: 95, mobile: 155 },
-  { date: "2025-05-22", desktop: 90, mobile: 135 },
-  { date: "2025-05-23", desktop: 265, mobile: 305 },
-  { date: "2025-05-24", desktop: 310, mobile: 235 },
-  { date: "2025-05-25", desktop: 215, mobile: 265 },
-  { date: "2025-05-26", desktop: 225, mobile: 185 },
-  { date: "2025-05-27", desktop: 435, mobile: 480 },
-  { date: "2025-05-28", desktop: 245, mobile: 205 },
-  { date: "2025-05-29", desktop: 90, mobile: 140 },
-  { date: "2025-05-30", desktop: 355, mobile: 295 },
-  { date: "2025-05-31", desktop: 190, mobile: 245 },
-  { date: "2025-06-01", desktop: 190, mobile: 215 },
-  { date: "2025-06-02", desktop: 485, mobile: 425 },
-  { date: "2025-06-03", desktop: 115, mobile: 175 },
-  { date: "2025-06-04", desktop: 455, mobile: 395 },
-  { date: "2025-06-05", desktop: 100, mobile: 155 },
-  { date: "2025-06-06", desktop: 310, mobile: 265 },
-  { date: "2025-06-07", desktop: 340, mobile: 385 },
-  { date: "2025-06-08", desktop: 400, mobile: 335 },
-  { date: "2025-06-09", desktop: 455, mobile: 495 },
-  { date: "2025-06-10", desktop: 170, mobile: 215 },
-  { date: "2025-06-11", desktop: 105, mobile: 165 },
-  { date: "2025-06-12", desktop: 505, mobile: 435 },
-  { date: "2025-06-13", desktop: 95, mobile: 145 },
-  { date: "2025-06-14", desktop: 440, mobile: 395 },
-  { date: "2025-06-15", desktop: 320, mobile: 365 },
-  { date: "2025-06-16", desktop: 385, mobile: 325 },
-  { date: "2025-06-17", desktop: 490, mobile: 535 },
-  { date: "2025-06-18", desktop: 120, mobile: 185 },
-  { date: "2025-06-19", desktop: 355, mobile: 305 },
-  { date: "2025-06-20", desktop: 425, mobile: 470 },
-  { date: "2025-06-21", desktop: 185, mobile: 225 },
-  { date: "2025-06-22", desktop: 330, mobile: 285 },
-  { date: "2025-06-23", desktop: 495, mobile: 550 },
+  { date: "2024-04-01", desktop: 222, mobile: 150, tablet: 100, smartTV: 80 },
+  { date: "2024-04-02", desktop: 97, mobile: 180, tablet: 120, smartTV: 90 },
+  { date: "2024-04-03", desktop: 167, mobile: 120, tablet: 90, smartTV: 60 },
+  { date: "2024-04-04", desktop: 242, mobile: 260, tablet: 150, smartTV: 110 },
+  { date: "2024-04-05", desktop: 373, mobile: 290, tablet: 180, smartTV: 140 },
 ];
 
 const chartConfig = {
@@ -349,6 +273,36 @@ const chartConfig = {
   mobile: {
     label: "Mobile",
     color: "hsl(var(--chart-2))",
+  },
+  tablet: {
+    label: "Tablet",
+    color: "hsl(var(--chart-3))",
+  },
+  smartTV: {
+    label: "Smart TV",
+    color: "hsl(var(--chart-4))",
+  },
+} satisfies ChartConfig;
+
+const chartConfigMain = {
+  production: {
+    label: "Gas Production",
+  },
+  stringsUp: {
+    label: "Strings Up",
+    color: "hsl(var(--chart-1))",
+  },
+  gross: {
+    label: "Gross",
+    color: "hsl(var(--chart-2))",
+  },
+  net: {
+    label: "Net",
+    color: "hsl(var(--chart-3))",
+  },
+  bsw: {
+    label: "Bsw",
+    color: "hsl(175.9 60.8% 19%)",
   },
 } satisfies ChartConfig;
 
@@ -406,7 +360,7 @@ export default function Component() {
         <CardContent>{/* <p>Card Content</p> */}</CardContent>
         <CardFooter>
           <p className="text-xs text-muted-foreground">
-            Amet gerid el Inventore, voluptatibus!
+            Prices are subject to the rate of the US dollar!
           </p>
         </CardFooter>
       </Card>
@@ -421,25 +375,6 @@ export default function Component() {
               Showing total visitors for the last 3 months
             </CardDescription>
           </div>
-          <Select value={timeRange} onValueChange={setTimeRange}>
-            <SelectTrigger
-              className="w-[160px] rounded-lg sm:ml-auto"
-              aria-label="Select a value"
-            >
-              <SelectValue placeholder="2025" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl">
-              <SelectItem value="90d" className="rounded-lg">
-                2025
-              </SelectItem>
-              <SelectItem value="30d" className="rounded-lg">
-                2024
-              </SelectItem>
-              <SelectItem value="7d" className="rounded-lg">
-                2023
-              </SelectItem>
-            </SelectContent>
-          </Select>
           <Select value={timeRange} onValueChange={setTimeRange}>
             <SelectTrigger
               className="w-[160px] rounded-lg sm:ml-auto"
@@ -540,7 +475,6 @@ export default function Component() {
           </ChartContainer>
         </CardContent>
       </Card>
-
       <Card>
         <CardHeader>
           <CardTitle>Line Chart - Multiple</CardTitle>
@@ -615,7 +549,7 @@ export default function Component() {
                 data={chartDataUPTIME}
                 dataKey="visitors"
                 nameKey="browser"
-                innerRadius={70}
+                innerRadius={80}
                 strokeWidth={5}
               >
                 <Label

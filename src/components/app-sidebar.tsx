@@ -34,7 +34,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Filter } from "@/app/dashboard/report/filters";
+import { Filter } from "@/components/filters";
 
 const data = {
   user: {

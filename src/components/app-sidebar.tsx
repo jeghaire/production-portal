@@ -3,20 +3,22 @@
 import * as React from "react";
 import {
   IconCamera,
+  IconCarCrane,
   IconChartBar,
-  IconDashboard,
+  IconChartColumn,
+  IconChartLine,
   IconDatabase,
   IconFileAi,
   IconFileDescription,
   IconFileWord,
-  IconFolder,
+  IconFolderCog,
   IconHelp,
   IconInnerShadowTop,
   IconListDetails,
   IconReport,
   IconSearch,
   IconSettings,
-  IconUsers,
+  IconShieldCheck,
 } from "@tabler/icons-react";
 
 import { NavDocuments } from "@/components/nav-documents";
@@ -46,27 +48,27 @@ const data = {
     {
       title: "Production",
       url: "/reports",
-      icon: IconDashboard,
+      icon: IconChartLine,
     },
     {
       title: "Equipment",
       url: "#",
-      icon: IconListDetails,
+      icon: IconCarCrane,
     },
     {
       title: "HSE",
       url: "#",
-      icon: IconChartBar,
+      icon: IconShieldCheck,
     },
     {
       title: "Projects",
       url: "#",
-      icon: IconFolder,
+      icon: IconListDetails,
     },
     {
       title: "UPS Status",
       url: "#",
-      icon: IconUsers,
+      icon: IconChartColumn ,
     },
   ],
   navClouds: [

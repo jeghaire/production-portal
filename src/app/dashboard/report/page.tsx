@@ -46,6 +46,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+import { useSearchParams, useRouter } from "next/navigation";
+
 const loc = [
   { label: "AFIESERE", value: "AFIESERE" },
   { label: "ERIEMU", value: "ERIEMU" },
@@ -54,7 +56,8 @@ const loc = [
   { label: "OLOMORO", value: "OLOMORO" },
   { label: "ORONI", value: "ORONI" },
   { label: "OWEH", value: "OWEH" },
-  { label: "UZERE WEST", value: "UZERE WEST" },
+  { label: "UZERE", value: "UZERE" },
+  { label: "UZERE EAST", value: "UZERE EAST" },
 ];
 
 const chartDataX = {
@@ -121,19 +124,61 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function Component() {
-  const [selectedLocation, setSelectedLocation] = React.useState("EVWRENI");
+  // const searchParams = useSearchParams();
+
+  // // const locn = searchParams.getAll("loc");
+  // // console.log(locn);
+
+  // const [selectedLocation, setSelectedLocation] = React.useState("EVWRENI");
   const [open, setOpen] = React.useState(false);
-  // const [value, setValue] = React.useState("");
+  // // const [value, setValue] = React.useState("");
 
-  const [selectedValues, setSelectedValues] = React.useState([]);
+  // const [selectedValues, setSelectedValues] = React.useState([]);
 
-  const toggleSelection = (currentValue) => {
-    setSelectedValues((prev) =>
-      prev.includes(currentValue)
+  // const toggleSelection = (currentValue) => {
+  //   setSelectedValues((prev) =>
+  //     prev.includes(currentValue)
+  //       ? prev.filter((value) => value !== currentValue)
+  //       : [...prev, currentValue]
+  //   );
+  // };
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Extract selected locations from query params
+  const selectedQueryParams = searchParams.getAll("loc");
+
+  // Set initial state from query params
+  const [selectedValues, setSelectedValues] = React.useState(
+    selectedQueryParams.length > 0 ? selectedQueryParams : []
+  );
+
+  // Function to update selected locations
+  const toggleSelection = (currentValue: string) => {
+    setSelectedValues((prev) => {
+      const newSelectedValues = prev.includes(currentValue)
         ? prev.filter((value) => value !== currentValue)
-        : [...prev, currentValue]
-    );
+        : [...prev, currentValue];
+
+      // Update the URL query parameters
+      const params = new URLSearchParams(searchParams);
+      params.delete("loc");
+      newSelectedValues.forEach((value) => params.append("loc", value));
+
+      router.replace(`?${params.toString()}`);
+
+      return newSelectedValues;
+    });
   };
+
+  // const [myState, setMyState] = useState("");
+
+  React.useEffect(() => {
+    setSelectedValues(
+      selectedQueryParams.length > 0 ? selectedQueryParams : []
+    );
+  }, [searchParams]);
 
   // Function to aggregate data based on selected locations
   const getAggregatedData = () => {
@@ -163,9 +208,6 @@ export default function Component() {
     return aggregatedData;
   };
 
-  console.log("selectedValues", selectedValues);
-  console.log("selectedValues", getAggregatedData());
-
   return (
     <section className="mx-auto p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
       <Card>
@@ -191,7 +233,7 @@ export default function Component() {
               Showing total visitors for the last 3 months
             </CardDescription>
           </div>
-          <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+          {/* <Select value={selectedLocation} onValueChange={setSelectedLocation}>
             <SelectTrigger
               className="w-[160px] rounded-lg sm:ml-auto"
               aria-label="Select a value"
@@ -209,27 +251,36 @@ export default function Component() {
                 </SelectItem>
               ))}
             </SelectContent>
-          </Select>
+          </Select> */}
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                className="w-[200px] justify-between truncate"
+                className="w-[200px] justify-between"
               >
                 {/* {value
                   ? loc.find((framework) => framework.value === value)
                       ?.label
                   : "Select location..."} */}
                 {selectedValues.length > 0
-                  ? selectedValues
-                      .map(
-                        (value) =>
-                          loc.find((framework) => framework.value === value)
-                            ?.label
-                      )
-                      .join(", ")
+                  // ? selectedValues
+                  //     .map(
+                  //       (value) =>
+                  //         loc.find((framework) => framework.value === value)
+                  //           ?.label
+                  //     )
+                  //     .join(", ")
+                  ? (() => {
+                    const selectedLabels = selectedValues
+                      .map((value) => loc.find((framework) => framework.value === value)?.label)
+                      .filter(Boolean); // Removes any undefined values
+              
+                    return selectedLabels.length > 2
+                      ? `${selectedLabels.slice(0, 2).join(", ")}...`
+                      : selectedLabels.join(", ");
+                  })()
                   : "ALL LOCATIONS"}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
@@ -375,17 +426,17 @@ export default function Component() {
                 stackId="a"
               />
               <Area
-                dataKey="bsw"
-                type="natural"
-                fill="url(#fillBsw)"
-                stroke="var(--color-bsw)"
-                stackId="a"
-              />
-              <Area
                 dataKey="gross"
                 type="natural"
                 fill="url(#fillGross)"
                 stroke="var(--color-gross)"
+                stackId="a"
+              />
+              <Area
+                dataKey="bsw"
+                type="natural"
+                fill="url(#fillBsw)"
+                stroke="var(--color-bsw)"
                 stackId="a"
               />
               <Area

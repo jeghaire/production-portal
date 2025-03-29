@@ -7,11 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
-import {
-  SearchParams,
-  parseSearchParams,
-  stringifySearchParams,
-} from "@/lib/url-state";
+import { SearchParams } from "@/lib/url-state";
 
 const LOCATIONS = [
   { label: "AFIESERE", value: "AFIESERE" },
@@ -21,7 +17,8 @@ const LOCATIONS = [
   { label: "OLOMORO", value: "OLOMORO" },
   { label: "ORONI", value: "ORONI" },
   { label: "OWEH", value: "OWEH" },
-  { label: "UZERE WEST", value: "UZERE WEST" },
+  { label: "UZERE", value: "UZERE" },
+  { label: "UZERE EAST", value: "UZERE EAST" },
 ];
 
 interface FilterProps {
@@ -32,12 +29,26 @@ function FilterBase({ searchParams }: FilterProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const initialFilters = parseSearchParams(Object.fromEntries(searchParams));
+  const initialFilters: SearchParams = {
+    loc: searchParams.getAll("loc") || [],
+    yr: searchParams.get("yr") || undefined,
+  };
+
   const [optimisticFilters, setOptimisticFilters] =
     useOptimistic<SearchParams>(initialFilters);
 
   const updateURL = (newFilters: SearchParams) => {
-    const queryString = stringifySearchParams(newFilters);
+    const searchParams = new URLSearchParams();
+
+    Object.entries(newFilters).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((v) => searchParams.append(key, v));
+      } else if (value) {
+        searchParams.set(key, value);
+      }
+    });
+
+    const queryString = searchParams.toString();
     router.push(
       queryString ? `/dashboard/report?${queryString}` : "/dashboard/report"
     );
@@ -45,28 +56,34 @@ function FilterBase({ searchParams }: FilterProps) {
 
   const handleFilterChange = (
     filterType: keyof SearchParams,
-    value: string | undefined
+    value: string[] | string | undefined
   ) => {
     startTransition(() => {
-      const newFilters = { ...optimisticFilters, [filterType]: value };
+      const newFilters = {
+        ...optimisticFilters,
+        [filterType]: Array.isArray(value)
+          ? value
+          : value
+          ? [value]
+          : undefined,
+      };
       setOptimisticFilters(newFilters);
       updateURL(newFilters);
     });
   };
 
-  const handleListToggle = (locs: string) => {
+  const handleListToggle = (loc: string) => {
     startTransition(() => {
-      const newlocs = locs.split(",");
-      const currentlocs = optimisticFilters.loc?.split(",") || [];
+      const currentlocs = optimisticFilters.loc || [];
+      let updatedlocs: string[];
 
-      // If the first loc of the list is already in the filter, remove all locs of this list
-      if (currentlocs.includes(newlocs[0])) {
-        const updatedlocs = currentlocs.filter((loc) => !newlocs.includes(loc));
-        handleFilterChange("loc", updatedlocs.join(",") || undefined);
+      if (currentlocs.includes(loc)) {
+        updatedlocs = currentlocs.filter((l) => l !== loc);
       } else {
-        // Otherwise, replace all current locs with the new list
-        handleFilterChange("loc", locs);
+        updatedlocs = [...currentlocs, loc];
       }
+
+      handleFilterChange("loc", updatedlocs.length ? updatedlocs : undefined);
     });
   };
 
@@ -114,8 +131,7 @@ function FilterBase({ searchParams }: FilterProps) {
                   <Checkbox
                     id={`list-${list.label.toLowerCase()}`}
                     checked={
-                      optimisticFilters.loc?.split(",")[0] ===
-                      list.value.split(",")[0]
+                      optimisticFilters.loc?.includes(list.value) || false
                     }
                     onCheckedChange={() => handleListToggle(list.value)}
                   />

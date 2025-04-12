@@ -19,9 +19,9 @@ import {
   IconSearch,
   IconSettings,
   IconShieldCheck,
+  IconBuildingFactory,
 } from "@tabler/icons-react";
 
-import { NavDocuments } from "@/components/nav-documents";
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
@@ -47,18 +47,8 @@ const data = {
   navMain: [
     {
       title: "Production",
-      url: "/reports",
-      icon: IconChartLine,
-    },
-    {
-      title: "Equipment",
-      url: "#",
-      icon: IconCarCrane,
-    },
-    {
-      title: "HSE",
-      url: "#",
-      icon: IconShieldCheck,
+      url: "/dashboard",
+      icon: IconBuildingFactory,
     },
     {
       title: "Projects",
@@ -66,9 +56,19 @@ const data = {
       icon: IconListDetails,
     },
     {
+      title: "HSE",
+      url: "#",
+      icon: IconShieldCheck,
+    },
+    {
+      title: "Equipment",
+      url: "#",
+      icon: IconCarCrane,
+    },
+    {
       title: "UPS Status",
       url: "#",
-      icon: IconChartColumn ,
+      icon: IconChartColumn,
     },
   ],
   navClouds: [

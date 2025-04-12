@@ -5,9 +5,15 @@ import { useOptimistic, useTransition } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { SearchParams } from "@/lib/url-state";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const LOCATIONS = [
   { label: "AFIESERE", value: "AFIESERE" },
@@ -21,6 +27,8 @@ const LOCATIONS = [
   { label: "UZERE EAST", value: "UZERE EAST" },
 ];
 
+const YEARS = ["2025", "2024"];
+
 interface FilterProps {
   searchParams: URLSearchParams;
 }
@@ -32,6 +40,7 @@ function FilterBase({ searchParams }: FilterProps) {
   const initialFilters: SearchParams = {
     loc: searchParams.getAll("loc") || [],
     yr: searchParams.get("yr") || undefined,
+    // Add other filters as needed
   };
 
   const [optimisticFilters, setOptimisticFilters] =
@@ -49,9 +58,7 @@ function FilterBase({ searchParams }: FilterProps) {
     });
 
     const queryString = searchParams.toString();
-    router.push(
-      queryString ? `/dashboard/report?${queryString}` : "/dashboard/report"
-    );
+    router.push(queryString ? `/dashboard?${queryString}` : "/dashboard");
   };
 
   const handleFilterChange = (
@@ -90,7 +97,7 @@ function FilterBase({ searchParams }: FilterProps) {
   const handleClearFilters = () => {
     startTransition(() => {
       setOptimisticFilters({});
-      router.push("/dashboard/report");
+      router.push("/dashboard");
     });
   };
 
@@ -99,30 +106,30 @@ function FilterBase({ searchParams }: FilterProps) {
       data-pending={isPending ? "" : undefined}
       className="flex-shrink-0 flex flex-col h-full"
     >
-      <ScrollArea className="flex-grow">
+      <div className="p-2 flex flex-col space-y-2">
+        <Label htmlFor="year">Chosen Year</Label>
+        <Select
+          value={optimisticFilters.yr || "2025"}
+          onValueChange={(value) => handleFilterChange("yr", value)}
+        >
+          <SelectTrigger id="year" className="mt-2">
+            <SelectValue placeholder="Select a Year" />
+          </SelectTrigger>
+          <SelectContent>
+            {YEARS.map((yr) => (
+              <SelectItem key={yr} value={yr}>
+                {yr}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <ScrollArea className="flex-grow mt-4">
         <div className="p-2 space-y-4">
           <div>
-            <Label htmlFor="year-range">Production Year</Label>
-            <Slider
-              id="year-range"
-              min={1950}
-              max={2025}
-              step={10}
-              value={[Number(optimisticFilters.yr) || 2025]}
-              onValueChange={([value]) =>
-                handleFilterChange("yr", value.toString())
-              }
-              className="mt-2"
-            />
-            <div className="flex justify-between mt-1 text-sm text-muted-foreground">
-              <span>1950</span>
-              <span>{optimisticFilters.yr || 2025}</span>
-            </div>
-          </div>
-
-          <div>
             <Label>Locations</Label>
-            <ScrollArea className="h-[200px] mt-2">
+            <ScrollArea className="h-[220px] mt-2">
               {LOCATIONS.map((list) => (
                 <div
                   key={list.label}

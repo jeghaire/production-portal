@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, Label, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -52,9 +52,21 @@ import {
   IconCheck,
   IconSelector,
   IconAlertCircleFilled,
+  IconDropletsFilled,
+  IconFlameFilled,
+  IconBarrel,
+  IconTriangleInvertedFilled,
+  IconTriangleFilled,
 } from "@tabler/icons-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const loc = [
   { label: "AFIESERE", value: "AFIESERE" },
@@ -69,10 +81,10 @@ const loc = [
 ];
 
 const options = [
-  { label: "GROSS", value: "GROSS" },
-  { label: "NET", value: "NET" },
-  { label: "BSW", value: "BSW" },
-  { label: "STRINGSUP", value: "STRINGSUP" },
+  { label: "GROSS", value: "gross" },
+  { label: "NET", value: "net" },
+  { label: "BSW", value: "bsw" },
+  { label: "STRINGS UP", value: "stringsUp" },
 ];
 
 // const chartDataX = {
@@ -145,16 +157,18 @@ export default function Component() {
 
   // Extract selected locations from query params
   const selectedQueryParams = searchParams.getAll("loc");
+  const selectedMonth = searchParams.getAll("mnt");
+  const selectedYear = searchParams.getAll("yr");
 
   // Set initial state from query params
   const [selectedValues, setSelectedValues] = React.useState(
     selectedQueryParams.length > 0 ? selectedQueryParams : []
   );
   const [filterT, setFilterT] = React.useState([
-    "BSW",
-    "NET",
-    "GROSS",
-    "STRINGSUP",
+    "bsw",
+    "net",
+    "gross",
+    "stringsUp",
   ]);
 
   // Function to update selected locations
@@ -184,9 +198,16 @@ export default function Component() {
     );
   };
 
+  // React.useEffect(() => {
+  //   setSelectedValues(
+  //     selectedQueryParams.length > 0 ? selectedQueryParams : []
+  //   );
+  // }, [searchParams]);
+
   React.useEffect(() => {
-    setSelectedValues(
-      selectedQueryParams.length > 0 ? selectedQueryParams : ["EVWRENI"]
+    const incoming = selectedQueryParams.length > 0 ? selectedQueryParams : [];
+    setSelectedValues((prev) =>
+      JSON.stringify(prev) !== JSON.stringify(incoming) ? incoming : prev
     );
   }, [searchParams]);
 
@@ -198,7 +219,7 @@ export default function Component() {
     const aggregatedData: Record<string, any>[] = [];
 
     locations.forEach((location) => {
-      chartData[location].forEach((entry: any, index: number) => {
+      march2025Data[location].forEach((entry: any, index: number) => {
         if (!aggregatedData[index]) {
           aggregatedData[index] = {
             date: entry.date,
@@ -218,6 +239,49 @@ export default function Component() {
     return aggregatedData;
   };
 
+  const result = {};
+  const data = { ...chartData };
+
+  for (const key in data) {
+    // Sort the array by date in descending order
+    const sorted = [...data[key]].sort(
+      (a, b) => new Date(b.date) - new Date(a.date)
+    );
+    // Take the first two elements (most recent dates)
+    result[key] = sorted.slice(0, 2);
+  }
+
+  const carouselData = Object.entries(result).map(([location, items]) => ({
+    location, // "AFIESERE" or "ERIEMU"
+    entries: items.map((item) => ({
+      date: new Date(item.date).toLocaleDateString("en-GB"), // "DD/MM/YYYY"
+      value: item.net, // or item.gross, item.stringsUp, etc.
+      rawData: item, // Keep original data for calculations
+    })),
+  }));
+
+  function getMonthDataByName(data, monthName, year) {
+    const monthIndex = new Date(`${monthName} 1, ${year}`).getMonth();
+
+    return Object.keys(data).reduce((acc, location) => {
+      acc[location] = data[location].filter((entry) => {
+        const entryDate = new Date(entry.date);
+        return (
+          entryDate.getMonth() === monthIndex &&
+          entryDate.getFullYear() === year
+        );
+      });
+      return acc;
+    }, {});
+  }
+
+  // Usage:
+  const march2025Data = getMonthDataByName(
+    chartData,
+    selectedMonth.length ? selectedMonth[0].slice(0, 3) : "MAR",
+    selectedYear.length ? Number(selectedYear[0]) : 2025
+  );
+
   return (
     <section className="p-5 grid grid-cols-1 @xl:grid-cols-2 @5xl:grid-cols-3 @7xl:grid-cols-4 gap-4">
       <Card>
@@ -233,23 +297,23 @@ export default function Component() {
           <CardDescription>BPOD/Barrels per day</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="font-black text-4xl">$94,330.00</p>
+          <p className="font-black text-4xl">94,330.00</p>
           <p className="mt-5 flex items-center justify-between text-muted-foreground text-xs">
             <span className="truncate">{`26% of annual target`}</span>
             <span className="text-nowrap">
-              ${(94330 * (100 / 60)).toFixed(2)}
+              {(94330 * (100 / 60)).toFixed(2)}
             </span>
           </p>
           <Progress value={26} className="mt-1 h-1.5" />
         </CardContent>
-        <CardFooter className="flex flex-col flex-start items-start">
+        {/* <CardFooter className="flex flex-col flex-start items-start">
           <div className="flex items-center gap-2">
             <IconAlertCircleFilled className="w-3.5" />
             <p className="text-xs text-muted-foreground">
               Prices are subject to the rate of the US dollar!
             </p>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
       <Card>
         <CardHeader>
@@ -264,23 +328,23 @@ export default function Component() {
           <CardDescription>Gross sum of production for 2025</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="font-black text-4xl">$82,503,492.00</p>
+          <p className="font-black text-4xl">82,503,492</p>
           <p className="mt-5 flex items-center justify-between text-muted-foreground text-xs">
             <span className="truncate">{`60% of annual target`}</span>
             <span className="text-nowrap">
-              ${(82503492.0 * (100 / 60)).toFixed(2)}
+              {(82503492 * (100 / 60)).toFixed(2)}
             </span>
           </p>
           <Progress value={60} className="mt-1 h-1.5" />
         </CardContent>
-        <CardFooter className="flex flex-col flex-start items-start">
+        {/* <CardFooter className="flex flex-col flex-start items-start">
           <div className="flex items-center gap-2">
             <IconAlertCircleFilled className="w-3.5" />
             <p className="text-xs text-muted-foreground">
               Prices are subject to the rate of the US dollar!
             </p>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
       <Card>
         <CardHeader>
@@ -295,28 +359,160 @@ export default function Component() {
           <CardDescription>Net sum of production for 2025</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="font-black text-4xl">$218,740.26</p>
+          <p className="font-black text-4xl">218,740.26</p>
 
           <p className="mt-5 flex items-center justify-between text-muted-foreground text-xs">
             <span className="truncate">{`27.5% of annual target`}</span>
             <span className="text-nowrap">
-              ${(218740.26 * (100 / 27.5)).toFixed(2)}
+              {(218740.26 * (100 / 27.5)).toFixed(2)}
             </span>
           </p>
           <Progress value={27.5} className="mt-1 h-1.5" />
         </CardContent>
-        <CardFooter className="flex flex-col flex-start items-start">
+        {/* <CardFooter className="flex flex-col flex-start items-start">
           <div className="flex items-center gap-2">
             <IconAlertCircleFilled className="w-3.5" />
             <p className="text-xs text-muted-foreground">
               Prices are subject to the rate of the US dollar!
             </p>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
-      <Card className="col-span-full">
-        <CardHeader className="flex flex-col items-center gap-2 space-y-0 border-b py-5 md:flex-row">
-          <div className="grid flex-1 gap-1 text-center sm:text-left">
+      <Card>
+        <Carousel className="w-full">
+          <CarouselContent>
+            {/* {Array.from({ length: 5 }).map((_, index) => ( */}
+            {/* {carouselData.map(({ location, value, date }, index) => (
+              <CarouselItem key={index} className="w-full">
+                <div>
+                  <CardContent className="flex flex-col items-center justify-center p-4">
+                    <div className="flex flex-col items-center justify-center">
+                      <span className="font-medium text-sm font-mono">
+                        {date}
+                      </span>
+                      <span className="text-2xl my-5">{location}</span>
+                    </div>
+                    <div className="flex items-start w-full justify-between">
+                      <div className="flex items-center leading-none flex-col">
+                        <span className="font-bold font-mono">7.13K</span>
+                        <span className="text-[10px]">Previous Day</span>
+                      </div>
+                      <div className="flex items-center leading-none flex-col text-red-900">
+                        <IconTriangleInvertedFilled className="w-8 h-8 mb-3" />
+                        <span className="font-bold font-mono">1.39K</span>
+                        <span className="text-[10px]">versus</span>
+                      </div>
+                      <div className="flex items-center leading-none flex-col">
+                        <span className="font-bold font-mono">7.03K</span>
+                        <span className="text-[10px]">Selected Day</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </div>
+              </CarouselItem>
+            ))} */}
+            {carouselData.map(({ location, entries }, locIndex) => {
+              // Calculate the difference
+              const currentValue = (entries[0].value / 1000).toFixed(2);
+              const previousValue = (entries[1].value / 1000).toFixed(2);
+              const difference = (currentValue - previousValue).toFixed(2);
+
+              // Determine if positive or negative
+              const isPositive = parseFloat(difference) >= 0;
+              const colorClass = isPositive ? "text-green-600" : "text-red-600";
+              const IconComponent = isPositive
+                ? IconTriangleFilled
+                : IconTriangleInvertedFilled;
+
+              return (
+                <CarouselItem key={locIndex} className="w-full">
+                  {/* <span className="font-medium flex justify-center">
+                    {entries[0].date}
+                  </span> */}
+                  <div>
+                    <CardContent className="flex flex-col items-center justify-start px-4">
+                      <div className="flex flex-col items-center justify-center mb-5">
+                        <span className="font-medium">{entries[0].date}</span>
+                        <span className="text-2xl mb-0 font-semibold font-mono">
+                          {location}
+                        </span>
+                      </div>
+                      <div className="flex items-start w-full justify-between">
+                        <div className="flex items-center leading-none flex-col">
+                          <span className="font-bold font-mono">
+                            {previousValue}K
+                          </span>
+                          <span className="text-[10px]">Previous Day</span>
+                        </div>
+                        <div
+                          className={`flex items-center leading-none flex-col ${colorClass}`}
+                        >
+                          <IconComponent className="w-8 h-8 mb-3" />
+                          <span className="font-bold font-mono">
+                            {difference}K
+                          </span>
+                          <span className="text-[10px]">versus</span>
+                        </div>
+                        <div className="flex items-center leading-none flex-col">
+                          <span className="font-bold font-mono">
+                            {currentValue}K
+                          </span>
+                          <span className="text-[10px]">Selected Day</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </div>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+          <CarouselPrevious className="!left-5 !top-2" />
+          <CarouselNext className="!right-5 !top-2" />
+        </Carousel>
+      </Card>
+      {/* <Card>
+        <div className="flex justify-between flex-row items-center gap-3 p-4">
+          <div className="flex flex-col items-center">
+            <h2 className="text-base font-medium text-muted-foreground">
+              Brent
+            </h2>
+            <p className="text-center text-xl">$70.38</p>
+            <IconDropletFilled className="w-10 h-10" />
+          </div>
+          <div className="flex flex-col items-center">
+            <h2 className="text-base font-medium text-muted-foreground">WTI</h2>
+            <p className="text-center text-xl">$67.05</p>
+            <IconDroplet className="w-10 h-10" />
+          </div>
+          <div className="flex flex-col items-center">
+            <h2 className="text-base font-medium text-muted-foreground">
+              Flame Penalty
+            </h2>
+            <p className="text-center text-xl">$3.50</p>
+            <IconFlameFilled className="w-10 h-10" />
+          </div>
+        </div>
+        <div className="flex justify-between flex-row items-center gap-3 p-4">
+          <div className="flex flex-col items-center">
+            <h2 className="text-base font-medium text-muted-foreground">
+              Flame Penalty
+            </h2>
+            <p className="text-center text-xl">$3.50</p>
+            <IconBarrel className="w-10 h-10" />
+          </div>
+          <div className="flex flex-col items-center">
+            <h2 className="text-base font-medium text-muted-foreground">
+              Flame Penalty
+            </h2>
+            <p className="text-center text-xl">$3.50</p>
+            <IconFlameFilled className="w-10 h-10" />
+          </div>
+        </div>
+      </Card> */}
+
+      <Card className="col-span-full @container">
+        <CardHeader className="flex flex-col items-start gap-2 space-y-0 border-b py-5 @xl:flex-row">
+          <div className="grid @7xl:flex flex-1 gap-1">
             <CardTitle>Gas/Oil Production</CardTitle>
             <CardDescription>
               Showing total Oil Production for the last 1 year
@@ -341,143 +537,144 @@ export default function Component() {
               ))}
             </SelectContent>
           </Select> */}
+          <div className="flex flex-col @md:flex-row gap-2">
+            <Popover open={openT} onOpenChange={setOpenT}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="w-[200px] justify-between"
+                >
+                  {selectedValues.length > 0
+                    ? (() => {
+                        const selectedLabels = filterT
+                          .map(
+                            (value) =>
+                              options.find(
+                                (framework) => framework.value === value
+                              )?.label
+                          )
+                          .filter(Boolean); // Removes any undefined values
 
-          <Popover open={openT} onOpenChange={setOpenT}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-[200px] justify-between"
-              >
-                {selectedValues.length > 0
-                  ? (() => {
-                      const selectedLabels = filterT
-                        .map(
-                          (value) =>
-                            options.find(
-                              (framework) => framework.value === value
-                            )?.label
-                        )
-                        .filter(Boolean); // Removes any undefined values
+                        return selectedLabels.length > 2
+                          ? `${selectedLabels.slice(0, 2).join(", ")}...`
+                          : selectedLabels.join(", ");
+                      })()
+                    : "Filter Chart"}
+                  <IconSelector className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[200px] p-0">
+                <Command>
+                  <CommandInput placeholder="Search chart filters..." />
+                  <CommandList>
+                    <CommandEmpty>No location found.</CommandEmpty>
+                    <CommandGroup>
+                      {options.map((option) => (
+                        <CommandItem
+                          key={option.value}
+                          value={option.value}
+                          onSelect={() => toggleFilterT(option.value)}
+                        >
+                          <IconCheck
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              filterT.includes(option.value)
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                          {option.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
 
-                      return selectedLabels.length > 2
-                        ? `${selectedLabels.slice(0, 2).join(", ")}...`
-                        : selectedLabels.join(", ");
-                    })()
-                  : "Filter Chart"}
-                <IconSelector className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-              <Command>
-                <CommandInput placeholder="Search chart filters..." />
-                <CommandList>
-                  <CommandEmpty>No location found.</CommandEmpty>
-                  <CommandGroup>
-                    {options.map((option) => (
-                      <CommandItem
-                        key={option.value}
-                        value={option.value}
-                        onSelect={() => toggleFilterT(option.value)}
-                      >
-                        <IconCheck
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            filterT.includes(option.value)
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                        {option.label}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
-
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-[200px] justify-between"
-              >
-                {/* {value
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="w-[200px] justify-between"
+                >
+                  {/* {value
                   ? loc.find((framework) => framework.value === value)
                       ?.label
                   : "Select location..."} */}
-                {selectedValues.length > 0
-                  ? // ? selectedValues
-                    //     .map(
-                    //       (value) =>
-                    //         loc.find((framework) => framework.value === value)
-                    //           ?.label
-                    //     )
-                    //     .join(", ")
-                    (() => {
-                      const selectedLabels = selectedValues
-                        .map(
-                          (value) =>
-                            loc.find((framework) => framework.value === value)
-                              ?.label
-                        )
-                        .filter(Boolean); // Removes any undefined values
+                  {selectedValues.length > 0
+                    ? // ? selectedValues
+                      //     .map(
+                      //       (value) =>
+                      //         loc.find((framework) => framework.value === value)
+                      //           ?.label
+                      //     )
+                      //     .join(", ")
+                      (() => {
+                        const selectedLabels = selectedValues
+                          .map(
+                            (value) =>
+                              loc.find((framework) => framework.value === value)
+                                ?.label
+                          )
+                          .filter(Boolean); // Removes any undefined values
 
-                      return selectedLabels.length > 2
-                        ? `${selectedLabels.slice(0, 2).join(", ")}...`
-                        : selectedLabels.join(", ");
-                    })()
-                  : "ALL LOCATIONS"}
-                <IconSelector className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-              <Command>
-                <CommandInput placeholder="Search locations..." />
-                <CommandList>
-                  <CommandEmpty>No location found.</CommandEmpty>
-                  <CommandGroup>
-                    {loc.map((framework) => (
-                      <CommandItem
-                        key={framework.value}
-                        value={framework.value}
-                        // onSelect={(currentValue) => {
-                        //   setValue(currentValue === value ? "" : currentValue);
-                        //   setOpen(false);
-                        // }}
-                        onSelect={() => toggleSelection(framework.value)}
-                      >
-                        <IconCheck
-                          // className={cn(
-                          //   "mr-2 h-4 w-4",
-                          //   value === framework.value
-                          //     ? "opacity-100"
-                          //     : "opacity-0"
-                          // )}
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            selectedValues.includes(framework.value)
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                        {framework.label}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
+                        return selectedLabels.length > 2
+                          ? `${selectedLabels.slice(0, 2).join(", ")}...`
+                          : selectedLabels.join(", ");
+                      })()
+                    : "ALL LOCATIONS"}
+                  <IconSelector className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[200px] p-0">
+                <Command>
+                  <CommandInput placeholder="Search locations..." />
+                  <CommandList>
+                    <CommandEmpty>No location found.</CommandEmpty>
+                    <CommandGroup>
+                      {loc.map((framework) => (
+                        <CommandItem
+                          key={framework.value}
+                          value={framework.value}
+                          // onSelect={(currentValue) => {
+                          //   setValue(currentValue === value ? "" : currentValue);
+                          //   setOpen(false);
+                          // }}
+                          onSelect={() => toggleSelection(framework.value)}
+                        >
+                          <IconCheck
+                            // className={cn(
+                            //   "mr-2 h-4 w-4",
+                            //   value === framework.value
+                            //     ? "opacity-100"
+                            //     : "opacity-0"
+                            // )}
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              selectedValues.includes(framework.value)
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                          {framework.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          </div>
         </CardHeader>
         <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
           <ChartContainer
             config={chartConfig}
-            className="aspect-auto h-[350px] w-full"
+            className="aspect-auto h-[450px] w-full"
           >
             {/* <AreaChart data={chartData[selectedLocation]}> */}
             <AreaChart data={getAggregatedData()}>
@@ -569,7 +766,7 @@ export default function Component() {
                 }
               />
 
-              {filterT.includes("STRINGSUP") && (
+              {filterT.includes("stringsUp") && (
                 <Area
                   dataKey="stringsUp"
                   type="natural"
@@ -579,7 +776,7 @@ export default function Component() {
                 />
               )}
 
-              {filterT.includes("BSW") && (
+              {filterT.includes("bsw") && (
                 <Area
                   dataKey="bsw"
                   type="natural"
@@ -589,7 +786,7 @@ export default function Component() {
                 />
               )}
 
-              {filterT.includes("NET") && (
+              {filterT.includes("net") && (
                 <Area
                   dataKey="net"
                   type="natural"
@@ -599,7 +796,7 @@ export default function Component() {
                 />
               )}
 
-              {filterT.includes("GROSS") && (
+              {filterT.includes("gross") && (
                 <Area
                   dataKey="gross"
                   type="natural"
@@ -614,6 +811,9 @@ export default function Component() {
           </ChartContainer>
         </CardContent>
       </Card>
+      {/* <Card className="col-span-1">
+
+      </Card> */}
     </section>
   );
 }

@@ -28,6 +28,20 @@ const LOCATIONS = [
 ];
 
 const YEARS = ["2025", "2024"];
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 interface FilterProps {
   searchParams: URLSearchParams;
@@ -40,6 +54,7 @@ function FilterBase({ searchParams }: FilterProps) {
   const initialFilters: SearchParams = {
     loc: searchParams.getAll("loc") || [],
     yr: searchParams.get("yr") || undefined,
+    mnt: searchParams.get("mnt") || undefined,
     // Add other filters as needed
   };
 
@@ -106,23 +121,45 @@ function FilterBase({ searchParams }: FilterProps) {
       data-pending={isPending ? "" : undefined}
       className="flex-shrink-0 flex flex-col h-full"
     >
-      <div className="p-2 flex flex-col space-y-2">
-        <Label htmlFor="year">Chosen Year</Label>
-        <Select
-          value={optimisticFilters.yr || "2025"}
-          onValueChange={(value) => handleFilterChange("yr", value)}
-        >
-          <SelectTrigger id="year" className="mt-2">
-            <SelectValue placeholder="Select a Year" />
-          </SelectTrigger>
-          <SelectContent>
-            {YEARS.map((yr) => (
-              <SelectItem key={yr} value={yr}>
-                {yr}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+      <div className="flex space-x-2">
+        <div className="p-2 flex flex-col space-y-2">
+          <Label htmlFor="year">Year</Label>
+          <Select
+            // value={optimisticFilters.yr ?? ""}
+            value={optimisticFilters.yr || "2025"}
+            onValueChange={(value) => handleFilterChange("yr", value)}
+          >
+            <SelectTrigger id="year" className="mt-2">
+              <SelectValue placeholder="Select a year" />
+            </SelectTrigger>
+            <SelectContent>
+              {YEARS.map((yr) => (
+                <SelectItem key={yr} value={yr}>
+                  {yr}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="p-2 flex flex-col space-y-2">
+          <Label htmlFor="month">Month</Label>
+          <Select
+            // value={optimisticFilters.yr ?? ""}
+            value={optimisticFilters.mnt || MONTHS[new Date().getMonth()]}
+            onValueChange={(value) => handleFilterChange("mnt", value)}
+          >
+            <SelectTrigger id="month" className="mt-2">
+              <SelectValue placeholder="Select a month" />
+            </SelectTrigger>
+            <SelectContent>
+              {MONTHS.map((mnt) => (
+                <SelectItem key={mnt} value={mnt}>
+                  {mnt}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <ScrollArea className="flex-grow mt-4">

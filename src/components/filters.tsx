@@ -121,7 +121,7 @@ function FilterBase({ searchParams }: FilterProps) {
       data-pending={isPending ? "" : undefined}
       className="flex-shrink-0 flex flex-col h-full"
     >
-      <div className="flex space-x-2">
+      <div className="flex space-x-1">
         <div className="p-2 flex flex-col space-y-2">
           <Label htmlFor="year">Year</Label>
           <Select
@@ -129,7 +129,7 @@ function FilterBase({ searchParams }: FilterProps) {
             value={optimisticFilters.yr || "2025"}
             onValueChange={(value) => handleFilterChange("yr", value)}
           >
-            <SelectTrigger id="year" className="mt-2">
+            <SelectTrigger id="year" className="mt-1">
               <SelectValue placeholder="Select a year" />
             </SelectTrigger>
             <SelectContent>
@@ -148,7 +148,7 @@ function FilterBase({ searchParams }: FilterProps) {
             value={optimisticFilters.mnt || MONTHS[new Date().getMonth()]}
             onValueChange={(value) => handleFilterChange("mnt", value)}
           >
-            <SelectTrigger id="month" className="mt-2">
+            <SelectTrigger id="month" className="mt-1">
               <SelectValue placeholder="Select a month" />
             </SelectTrigger>
             <SelectContent>

@@ -297,14 +297,19 @@ export default function Component() {
           <CardDescription>BPOD/Barrels per day</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="font-black text-4xl">94,330.00</p>
-          <p className="mt-5 flex items-center justify-between text-muted-foreground text-xs">
-            <span className="truncate">{`26% of annual target`}</span>
-            <span className="text-nowrap">
-              {(94330 * (100 / 60)).toFixed(2)}
+          <p className="font-black text-4xl">
+            45,240
+            <span className="ml-1 text-base font-medium text-muted-foreground">
+              bbl
             </span>
           </p>
-          <Progress value={26} className="mt-1 h-1.5" />
+          <p className="mt-5 flex items-center justify-between text-muted-foreground text-xs">
+            <span className="truncate">{`76% of daily target`}</span>
+            <span className="text-nowrap">
+              {(45240 * (100 / 76)).toFixed(2)}
+            </span>
+          </p>
+          <Progress value={76} className="mt-1 h-1.5" />
         </CardContent>
         {/* <CardFooter className="flex flex-col flex-start items-start">
           <div className="flex items-center gap-2">
@@ -325,14 +330,19 @@ export default function Component() {
             </Badge>
           </div>
 
-          <CardDescription>Gross sum of production for 2025</CardDescription>
+          <CardDescription>Gross production per day</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="font-black text-4xl">82,503,492</p>
+          <p className="font-black text-4xl">
+            170,420
+            <span className="ml-1 text-base font-medium text-muted-foreground">
+              bbl
+            </span>
+          </p>
           <p className="mt-5 flex items-center justify-between text-muted-foreground text-xs">
-            <span className="truncate">{`60% of annual target`}</span>
+            <span className="truncate">{`60% of daily target`}</span>
             <span className="text-nowrap">
-              {(82503492 * (100 / 60)).toFixed(2)}
+              {(170420 * (100 / 60)).toFixed(2)}
             </span>
           </p>
           <Progress value={60} className="mt-1 h-1.5" />
@@ -356,15 +366,20 @@ export default function Component() {
             </Badge>
           </div>
 
-          <CardDescription>Net sum of production for 2025</CardDescription>
+          <CardDescription>Net production YTD</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="font-black text-4xl">218,740.26</p>
+          <p className="font-black text-4xl">
+            3,143,740.26
+            <span className="ml-1 text-base font-medium text-muted-foreground">
+              bbl
+            </span>
+          </p>
 
           <p className="mt-5 flex items-center justify-between text-muted-foreground text-xs">
             <span className="truncate">{`27.5% of annual target`}</span>
             <span className="text-nowrap">
-              {(218740.26 * (100 / 27.5)).toFixed(2)}
+              {(3143740.26 * (100 / 27.5)).toFixed(2)}
             </span>
           </p>
           <Progress value={27.5} className="mt-1 h-1.5" />
@@ -426,16 +441,11 @@ export default function Component() {
 
               return (
                 <CarouselItem key={locIndex} className="w-full">
-                  {/* <span className="font-medium flex justify-center">
-                    {entries[0].date}
-                  </span> */}
                   <div>
                     <CardContent className="flex flex-col items-center justify-start px-4">
                       <div className="flex flex-col items-center justify-center mb-5">
                         <span className="font-medium">{entries[0].date}</span>
-                        <span className="text-2xl mb-0 font-semibold font-mono">
-                          {location}
-                        </span>
+                        <span className="text-2xl mb-0">{location}</span>
                       </div>
                       <div className="flex items-start w-full justify-between">
                         <div className="flex items-center leading-none flex-col">
@@ -465,6 +475,43 @@ export default function Component() {
                 </CarouselItem>
               );
             })}
+            <CarouselItem className="grid grid-cols-3 place-items-center gap-3 p-4">
+              <div className="flex flex-col items-center">
+                <h2 className="text-base font-medium text-muted-foreground">
+                  Brent
+                </h2>
+                <p className="text-center text-xl">$70.38</p>
+                <IconDropletFilled className="w-10 h-10" />
+              </div>
+              <div className="flex flex-col items-center">
+                <h2 className="text-base font-medium text-muted-foreground">
+                  WTI
+                </h2>
+                <p className="text-center text-xl">$67.05</p>
+                <IconDroplet className="w-10 h-10" />
+              </div>
+              <div className="flex flex-col items-center">
+                <h2 className="text-base font-medium text-muted-foreground">
+                  Flame Penalty
+                </h2>
+                <p className="text-center text-xl">$3.50</p>
+                <IconFlameFilled className="w-10 h-10" />
+              </div>
+              {/* <div className="flex flex-col items-center">
+                <h2 className="text-base font-medium text-muted-foreground">
+                  Total String Count
+                </h2>
+                <p className="text-center text-xl">$3.50</p>
+                <IconBarrel className="w-10 h-10" />
+              </div>
+              <div className="flex flex-col items-center">
+                <h2 className="text-base font-medium text-muted-foreground">
+                  Producing Fields
+                </h2>
+                <p className="text-center text-xl">$3.50</p>
+                <IconFlameFilled className="w-10 h-10" />
+              </div> */}
+            </CarouselItem>
           </CarouselContent>
           <CarouselPrevious className="!left-5 !top-2" />
           <CarouselNext className="!right-5 !top-2" />
@@ -811,9 +858,6 @@ export default function Component() {
           </ChartContainer>
         </CardContent>
       </Card>
-      {/* <Card className="col-span-1">
-
-      </Card> */}
     </section>
   );
 }

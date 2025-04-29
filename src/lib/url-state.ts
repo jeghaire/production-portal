@@ -2,11 +2,6 @@ export interface SearchParams {
   loc?: string[]; // Array for multiple locations
   yr?: string;    // Single year
   mnt?: string;   // Single month
-  // search?: string;
-  // rtg?: string;
-  // lng?: string;
-  // pgs?: string;
-  // page?: string;
 }
   
   export function parseSearchParams(
@@ -18,14 +13,9 @@ export interface SearchParams {
       : params.loc 
         ? [params.loc] 
         : undefined,
-      yr: typeof params.yr === 'string' ? params.yr : undefined,
-      mnt: typeof params.mnt === 'string' ? params.mnt : undefined,
+        mnt: typeof params.mnt === 'string' ? params.mnt : undefined,
+        yr: typeof params.yr === 'string' ? params.yr : undefined,
       // yr: Array.isArray(params.yr) ? params.yr[0] : params.yr,
-      // search: typeof params.search === 'string' ? params.search : undefined,
-      // rtg: typeof params.rtg === 'string' ? params.rtg : undefined,
-      // lng: typeof params.lng === 'string' ? params.lng : undefined,
-      // pgs: Array.isArray(params.pgs) ? params.pgs[0] : params.pgs,
-      // page: typeof params.page === 'string' ? params.page : undefined,
     };
   }
   

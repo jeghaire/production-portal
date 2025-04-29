@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@theme {
+  --font-geist: var(--font-geistVF);
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

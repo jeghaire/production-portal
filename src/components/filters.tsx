@@ -122,7 +122,7 @@ function FilterBase({ searchParams }: FilterProps) {
       className="flex-shrink-0 flex flex-col h-full"
     >
       <div className="flex space-x-1">
-        <div className="p-2 flex flex-col space-y-2">
+        <div className="p-2 flex flex-col space-y-1">
           <Label htmlFor="year">Year</Label>
           <Select
             // value={optimisticFilters.yr ?? ""}
@@ -141,11 +141,11 @@ function FilterBase({ searchParams }: FilterProps) {
             </SelectContent>
           </Select>
         </div>
-        <div className="p-2 flex flex-col space-y-2">
+        <div className="p-2 flex flex-col space-y-1">
           <Label htmlFor="month">Month</Label>
           <Select
-            // value={optimisticFilters.yr ?? ""}
-            value={optimisticFilters.mnt || MONTHS[new Date().getMonth()]}
+            value={optimisticFilters.mnt ?? ""}
+            // value={optimisticFilters.mnt || MONTHS[new Date().getMonth()]}
             onValueChange={(value) => handleFilterChange("mnt", value)}
           >
             <SelectTrigger id="month" className="mt-1">

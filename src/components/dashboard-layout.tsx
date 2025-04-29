@@ -1,5 +1,4 @@
 import { AppSidebar } from "@/components/app-sidebar";
-import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({
@@ -17,10 +16,7 @@ export default function DashboardLayout({
       }
     >
       <AppSidebar variant="inset" />
-      <SidebarInset className="@container">
-        <SiteHeader />
-        {children}
-      </SidebarInset>
+      <SidebarInset className="@container">{children}</SidebarInset>
     </SidebarProvider>
   );
 }

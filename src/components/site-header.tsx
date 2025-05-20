@@ -15,7 +15,7 @@ export function SiteHeader({ title = "PRODUCTION DATA" }: { title?: string }) {
         <div className="ml-auto flex items-center gap-2">
           <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
             <a
-              href="/"
+              href="http://217.14.88.108/heosluploader/home/dashboard"
               rel="noopener noreferrer"
               target="_blank"
               className="dark:text-foreground"

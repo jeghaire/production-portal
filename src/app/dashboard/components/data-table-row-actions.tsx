@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { Ellipsis } from "lucide-react";
+import { ProductionDataSchema } from "./columns";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -20,6 +21,8 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const item = ProductionDataSchema.parse(row.original);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -34,8 +37,14 @@ export function DataTableRowActions<TData>({
       <DropdownMenuContent align="end" className="w-[180px]">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => navigator.clipboard.writeText(JSON.stringify(item))}
+        >
+          Copy
+        </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link href={`/dashboard#graph`}>See graphical data</Link>
+          <Link href={`/dashboard#chart`}>See graphical data</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

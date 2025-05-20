@@ -27,7 +27,7 @@ const LOCATIONS = [
   { label: "UZERE EAST", value: "UZERE EAST" },
 ];
 
-const YEARS = ["2025", "2024"];
+const YEARS = ["2025"];
 const MONTHS = [
   "January",
   "February",
@@ -73,7 +73,9 @@ function FilterBase({ searchParams }: FilterProps) {
     });
 
     const queryString = searchParams.toString();
-    router.push(queryString ? `/dashboard?${queryString}` : "/dashboard");
+    router.push(
+      queryString ? `/dashboard?${queryString}#chart` : "/dashboard#chart"
+    );
   };
 
   const handleFilterChange = (
@@ -121,12 +123,12 @@ function FilterBase({ searchParams }: FilterProps) {
       data-pending={isPending ? "" : undefined}
       className="flex-shrink-0 flex flex-col h-full"
     >
-      <div className="flex space-x-1">
+      <div className="flex flex-wrap">
         <div className="p-2 flex flex-col space-y-1">
           <Label htmlFor="year">Year</Label>
           <Select
-            // value={optimisticFilters.yr ?? ""}
-            value={optimisticFilters.yr || "2025"}
+            value={optimisticFilters.yr ?? ""}
+            // value={optimisticFilters.yr || "2025"}
             onValueChange={(value) => handleFilterChange("yr", value)}
           >
             <SelectTrigger id="year" className="mt-1">
@@ -162,31 +164,36 @@ function FilterBase({ searchParams }: FilterProps) {
         </div>
       </div>
 
-      <ScrollArea className="flex-grow mt-4">
-        <div className="p-2 space-y-4">
-          <div>
-            <Label>Locations</Label>
-            <ScrollArea className="h-[220px] mt-2">
-              {LOCATIONS.map((list) => (
-                <div
-                  key={list.label}
-                  className="flex items-center space-x-2 py-1"
-                >
-                  <Checkbox
-                    id={`list-${list.label.toLowerCase()}`}
-                    checked={
-                      optimisticFilters.loc?.includes(list.value) || false
-                    }
-                    onCheckedChange={() => handleListToggle(list.value)}
-                  />
-                  <Label htmlFor={`list-${list.label.toLowerCase()}`}>
-                    {list.label}
-                  </Label>
-                </div>
-              ))}
-            </ScrollArea>
-          </div>
+      <ScrollArea className="h-[300px] mt-2 p-2 space-y-4">
+        <Label className="mb-2">Locations</Label>
+        <div className="flex items-center space-x-2 py-1">
+          <Checkbox
+            id="list-all"
+            checked={optimisticFilters.loc?.length === LOCATIONS.length}
+            onCheckedChange={() => {
+              const allSelected =
+                optimisticFilters.loc?.length === LOCATIONS.length;
+              const newLocs = allSelected
+                ? undefined
+                : LOCATIONS.map((l) => l.value);
+              handleFilterChange("loc", newLocs);
+            }}
+          />
+          <Label htmlFor="list-all">ALL LOCATIONS</Label>
         </div>
+
+        {LOCATIONS.map((list) => (
+          <div key={list.label} className="flex items-center space-x-2 py-1">
+            <Checkbox
+              id={`list-${list.label.toLowerCase()}`}
+              checked={optimisticFilters.loc?.includes(list.value) || false}
+              onCheckedChange={() => handleListToggle(list.value)}
+            />
+            <Label htmlFor={`list-${list.label.toLowerCase()}`}>
+              {list.label}
+            </Label>
+          </div>
+        ))}
       </ScrollArea>
 
       {Object.keys(optimisticFilters).length > 0 && (
@@ -196,7 +203,7 @@ function FilterBase({ searchParams }: FilterProps) {
             className="w-full"
             onClick={handleClearFilters}
           >
-            Clear all filters
+            Reset all filters
           </Button>
         </div>
       )}

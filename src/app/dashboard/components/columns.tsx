@@ -5,14 +5,18 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "./data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
 
-type ProductionData = {
-  date: string;
-  stringsUp: number;
-  gross: number;
-  net: number;
-  bsw: number;
-  location: string;
-};
+import { z } from "zod";
+
+export const ProductionDataSchema = z.object({
+  date: z.string(),
+  stringsUp: z.number(),
+  gross: z.number(),
+  net: z.number(),
+  bsw: z.number(),
+  location: z.string(),
+});
+
+type ProductionData = z.infer<typeof ProductionDataSchema>;
 
 export const columns: ColumnDef<ProductionData>[] = [
   {
@@ -50,7 +54,9 @@ export const columns: ColumnDef<ProductionData>[] = [
       <DataTableColumnHeader column={column} title="Location" />
     ),
     cell: ({ row }) => {
-      return <span>{row.getValue("Location").toLocaleString()}</span>;
+      return (
+        <span>{(row.getValue("Location") as string).toLocaleString()}</span>
+      );
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
@@ -75,7 +81,7 @@ export const columns: ColumnDef<ProductionData>[] = [
     accessorKey: "gross",
     header: "Gross",
     cell: ({ row }) => {
-      return <span>{row.getValue("Gross").toLocaleString()}</span>;
+      return <span>{(row.getValue("Gross") as number).toLocaleString()}</span>;
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
@@ -88,7 +94,7 @@ export const columns: ColumnDef<ProductionData>[] = [
     cell: ({ row }) => {
       return (
         <span>
-          {row.getValue("Net").toLocaleString(undefined, {
+          {(row.getValue("Net") as number).toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}
@@ -110,7 +116,9 @@ export const columns: ColumnDef<ProductionData>[] = [
     accessorKey: "stringsUp",
     header: "Strings Up",
     cell: ({ row }) => {
-      return <span>{row.getValue("Strings Up").toLocaleString()}</span>;
+      return (
+        <span>{(row.getValue("Strings Up") as number).toLocaleString()}</span>
+      );
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));

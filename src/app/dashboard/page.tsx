@@ -5,13 +5,11 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
-  Label,
   Line,
   LineChart,
   XAxis,
   YAxis,
 } from "recharts";
-
 import {
   Card,
   CardContent,
@@ -28,13 +26,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
 import chartData from "@/lib/data.json";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -51,21 +42,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
 import { useSearchParams, useRouter } from "next/navigation";
 import {
   IconArrowUp,
   IconDroplet,
   IconDropletFilled,
-  IconFlame,
   IconCheck,
   IconSelector,
-  IconAlertCircleFilled,
-  IconDropletsFilled,
   IconFlameFilled,
-  IconBarrel,
   IconTriangleInvertedFilled,
   IconTriangleFilled,
+  IconAlertCircleFilled,
 } from "@tabler/icons-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -76,7 +63,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-// import tableData from "@/app/data.json";
 import { SiteHeader } from "@/components/site-header";
 import { DataTable } from "./components/data-table";
 import { columns } from "./components/columns";
@@ -95,48 +81,30 @@ const loc = [
 ];
 
 const options = [
-  { label: "GROSS", value: "gross" },
   { label: "NET", value: "net" },
-  // { label: "BSW", value: "bsw" },
-  // { label: "STRINGS UP", value: "stringsUp" },
+  { label: "GROSS", value: "gross" },
 ];
 
 const chartConfig = {
   bsw: {
     label: "BSW",
-    color: "hsl(var(--chart-1))",
+    color: "hsl(var(--chart-bsw))",
   },
   gross: {
     label: "Gross",
-    color: "hsl(var(--chart-2))",
+    color: "hsl(var(--chart-gross))",
   },
   net: {
-    label: "Net",
-    color: "hsl(var(--chart-3))",
+    label: "Oil Rate",
+    color: "hsl(var(--chart-net))",
   },
   stringsUp: {
     label: "Strings Up",
-    color: "hsl(var(--chart-4))",
+    color: "hsl(var(--chart-stringsup))",
   },
-} satisfies ChartConfig;
-
-const chartDataLine = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
-
-const chartConfigLine = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
+  netTarget: {
+    label: "Net Target",
+    color: "hsl(var(--chart-stringsup))",
   },
 } satisfies ChartConfig;
 
@@ -157,12 +125,7 @@ export default function Component() {
   const [selectedValues, setSelectedValues] = React.useState(
     selectedQueryParams.length > 0 ? selectedQueryParams : []
   );
-  const [filterT, setFilterT] = React.useState([
-    // "bsw",
-    "net",
-    "gross",
-    // "stringsUp",
-  ]);
+  const [filterT, setFilterT] = React.useState(["net", "gross"]);
 
   // Function to update selected locations
   const toggleSelection = (currentValue: string) =>
@@ -176,7 +139,7 @@ export default function Component() {
       params.delete("loc");
       newSelectedValues.forEach((value) => params.append("loc", value));
 
-      router.replace(`?${params.toString()}`);
+      router.replace(`?${params.toString()}`, { scroll: false });
 
       return newSelectedValues;
     });
@@ -194,14 +157,14 @@ export default function Component() {
   //   setSelectedValues(
   //     selectedQueryParams.length > 0 ? selectedQueryParams : []
   //   );
-  // }, [searchParams]);
+  // }, [selectedQueryParams]);
 
   React.useEffect(() => {
     const incoming = selectedQueryParams.length > 0 ? selectedQueryParams : [];
     setSelectedValues((prev) =>
       JSON.stringify(prev) !== JSON.stringify(incoming) ? incoming : prev
     );
-  }, [searchParams]);
+  }, [selectedQueryParams]);
 
   // Function to aggregate data based on selected locations
   // const getAggregatedData = () => {
@@ -259,6 +222,7 @@ export default function Component() {
         // Other metrics can be summed directly
         aggregatedData[index].net += entry.net;
         aggregatedData[index].gross += entry.gross;
+        aggregatedData[index].netTarget = 40000;
         aggregatedData[index].stringsUp += entry.stringsUp;
       });
     });
@@ -278,20 +242,20 @@ export default function Component() {
     return aggregatedData;
   };
 
-  const result = {};
+  const result: Record<string, { date: string; net: number }[]> = {};
   const data = { ...chartData };
 
   for (const key in data) {
-    // Sort the array by date in descending order
-    const sorted = [...data[key]].sort(
-      (a, b) => new Date(b.date) - new Date(a.date)
+    // Ensure TypeScript knows key is a valid key of data
+    const sorted = [...data[key as keyof typeof data]].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
     );
     // Take the first two elements (most recent dates)
     result[key] = sorted.slice(0, 2);
   }
 
   const carouselData = Object.entries(result).map(([location, items]) => ({
-    location, // "AFIESERE" or "ERIEMU"
+    location, // "AFIESERE", "ERIEMU", etc.
     entries: items.map((item) => ({
       date: new Date(item.date).toLocaleDateString("en-GB"), // "DD/MM/YYYY"
       value: item.net, // or item.gross, item.stringsUp, etc.
@@ -303,25 +267,90 @@ export default function Component() {
     .flatMap(([key, items]) =>
       items.map((item) => ({ ...item, location: key }))
     )
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  function getMonthDataByName(data, monthName, year) {
+  function getMonthDataByName(
+    data: Record<
+      string,
+      {
+        date: string;
+        bsw: number;
+        net: number;
+        gross: number;
+        stringsUp: number;
+      }[]
+    >,
+    monthName: string,
+    year: number
+  ) {
     const monthIndex = new Date(`${monthName} 1, ${year}`).getMonth();
 
-    return Object.keys(data).reduce((acc, location) => {
-      acc[location] = data[location].filter((entry) => {
-        const entryDate = new Date(entry.date);
-        return (
-          entryDate.getMonth() === monthIndex &&
-          entryDate.getFullYear() === year
-        );
-      });
-      return acc;
-    }, {});
+    // Filter data for the selected month
+    const filteredData = Object.keys(data).reduce(
+      (acc, location) => {
+        acc[location] = data[location].filter((entry) => {
+          const entryDate = new Date(entry.date);
+          return (
+            entryDate.getMonth() === monthIndex &&
+            entryDate.getFullYear() === year
+          );
+        });
+        return acc;
+      },
+      {} as Record<
+        string,
+        {
+          date: string;
+          bsw: number;
+          net: number;
+          gross: number;
+          stringsUp: number;
+        }[]
+      >
+    );
+
+    // Check if the total number of entries is less than 20
+    // const totalEntries = Object.values(filteredData).flat().length;
+
+    // if (totalEntries < 20) {
+    //   // Get data from the previous month
+    //   const previousMonthIndex = (monthIndex - 1 + 12) % 12;
+    //   const previousYear = monthIndex === 0 ? year - 1 : year;
+
+    //   const previousMonthData = Object.keys(data).reduce((acc, location) => {
+    //     acc[location] = data[location].filter((entry) => {
+    //       const entryDate = new Date(entry.date);
+    //       return (
+    //         entryDate.getMonth() === previousMonthIndex &&
+    //         entryDate.getFullYear() === previousYear
+    //       );
+    //     });
+    //     return acc;
+    //   }, {});
+
+    //   // Merge data from the selected month and the previous month
+    //   Object.keys(filteredData).forEach((location) => {
+    //     filteredData[location] = [
+    //       ...filteredData[location],
+    //       ...(previousMonthData[location] || []),
+    //     ];
+    //   });
+    // }
+
+    return filteredData;
   }
 
   // Usage:
-  const filteredData = getMonthDataByName(
+  const filteredData: Record<
+    string,
+    {
+      date: string;
+      bsw: number;
+      net: number;
+      gross: number;
+      stringsUp: number;
+    }[]
+  > = getMonthDataByName(
     chartData,
     selectedMonth.length ? selectedMonth[0].slice(0, 3) : "Jan",
     selectedYear.length ? Number(selectedYear[0]) : 2025
@@ -330,12 +359,12 @@ export default function Component() {
   return (
     <>
       <SiteHeader title="GAS/OIL PRODUCTION DATA" />
-      <section className="p-5 grid grid-cols-1 @xl:grid-cols-2 @5xl:grid-cols-3 @7xl:grid-cols-4 gap-4">
+      <section className="p-5 grid grid-cols-1 @xl:grid-cols-2 @6xl:grid-cols-4 @7xl:grid-cols-4 gap-4">
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Production Status</CardTitle>
-              <Badge variant="default" className="text-xs font-mono">
+              <Badge variant="outline" className="text-xs font-mono">
                 <IconArrowUp className="!h-4 !w-4 mr-1" />
                 <span className="tracking-wider">46%</span>
               </Badge>
@@ -344,9 +373,9 @@ export default function Component() {
             <CardDescription>BPOD/Barrels per day</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="font-black text-4xl">
+            <p className="font-bold text-3xl @7xl:text-4xl">
               45,240
-              <span className="ml-1 text-base font-medium text-muted-foreground">
+              <span className="ml-1 text-base font-normal text-foreground">
                 bbl
               </span>
             </p>
@@ -359,19 +388,19 @@ export default function Component() {
             <Progress value={76} className="mt-1 h-1.5" />
           </CardContent>
           {/* <CardFooter className="flex flex-col flex-start items-start">
-          <div className="flex items-center gap-2">
-            <IconAlertCircleFilled className="w-3.5" />
-            <p className="text-xs text-muted-foreground">
-              Prices are subject to the rate of the US dollar!
-            </p>
-          </div>
-        </CardFooter> */}
+            <div className="flex items-center gap-2">
+              <IconAlertCircleFilled className="w-3.5" />
+              <p className="text-xs text-muted-foreground">
+                Prices are subject to the rate of the US dollar!
+              </p>
+            </div>
+          </CardFooter> */}
         </Card>
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>Gross</CardTitle>
-              <Badge variant="default" className="text-xs font-mono">
+              <CardTitle>Gross Production</CardTitle>
+              <Badge variant="outline" className="text-xs font-mono">
                 <IconArrowUp className="!h-4 !w-4 mr-1" />
                 <span>53%</span>
               </Badge>
@@ -380,9 +409,9 @@ export default function Component() {
             <CardDescription>Gross production per day</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="font-black text-4xl">
+            <p className="font-bold text-3xl @7xl:text-4xl">
               170,420
-              <span className="ml-1 text-base font-medium text-muted-foreground">
+              <span className="ml-1 text-base font-normal text-foreground">
                 bbl
               </span>
             </p>
@@ -395,19 +424,19 @@ export default function Component() {
             <Progress value={60} className="mt-1 h-1.5" />
           </CardContent>
           {/* <CardFooter className="flex flex-col flex-start items-start">
-          <div className="flex items-center gap-2">
-            <IconAlertCircleFilled className="w-3.5" />
-            <p className="text-xs text-muted-foreground">
-              Prices are subject to the rate of the US dollar!
-            </p>
-          </div>
-        </CardFooter> */}
+            <div className="flex items-center gap-2">
+              <IconAlertCircleFilled className="w-3.5" />
+              <p className="text-xs text-muted-foreground">
+                Prices are subject to the rate of the US dollar!
+              </p>
+            </div>
+          </CardFooter> */}
         </Card>
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>Net Production</CardTitle>
-              <Badge variant="default" className="text-xs font-mono">
+              <Badge variant="outline" className="text-xs font-mono">
                 <IconArrowUp className="!h-4 !w-4 mr-1" />
                 <span className="tracking-wider">12%</span>
               </Badge>
@@ -416,9 +445,9 @@ export default function Component() {
             <CardDescription>Net production YTD</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="font-black text-4xl">
+            <p className="font-bold text-3xl @7xl:text-4xl">
               3,143,740.26
-              <span className="ml-1 text-base font-medium text-muted-foreground">
+              <span className="ml-1 text-base font-normal text-foreground">
                 bbl
               </span>
             </p>
@@ -432,13 +461,13 @@ export default function Component() {
             <Progress value={27.5} className="mt-1 h-1.5" />
           </CardContent>
           {/* <CardFooter className="flex flex-col flex-start items-start">
-          <div className="flex items-center gap-2">
-            <IconAlertCircleFilled className="w-3.5" />
-            <p className="text-xs text-muted-foreground">
-              Prices are subject to the rate of the US dollar!
-            </p>
-          </div>
-        </CardFooter> */}
+            <div className="flex items-center gap-2">
+              <IconAlertCircleFilled className="w-3.5" />
+              <p className="text-xs text-muted-foreground">
+                Prices are subject to the rate of the US dollar!
+              </p>
+            </div>
+          </CardFooter> */}
         </Card>
         <Card>
           <Carousel className="w-full">
@@ -477,7 +506,9 @@ export default function Component() {
                 // Calculate the difference
                 const currentValue = (entries[0].value / 1000).toFixed(2);
                 const previousValue = (entries[1].value / 1000).toFixed(2);
-                const difference = (currentValue - previousValue).toFixed(2);
+                const difference = (
+                  parseFloat(currentValue) - parseFloat(previousValue)
+                ).toFixed(2);
 
                 // Determine if positive or negative
                 const isPositive = parseFloat(difference) >= 0;
@@ -493,28 +524,41 @@ export default function Component() {
                     <div>
                       <CardContent className="flex flex-col items-center justify-start px-4">
                         <div className="flex flex-col items-center justify-center mb-5">
-                          <span className="text-sm">{entries[0].date}</span>
-                          <span className="text-xl mb-0">{location}</span>
+                          <CardDescription className="text-sm">
+                            {entries[0].date}
+                          </CardDescription>
+                          <CardTitle className="text-lg mb-0">
+                            {location}
+                          </CardTitle>
                         </div>
                         <div className="flex items-start w-full justify-between">
                           <div className="flex items-center leading-none flex-col">
                             <span className="font-bold font-mono text-3xl">
-                              {previousValue}K
+                              {previousValue}
+                              <span className="text-[27px] font-semibold">
+                                K
+                              </span>
                             </span>
                             <span className="text-[10px]">Previous Day</span>
                           </div>
                           <div
-                            className={`flex items-center leading-none flex-col ${colorClass}`}
+                            className={`flex items-center leading-none mt-2 flex-col ${colorClass}`}
                           >
                             <IconComponent className="w-8 h-8 mb-1" />
                             <span className="font-bold font-mono text-2xl">
-                              {difference}K
+                              {difference}
+                              <span className="text-[23px] font-semibold">
+                                K
+                              </span>
                             </span>
                             <span className="text-[10px]">versus</span>
                           </div>
                           <div className="flex items-center leading-none flex-col">
                             <span className="font-bold font-mono text-3xl">
-                              {currentValue}K
+                              {currentValue}
+                              <span className="text-[27px] font-semibold">
+                                K
+                              </span>
                             </span>
                             <span className="text-[10px]">Selected Day</span>
                           </div>
@@ -605,7 +649,7 @@ export default function Component() {
           </div>
         </div>
       </Card> */}
-        <Card className="col-span-full @container">
+        <Card className="col-span-full @container scroll-mt-8" id="chart">
           <CardHeader className="flex flex-col items-start gap-2 space-y-0 border-b py-5 @xl:flex-row">
             <div className="flex flex-col @7xl:flex flex-1 gap-1">
               <CardTitle>Gas/Oil Production</CardTitle>
@@ -633,7 +677,7 @@ export default function Component() {
               ))}
             </SelectContent>
           </Select> */}
-            <div className="flex flex-col @md:flex-row gap-2">
+            <div className="flex flex-col @md:flex-row gap-2 print:hidden">
               <Popover open={openT} onOpenChange={setOpenT}>
                 <PopoverTrigger asChild>
                   <Button
@@ -770,29 +814,15 @@ export default function Component() {
           <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
             <ChartContainer
               config={chartConfig}
-              className="aspect-auto h-[400px] w-full"
+              className="aspect-auto h-[500px] w-full"
             >
               {/* <AreaChart data={chartData[selectedLocation]}> */}
-              <AreaChart data={getAggregatedData()}>
+              <AreaChart
+                data={getAggregatedData()}
+                syncId="chartSync"
+                className="h-full"
+              >
                 <defs>
-                  <linearGradient
-                    id="fillStringsUp"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop
-                      offset="5%"
-                      stopColor="var(--color-stringsUp)"
-                      stopOpacity={0.8}
-                    />
-                    <stop
-                      offset="95%"
-                      stopColor="var(--color-stringsUp)"
-                      stopOpacity={0.1}
-                    />
-                  </linearGradient>
                   <linearGradient id="fillNet" x1="0" y1="0" x2="0" y2="1">
                     <stop
                       offset="5%"
@@ -802,18 +832,6 @@ export default function Component() {
                     <stop
                       offset="95%"
                       stopColor="var(--color-net)"
-                      stopOpacity={0.1}
-                    />
-                  </linearGradient>
-                  <linearGradient id="fillBsw" x1="0" y1="0" x2="0" y2="1">
-                    <stop
-                      offset="5%"
-                      stopColor="var(--color-bsw)"
-                      stopOpacity={0.8}
-                    />
-                    <stop
-                      offset="95%"
-                      stopColor="var(--color-bsw)"
                       stopOpacity={0.1}
                     />
                   </linearGradient>
@@ -852,6 +870,138 @@ export default function Component() {
                     axisLine={false}
                     tickMargin={5}
                     tickCount={5}
+                    label={{
+                      value: "Gross & Net (bbls)",
+                      angle: -90,
+                      position: "insideLeft",
+                    }}
+                    tickFormatter={(tickItem) => {
+                      if (tickItem >= 1000) {
+                        return tickItem / 1000 + "k";
+                      }
+                      return tickItem;
+                    }}
+                  />
+                )}
+                <ChartTooltip
+                  cursor={false}
+                  content={
+                    <ChartTooltipContent
+                      className="min-w-[170px] p-2"
+                      labelFormatter={(value) => {
+                        return new Date(value).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        });
+                      }}
+                      indicator="dot"
+                    />
+                  }
+                />
+                {filterT.includes("gross") && (
+                  <Area
+                    dataKey="gross"
+                    type="natural"
+                    // fill="url(#fillGross)"
+                    fill="var(--color-gross)"
+                    stroke="var(--color-gross)"
+                    strokeWidth={2}
+                    dot={false}
+                    // dot={{
+                    //   fill: "var(--color-gross)",
+                    //   fillOpacity: 1,
+                    // }}
+                    // activeDot={{
+                    //   r: 5,
+                    // }}
+                  />
+                )}
+                {filterT.includes("net") && (
+                  <Area
+                    dataKey="net"
+                    type="natural"
+                    // fill="url(#fillNet)"
+                    fill="var(--color-net)"
+                    stroke="var(--color-net)"
+                    strokeWidth={2}
+                    dot={false}
+                    // dot={{
+                    //   fill: "var(--color-net)",
+                    //   fillOpacity: 1,
+                    // }}
+                    // activeDot={{
+                    //   r: 5,
+                    // }}
+                  />
+                )}
+
+                <Area
+                  dataKey="netTarget"
+                  type="natural"
+                  stroke="var(--color-netTarget)"
+                  strokeWidth={2}
+                  fill="none"
+                  // dot={false}
+                  strokeDasharray={"5 5"}
+                  activeDot={{
+                    r: 0,
+                  }}
+                />
+                <ChartLegend content={<ChartLegendContent />} />
+              </AreaChart>
+            </ChartContainer>
+          </CardContent>
+        </Card>
+        <Card className="col-span-full @7xl:col-span-2">
+          <CardHeader>
+            <CardTitle>Strings Up by Day</CardTitle>
+            <CardDescription>
+              {selectedMonth[0] || "January"} {selectedYear[0] || 2025}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ChartContainer config={chartConfig} className="h-[300px] w-full">
+              <LineChart
+                syncId="chartSync"
+                accessibilityLayer
+                // data={chartDataLine}
+                data={getAggregatedData()}
+                margin={{
+                  right: 4,
+                  top: 4,
+                  bottom: 4,
+                }}
+              >
+                <CartesianGrid vertical={false} />
+                <XAxis
+                  dataKey="date"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={18}
+                  tickFormatter={(value) => {
+                    const date = new Date(value);
+                    return date.toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    });
+                  }}
+                />
+                {!isMobile && (
+                  <YAxis
+                    tickLine={false}
+                    axisLine={false}
+                    tickMargin={16}
+                    tickCount={4}
+                    type="number"
+                    domain={["dataMin", "auto"]}
+                    // allowDataOverflow={true}
+                    label={{
+                      value: "Strings Up",
+                      angle: -90,
+                      position: "insideLeft",
+                    }}
                   />
                 )}
                 <ChartTooltip
@@ -869,90 +1019,18 @@ export default function Component() {
                     />
                   }
                 />
-                {filterT.includes("stringsUp") && (
-                  <Area
-                    dataKey="stringsUp"
-                    type="natural"
-                    fill="url(#fillStringsUp)"
-                    stroke="var(--color-stringsUp)"
-                    stackId="a"
-                  />
-                )}
-                {filterT.includes("bsw") && (
-                  <Area
-                    dataKey="bsw"
-                    type="natural"
-                    fill="url(#fillBsw)"
-                    stroke="var(--color-bsw)"
-                    stackId="a"
-                  />
-                )}
-                {filterT.includes("net") && (
-                  <Area
-                    dataKey="net"
-                    type="natural"
-                    fill="url(#fillNet)"
-                    stroke="var(--color-net)"
-                    stackId="a"
-                  />
-                )}
-                {filterT.includes("gross") && (
-                  <Area
-                    dataKey="gross"
-                    type="natural"
-                    fill="url(#fillGross)"
-                    stroke="var(--color-gross)"
-                    stackId="a"
-                  />
-                )}
-                <ChartLegend content={<ChartLegendContent />} />
-              </AreaChart>
-            </ChartContainer>
-          </CardContent>
-        </Card>
-        <Card className="col-span-full @7xl:col-span-2">
-          <CardHeader>
-            <CardTitle>Strings Up</CardTitle>
-            <CardDescription>
-              {selectedMonth[0] || "January"} {selectedYear[0] || 2025}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ChartContainer config={chartConfig} className="h-[300px] w-full">
-              <LineChart
-                accessibilityLayer
-                // data={chartDataLine}
-                data={getAggregatedData()}
-                margin={{
-                  left: 12,
-                  right: 12,
-                }}
-              >
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey="date"
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={8}
-                  tickFormatter={(value) => {
-                    const date = new Date(value);
-                    return date.toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    });
-                  }}
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent />}
-                />
                 <Line
                   dataKey="stringsUp"
                   type="natural"
                   stroke="var(--color-stringsUp)"
-                  strokeWidth={1}
+                  strokeWidth={2}
                   dot={false}
+                  // dot={{
+                  //   fill: "var(--color-stringsUp)",
+                  // }}
+                  activeDot={{
+                    r: 5,
+                  }}
                 />
               </LineChart>
             </ChartContainer>
@@ -973,7 +1051,7 @@ export default function Component() {
         </Card>
         <Card className="col-span-full @7xl:col-span-2">
           <CardHeader>
-            <CardTitle>Basic Sediment and Water</CardTitle>
+            <CardTitle>Basic Sediment and Water (%) by Day</CardTitle>
             <CardDescription>
               {selectedMonth[0] || "January"} {selectedYear[0] || 2025}
             </CardDescription>
@@ -981,12 +1059,14 @@ export default function Component() {
           <CardContent>
             <ChartContainer config={chartConfig} className="h-[300px] w-full">
               <LineChart
+                syncId="chartSync"
                 accessibilityLayer
                 // data={chartDataLine}
                 data={getAggregatedData()}
                 margin={{
-                  left: 12,
-                  right: 12,
+                  right: 4,
+                  top: 4,
+                  bottom: 4,
                 }}
               >
                 <CartesianGrid vertical={false} />
@@ -1004,16 +1084,49 @@ export default function Component() {
                     });
                   }}
                 />
+                {/* {!isMobile && ( */}
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={16}
+                  tickCount={4}
+                  type="number"
+                  domain={["dataMin", "auto"]}
+                  // allowDataOverflow={true}
+                  label={{
+                    value: "BSW (%)",
+                    angle: -90,
+                    position: "insideLeft",
+                  }}
+                />
+                {/* )} */}
                 <ChartTooltip
                   cursor={false}
-                  content={<ChartTooltipContent />}
+                  content={
+                    <ChartTooltipContent
+                      labelFormatter={(value) => {
+                        return new Date(value).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        });
+                      }}
+                      indicator="dot"
+                    />
+                  }
                 />
                 <Line
                   dataKey="bsw"
-                  type="monotone"
+                  type="natural"
                   stroke="var(--color-bsw)"
-                  strokeWidth={1}
+                  strokeWidth={2}
                   dot={false}
+                  // dot={{
+                  //   fill: "var(--color-bsw)",
+                  // }}
+                  activeDot={{
+                    r: 5,
+                  }}
                 />
               </LineChart>
             </ChartContainer>
@@ -1032,7 +1145,7 @@ export default function Component() {
             </div>
           </CardFooter>
         </Card>
-        <div className="col-span-full">
+        <div className="col-span-full print:hidden">
           <DataTable data={tableData} columns={columns} />
         </div>
       </section>

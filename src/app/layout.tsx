@@ -14,7 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistVF.variable} antialiased font-geistVF dark`}>
+      <body
+        className={`${geistVF.variable} antialiased font-geistVF scroll-smooth`}
+      >
         {children}
       </body>
     </html>

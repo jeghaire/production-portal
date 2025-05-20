@@ -5,8 +5,7 @@ import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "./data-table-view-options";
 
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { Plus, XIcon } from "lucide-react";
-import Link from "next/link";
+import { XIcon } from "lucide-react";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;

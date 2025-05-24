@@ -2,6 +2,8 @@ export interface SearchParams {
   loc?: string[]; // Array for multiple locations
   yr?: string;    // Single year
   mnt?: string;   // Single month
+  from?: string;  // Single start date
+  to?: string;    // Single end date
 }
   
   export function parseSearchParams(
@@ -15,19 +17,10 @@ export interface SearchParams {
         : undefined,
         mnt: typeof params.mnt === 'string' ? params.mnt : undefined,
         yr: typeof params.yr === 'string' ? params.yr : undefined,
-      // yr: Array.isArray(params.yr) ? params.yr[0] : params.yr,
+        from: typeof params.from === 'string' ? params.from : undefined,
+        to: typeof params.to === 'string' ? params.to : undefined,
     };
   }
-  
-  // export function stringifySearchParams(params: SearchParams): string {
-  //   const urlParams = new URLSearchParams();
-  //   Object.entries(params).forEach(([key, value]) => {
-  //     if (value !== undefined) {
-  //       urlParams.append(key, value);
-  //     }
-  //   });
-  //   return urlParams.toString();
-  // }
 
   export function stringifySearchParams(params: SearchParams): string {
     const urlParams = new URLSearchParams();
@@ -40,6 +33,8 @@ export interface SearchParams {
     // Handle single-value parameters
     if (params.yr) urlParams.append('yr', params.yr);
     if (params.mnt) urlParams.append('mnt', params.mnt);
+    if (params.from) urlParams.append('from', params.from);
+    if (params.to) urlParams.append('to', params.to);
     
     return urlParams.toString();
   }

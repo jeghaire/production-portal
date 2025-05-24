@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useOptimistic, useTransition } from "react";
+import React, { useOptimistic, useTransition } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,6 +14,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import DateRangePicker from "./dashboard/my-daterange-picker";
+import { Calendar } from "./ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 
 const LOCATIONS = [
   { label: "AFIESERE", value: "AFIESERE" },
@@ -55,11 +61,30 @@ function FilterBase({ searchParams }: FilterProps) {
     loc: searchParams.getAll("loc") || [],
     yr: searchParams.get("yr") || undefined,
     mnt: searchParams.get("mnt") || undefined,
+    from: searchParams.get("from") || undefined,
+    to: searchParams.get("to") || undefined,
     // Add other filters as needed
   };
 
   const [optimisticFilters, setOptimisticFilters] =
     useOptimistic<SearchParams>(initialFilters);
+
+  // const updateURL = (newFilters: SearchParams) => {
+  //   const searchParams = new URLSearchParams();
+
+  //   Object.entries(newFilters).forEach(([key, value]) => {
+  //     if (Array.isArray(value)) {
+  //       value.forEach((v) => searchParams.append(key, v));
+  //     } else if (value) {
+  //       searchParams.set(key, value);
+  //     }
+  //   });
+
+  //   const queryString = searchParams.toString();
+  //   router.push(
+  //     queryString ? `/dashboard?${queryString}#chart` : "/dashboard#chart"
+  //   );
+  // };
 
   const updateURL = (newFilters: SearchParams) => {
     const searchParams = new URLSearchParams();
@@ -68,7 +93,16 @@ function FilterBase({ searchParams }: FilterProps) {
       if (Array.isArray(value)) {
         value.forEach((v) => searchParams.append(key, v));
       } else if (value) {
-        searchParams.set(key, value);
+        // Convert "from" and "to" dates to YYYY-MM-DD format for URL
+        if (key === "from" || key === "to") {
+          const date = new Date(value);
+          console.log(date);
+          if (!isNaN(date.getTime())) {
+            searchParams.set(key, date.toISOString().split("T")[0]);
+          }
+        } else {
+          searchParams.set(key, value);
+        }
       }
     });
 
@@ -118,20 +152,102 @@ function FilterBase({ searchParams }: FilterProps) {
     });
   };
 
+  const fromDate = optimisticFilters.from
+    ? new Date(optimisticFilters.from)
+    : undefined;
+  const toDate = optimisticFilters.to
+    ? new Date(optimisticFilters.to)
+    : undefined;
+
   return (
     <div
       data-pending={isPending ? "" : undefined}
       className="flex-shrink-0 flex flex-col h-full"
     >
+      <div className="p-2 flex flex-1 gap-2">
+        <DateRangePicker />
+      </div>
+      <div className="flex p-2">
+        <div className="flex flex-col flex-1 space-y-1">
+          <Label className="text-xs w-fit">Start Date</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-fit pl-3 text-left text-xs font-normal",
+                  !fromDate && "text-muted-foreground"
+                )}
+              >
+                {fromDate ? format(fromDate, "PPP") : <span>Pick a date</span>}
+                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={fromDate}
+                onSelect={(date) => {
+                  // const value = date
+                  //   ? date.toISOString().split("T")[0]
+                  //   : undefined;
+                  handleFilterChange("from", date?.toDateString());
+                }}
+                disabled={(date) =>
+                  date > new Date() || date < new Date("1900-01-01")
+                }
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+
+        <div className="flex flex-col flex-1 space-y-1">
+          <Label className="text-xs w-fit">End Date</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-fit pl-3 text-left text-xs font-normal",
+                  !toDate && "text-muted-foreground"
+                )}
+              >
+                {toDate ? format(toDate, "PPP") : <span>Pick a date</span>}
+                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={toDate}
+                onSelect={(date) => {
+                  // const value = date
+                  //   ? date.toISOString().split("T")[0]
+                  //   : undefined;
+                  // handleFilterChange("to", value);
+                  handleFilterChange("to", date?.toDateString());
+                }}
+                disabled={(date) =>
+                  date > new Date() || date < new Date("1900-01-01")
+                }
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+      </div>
       <div className="flex flex-wrap">
-        <div className="p-2 flex flex-col space-y-1">
-          <Label htmlFor="year">Year</Label>
+        <div className="p-2 flex flex-col space-y-0.5">
+          <Label htmlFor="year" className="text-xs">
+            Year
+          </Label>
           <Select
             value={optimisticFilters.yr ?? ""}
             // value={optimisticFilters.yr || "2025"}
             onValueChange={(value) => handleFilterChange("yr", value)}
           >
-            <SelectTrigger id="year" className="mt-1">
+            <SelectTrigger id="year" className="mt-1 text-xs">
               <SelectValue placeholder="Select a year" />
             </SelectTrigger>
             <SelectContent>
@@ -143,14 +259,16 @@ function FilterBase({ searchParams }: FilterProps) {
             </SelectContent>
           </Select>
         </div>
-        <div className="p-2 flex flex-col space-y-1">
-          <Label htmlFor="month">Month</Label>
+        <div className="p-2 flex flex-col space-y-0.5">
+          <Label htmlFor="month" className="text-xs">
+            Month
+          </Label>
           <Select
             value={optimisticFilters.mnt ?? ""}
             // value={optimisticFilters.mnt || MONTHS[new Date().getMonth()]}
             onValueChange={(value) => handleFilterChange("mnt", value)}
           >
-            <SelectTrigger id="month" className="mt-1">
+            <SelectTrigger id="month" className="mt-1 text-xs">
               <SelectValue placeholder="Select a month" />
             </SelectTrigger>
             <SelectContent>
@@ -165,7 +283,7 @@ function FilterBase({ searchParams }: FilterProps) {
       </div>
 
       <ScrollArea className="h-[300px] mt-2 p-2 space-y-4">
-        <Label className="mb-2">Locations</Label>
+        <Label className="text-sm mb-2">Locations</Label>
         <div className="flex items-center space-x-2 py-1">
           <Checkbox
             id="list-all"

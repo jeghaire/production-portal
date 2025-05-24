@@ -40,7 +40,10 @@ export function ProductionCard({
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle>{title}</CardTitle>
-          <Badge variant="outline" className="text-xs font-mono">
+          <Badge
+            variant="outline"
+            className="text-xs font-mono border-transparent bg-muted text-muted-foreground dark:border-muted dark:bg-muted dark:text-muted-foreground"
+          >
             {badgeIcon}
             <span className="tracking-wider">{badgeValue}</span>
           </Badge>

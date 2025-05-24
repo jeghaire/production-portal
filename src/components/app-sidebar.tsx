@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { Suspense } from "react";
 import {
   IconHelp,
   IconInnerShadowTop,
@@ -23,12 +23,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Filter } from "@/components/filters";
+import { Filter, FilterFallback } from "@/components/filters";
+import Image from "next/image";
 
 const data = {
   user: {
-    name: "Mavi",
-    email: "me@mavigc.com",
+    name: "Praise Eghaire",
+    email: "Praise.Eghaire@HEOSL.com",
     avatar: "/mavi.jpeg",
   },
   navMain: [
@@ -37,75 +38,7 @@ const data = {
       url: "/dashboard",
       icon: IconBuildingFactory,
     },
-    // {
-    //   title: "Projects",
-    //   url: "#",
-    //   icon: IconListDetails,
-    // },
-    // {
-    //   title: "HSE",
-    //   url: "#",
-    //   icon: IconShieldCheck,
-    // },
-    // {
-    //   title: "Equipment",
-    //   url: "#",
-    //   icon: IconCarCrane,
-    // },
-    // {
-    //   title: "UPS Status",
-    //   url: "#",
-    //   icon: IconChartColumn,
-    // },
   ],
-  // navClouds: [
-  //   {
-  //     title: "Capture",
-  //     icon: IconCamera,
-  //     isActive: true,
-  //     url: "#",
-  //     items: [
-  //       {
-  //         title: "Active Proposals",
-  //         url: "#",
-  //       },
-  //       {
-  //         title: "Archived",
-  //         url: "#",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: "Proposal",
-  //     icon: IconFileDescription,
-  //     url: "#",
-  //     items: [
-  //       {
-  //         title: "Active Proposals",
-  //         url: "#",
-  //       },
-  //       {
-  //         title: "Archived",
-  //         url: "#",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: "Prompts",
-  //     icon: IconFileAi,
-  //     url: "#",
-  //     items: [
-  //       {
-  //         title: "Active Proposals",
-  //         url: "#",
-  //       },
-  //       {
-  //         title: "Archived",
-  //         url: "#",
-  //       },
-  //     ],
-  //   },
-  // ],
   navSecondary: [
     {
       title: "Settings",
@@ -123,23 +56,6 @@ const data = {
       icon: IconSearch,
     },
   ],
-  // documents: [
-  //   {
-  //     name: "Data Library",
-  //     url: "#",
-  //     icon: IconDatabase,
-  //   },
-  //   {
-  //     name: "Reports",
-  //     url: "#",
-  //     icon: IconReport,
-  //   },
-  //   {
-  //     name: "Word Assistant",
-  //     url: "#",
-  //     icon: IconFileWord,
-  //   },
-  // ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -150,11 +66,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:!p-1.5 h-16 w-full"
             >
-              <a href="#">
-                <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Mavi GC.</span>
+              <a href="/">
+                {/* <IconInnerShadowTop className="!size-5" /> */}
+                <Image
+                  src="/heosl_logo.png"
+                  alt=""
+                  width={65}
+                  height={65}
+                  className="aspect-square "
+                />
+                {/* <span className="text-base font-semibold ml-auto">HEOSL</span> */}
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -162,11 +85,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        {/* <NavDocuments items={data.documents} /> */}
         <SidebarGroup className="group-data-[collapsible=icon]:hidden mb-6">
           <SidebarGroupLabel>Filters</SidebarGroupLabel>
           <SidebarMenu></SidebarMenu>
-          <Filter />
+          <Suspense fallback={<FilterFallback />}>
+            <Filter />
+          </Suspense>
         </SidebarGroup>
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>

@@ -69,9 +69,10 @@ export const columns: ColumnDef<ProductionData>[] = [
       <DataTableColumnHeader column={column} title="Date" />
     ),
     cell: ({ row }) => {
-      const date = new Date(row.getValue("Date")).toLocaleDateString("en-US", {
+      const date = new Date(row.getValue("Date")).toLocaleDateString("en-GB", {
         day: "2-digit",
         month: "2-digit",
+        year: "numeric",
       });
       return <span>{date}</span>;
     },

@@ -7,19 +7,19 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { SearchParams } from "@/lib/url-state";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import DateRangePicker from "./dashboard/my-daterange-picker";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
+// import DateRangePicker from "./dashboard/my-daterange-picker";
 import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+import { format, formatDate } from "date-fns";
 
 const LOCATIONS = [
   { label: "AFIESERE", value: "AFIESERE" },
@@ -33,21 +33,21 @@ const LOCATIONS = [
   { label: "UZERE EAST", value: "UZERE EAST" },
 ];
 
-const YEARS = ["2025"];
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+// const YEARS = ["2025"];
+// const MONTHS = [
+//   "January",
+//   "February",
+//   "March",
+//   "April",
+//   "May",
+//   "June",
+//   "July",
+//   "August",
+//   "September",
+//   "October",
+//   "November",
+//   "December",
+// ];
 
 interface FilterProps {
   searchParams: URLSearchParams;
@@ -69,23 +69,6 @@ function FilterBase({ searchParams }: FilterProps) {
   const [optimisticFilters, setOptimisticFilters] =
     useOptimistic<SearchParams>(initialFilters);
 
-  // const updateURL = (newFilters: SearchParams) => {
-  //   const searchParams = new URLSearchParams();
-
-  //   Object.entries(newFilters).forEach(([key, value]) => {
-  //     if (Array.isArray(value)) {
-  //       value.forEach((v) => searchParams.append(key, v));
-  //     } else if (value) {
-  //       searchParams.set(key, value);
-  //     }
-  //   });
-
-  //   const queryString = searchParams.toString();
-  //   router.push(
-  //     queryString ? `/dashboard?${queryString}#chart` : "/dashboard#chart"
-  //   );
-  // };
-
   const updateURL = (newFilters: SearchParams) => {
     const searchParams = new URLSearchParams();
 
@@ -93,16 +76,7 @@ function FilterBase({ searchParams }: FilterProps) {
       if (Array.isArray(value)) {
         value.forEach((v) => searchParams.append(key, v));
       } else if (value) {
-        // Convert "from" and "to" dates to YYYY-MM-DD format for URL
-        if (key === "from" || key === "to") {
-          const date = new Date(value);
-          console.log(date);
-          if (!isNaN(date.getTime())) {
-            searchParams.set(key, date.toISOString().split("T")[0]);
-          }
-        } else {
-          searchParams.set(key, value);
-        }
+        searchParams.set(key, value);
       }
     });
 
@@ -153,10 +127,10 @@ function FilterBase({ searchParams }: FilterProps) {
   };
 
   const fromDate = optimisticFilters.from
-    ? new Date(optimisticFilters.from)
+    ? new Date(optimisticFilters.from + "T00:00:00")
     : undefined;
   const toDate = optimisticFilters.to
-    ? new Date(optimisticFilters.to)
+    ? new Date(optimisticFilters.to + "T00:00:00")
     : undefined;
 
   return (
@@ -164,10 +138,10 @@ function FilterBase({ searchParams }: FilterProps) {
       data-pending={isPending ? "" : undefined}
       className="flex-shrink-0 flex flex-col h-full"
     >
-      <div className="p-2 flex flex-1 gap-2">
+      {/* <div className="p-2 flex flex-1 gap-2">
         <DateRangePicker />
-      </div>
-      <div className="flex p-2">
+      </div> */}
+      <div className="flex p-2 gap-3 flex-wrap">
         <div className="flex flex-col flex-1 space-y-1">
           <Label className="text-xs w-fit">Start Date</Label>
           <Popover>
@@ -175,7 +149,7 @@ function FilterBase({ searchParams }: FilterProps) {
               <Button
                 variant="outline"
                 className={cn(
-                  "w-fit pl-3 text-left text-xs font-normal",
+                  "w-fit text-left text-xs font-normal",
                   !fromDate && "text-muted-foreground"
                 )}
               >
@@ -188,14 +162,21 @@ function FilterBase({ searchParams }: FilterProps) {
                 mode="single"
                 selected={fromDate}
                 onSelect={(date) => {
-                  // const value = date
-                  //   ? date.toISOString().split("T")[0]
-                  //   : undefined;
-                  handleFilterChange("from", date?.toDateString());
+                  const value = date
+                    ? formatDate(date, "yyyy-MM-dd")
+                    : undefined;
+                  handleFilterChange("from", value);
                 }}
-                disabled={(date) =>
-                  date > new Date() || date < new Date("1900-01-01")
-                }
+                // disabled={(date) =>
+                //   date > new Date() || date < new Date("2024-12-31")
+                // }
+                disabled={(date) => {
+                  const minDate = new Date("2024-12-31");
+                  const maxDate = new Date();
+                  if (date < minDate || date > maxDate) return true;
+                  if (toDate && date > toDate) return true;
+                  return false;
+                }}
                 initialFocus
               />
             </PopoverContent>
@@ -209,7 +190,7 @@ function FilterBase({ searchParams }: FilterProps) {
               <Button
                 variant="outline"
                 className={cn(
-                  "w-fit pl-3 text-left text-xs font-normal",
+                  "w-fit text-left text-xs font-normal",
                   !toDate && "text-muted-foreground"
                 )}
               >
@@ -222,22 +203,28 @@ function FilterBase({ searchParams }: FilterProps) {
                 mode="single"
                 selected={toDate}
                 onSelect={(date) => {
-                  // const value = date
-                  //   ? date.toISOString().split("T")[0]
-                  //   : undefined;
-                  // handleFilterChange("to", value);
-                  handleFilterChange("to", date?.toDateString());
+                  const value = date
+                    ? formatDate(date, "yyyy-MM-dd")
+                    : undefined;
+                  handleFilterChange("to", value);
                 }}
-                disabled={(date) =>
-                  date > new Date() || date < new Date("1900-01-01")
-                }
+                // disabled={(date) =>
+                //   date > new Date() || date < new Date("1900-01-01")
+                // }
+                disabled={(date) => {
+                  const minDate = new Date("2024-12-31");
+                  const maxDate = new Date();
+                  if (date < minDate || date > maxDate) return true;
+                  if (fromDate && date < fromDate) return true;
+                  return false;
+                }}
                 initialFocus
               />
             </PopoverContent>
           </Popover>
         </div>
       </div>
-      <div className="flex flex-wrap">
+      {/* <div className="flex flex-wrap">
         <div className="p-2 flex flex-col space-y-0.5">
           <Label htmlFor="year" className="text-xs">
             Year
@@ -280,7 +267,7 @@ function FilterBase({ searchParams }: FilterProps) {
             </SelectContent>
           </Select>
         </div>
-      </div>
+      </div> */}
 
       <ScrollArea className="h-[300px] mt-2 p-2 space-y-4">
         <Label className="text-sm mb-2">Locations</Label>

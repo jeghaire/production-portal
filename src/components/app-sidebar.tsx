@@ -3,7 +3,6 @@
 import React, { Suspense } from "react";
 import {
   IconHelp,
-  IconInnerShadowTop,
   IconSearch,
   IconSettings,
   IconBuildingFactory,
@@ -25,6 +24,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Filter, FilterFallback } from "@/components/filters";
 import Image from "next/image";
+import Link from "next/link";
 
 const data = {
   user: {
@@ -68,8 +68,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5 h-16 w-full"
             >
-              <a href="/">
-                {/* <IconInnerShadowTop className="!size-5" /> */}
+              <Link href="/">
                 <Image
                   src="/heosl_logo.png"
                   alt=""
@@ -77,8 +76,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   height={65}
                   className="aspect-square "
                 />
-                {/* <span className="text-base font-semibold ml-auto">HEOSL</span> */}
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

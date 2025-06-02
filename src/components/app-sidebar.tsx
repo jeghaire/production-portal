@@ -9,12 +9,9 @@ import {
 } from "@tabler/icons-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavSecondary } from "@/components/nav-secondary";
-import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupLabel,
   SidebarHeader,
@@ -66,15 +63,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5 h-16 w-full"
+              className="h-16 w-18 p-0 relative rounded-none"
             >
               <Link href="/">
                 <Image
                   src="/heosl_logo.png"
                   alt=""
-                  width={65}
-                  height={65}
-                  className="aspect-square "
+                  fill
+                  className="object-cover object-left-top"
                 />
               </Link>
             </SidebarMenuButton>
@@ -90,11 +86,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <Filter />
           </Suspense>
         </SidebarGroup>
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
     </Sidebar>
   );
 }

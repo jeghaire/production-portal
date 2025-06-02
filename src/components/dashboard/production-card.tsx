@@ -37,8 +37,8 @@ export function ProductionCard({
 
   return (
     <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between">
+      <CardHeader className="gap-0">
+        <div className="flex items-end justify-between">
           <CardTitle>{title}</CardTitle>
           <Badge
             variant="outline"
@@ -48,13 +48,13 @@ export function ProductionCard({
             <span className="tracking-wider">{badgeValue}</span>
           </Badge>
         </div>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription className="text-sm">{description}</CardDescription>
       </CardHeader>
 
       <CardContent>
         <p className="font-bold text-3xl @7xl:text-4xl">
           {quantity.toLocaleString()}
-          <span className="ml-1 text-base font-normal text-foreground">
+          <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
             {unit}
           </span>
         </p>

@@ -119,7 +119,7 @@
 @layer base {
   :root {
     --chart-gross: 221.2 83.2% 53.3%;
-    --chart-net: 345.3 82.7% 40.8%;
+    --chart-net: 0 100% 53%;
     --chart-stringsup: 240 5.9% 10%;
     --chart-bsw: 243.7 54.5% 41.4%;
   }

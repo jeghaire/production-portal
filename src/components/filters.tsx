@@ -19,7 +19,7 @@ import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { format, formatDate } from "date-fns";
+import { addDays, format, formatDate, subDays } from "date-fns";
 
 const LOCATIONS = [
   { label: "AFIESERE", value: "AFIESERE" },
@@ -174,7 +174,7 @@ function FilterBase({ searchParams }: FilterProps) {
                   const minDate = new Date("2024-12-31");
                   const maxDate = new Date();
                   if (date < minDate || date > maxDate) return true;
-                  if (toDate && date > toDate) return true;
+                  if (toDate && date > subDays(toDate, 1)) return true;
                   return false;
                 }}
                 initialFocus
@@ -215,7 +215,7 @@ function FilterBase({ searchParams }: FilterProps) {
                   const minDate = new Date("2024-12-31");
                   const maxDate = new Date();
                   if (date < minDate || date > maxDate) return true;
-                  if (fromDate && date < fromDate) return true;
+                  if (fromDate && date < addDays(fromDate, 1)) return true;
                   return false;
                 }}
                 initialFocus

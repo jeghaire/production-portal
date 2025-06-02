@@ -54,7 +54,7 @@ import {
 import { SiteHeader } from "@/components/site-header";
 import { DataTable } from "./components/data-table";
 import { columns } from "./components/columns";
-// import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { ProductionCard } from "@/components/dashboard/production-card";
 import { LocationDifferenceCard } from "@/components/dashboard/location-difference-card";
 
@@ -81,7 +81,7 @@ const chartConfig = {
     color: "hsl(var(--chart-bsw))",
   },
   gross: {
-    label: "Gross",
+    label: "Gross Rate",
     color: "hsl(var(--chart-gross))",
   },
   net: {
@@ -102,31 +102,34 @@ const NET_TARGET = 48571;
 
 const productionCardData = [
   {
-    title: "Production Status",
-    badgeValue: "46%",
-    badgeIcon: <IconArrowUp className="!h-4 !w-4 mr-1" />,
-    description: "BPOD/Barrels per day",
-    quantity: 45240,
-    percentOfTarget: 76,
-    progressValue: 76,
-  },
-  {
-    title: "Gross Production",
+    title: "Gross Liquid Production",
     badgeValue: "53%",
     badgeIcon: <IconArrowUp className="!h-4 !w-4 mr-1" />,
-    description: "Gross production per day",
+    description: "Barrels of Liquid Per Day",
     quantity: 170420,
     percentOfTarget: 60,
     progressValue: 60,
+    unit: "blpd",
   },
   {
-    title: "Net Production",
+    title: "Net Oil Production",
+    badgeValue: "46%",
+    badgeIcon: <IconArrowUp className="!h-4 !w-4 mr-1" />,
+    description: "Barrels of Oil Per Day",
+    quantity: 45240,
+    percentOfTarget: 76,
+    progressValue: 76,
+    unit: "bopd",
+  },
+  {
+    title: "Year to Date Oil Production",
     badgeValue: "12%",
     badgeIcon: <IconArrowUp className="!h-4 !w-4 mr-1" />,
-    description: "Net production YTD",
+    description: "Barrels of Oil",
     quantity: 3143740.26,
     percentOfTarget: 27.5,
     progressValue: 27.5,
+    unit: "bbls",
     // footer: (
     //   <div className="flex items-center gap-2">
     //     <IconAlertCircleFilled className="w-3.5" />
@@ -144,7 +147,7 @@ function DashBoardComponent() {
   const [openT, setOpenT] = React.useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
-  // const isMobile = useIsMobile();
+  const isMobile = useIsMobile();
 
   // Extract selected locations from query params
   const selectedQueryParams = searchParams.getAll("loc");
@@ -185,12 +188,6 @@ function DashBoardComponent() {
     );
   };
 
-  // React.useEffect(() => {
-  //   setSelectedValues(
-  //     selectedQueryParams.length > 0 ? selectedQueryParams : []
-  //   );
-  // }, [selectedQueryParams]);
-
   React.useEffect(() => {
     const incoming = selectedQueryParams.length > 0 ? selectedQueryParams : [];
     setSelectedValues((prev) =>
@@ -213,7 +210,6 @@ function DashBoardComponent() {
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
-  // Get only the data between from and to for each location
   const filteredChartData: Record<string, any[]> = {};
 
   Object.entries(chartData).forEach(([location, entries]) => {
@@ -224,34 +220,6 @@ function DashBoardComponent() {
       );
     });
   });
-
-  // Function to aggregate data based on selected locations
-  // const getAggregatedData = () => {
-  //   const locations =
-  //     selectedValues.length > 0 ? selectedValues : Object.keys(chartData);
-
-  //   const aggregatedData: Record<string, any>[] = [];
-
-  //   locations.forEach((location) => {
-  //     filteredData[location].forEach((entry: any, index: number) => {
-  //       if (!aggregatedData[index]) {
-  //         aggregatedData[index] = {
-  //           date: entry.date,
-  //           bsw: 0,
-  //           net: 0,
-  //           gross: 0,
-  //           stringsUp: 0,
-  //         };
-  //       }
-  //       aggregatedData[index].bsw += entry.bsw;
-  //       aggregatedData[index].net += entry.net;
-  //       aggregatedData[index].gross += entry.gross;
-  //       aggregatedData[index].stringsUp += entry.stringsUp;
-  //     });
-  //   });
-
-  //   return aggregatedData;
-  // };
 
   const getAggregatedData = (filteredData: Record<string, any[]>) => {
     const locations =
@@ -438,9 +406,9 @@ function DashBoardComponent() {
           className="col-span-full @container scroll-mt-8 pb-0 !gap-0"
           id="chart"
         >
-          <CardHeader className="flex flex-col space-y-0 gap-0 border-b items-end @xl:flex-row">
+          <CardHeader className="flex flex-col @max-md:px-5 @xl:flex-row">
             <div className="flex flex-col space-y-1 space-x-1 @7xl:flex flex-1">
-              <CardTitle>Gas/Oil Production</CardTitle>
+              <CardTitle>OML 30 Production Perfomance</CardTitle>
               {/* <CardDescription>
                 Showing total Oil Production for {selectedMonth[0] || "January"}{" "}
                 {selectedYear[0] || 2025}
@@ -465,14 +433,14 @@ function DashBoardComponent() {
               ))}
             </SelectContent>
           </Select> */}
-            <div className="flex flex-col @md:flex-row @md:space-x-2 gap-0 @max-md:space-y-2 print:hidden">
+            <div className="flex md:flex-col @md:flex-row space-x-2 print:hidden">
               <Popover open={openT} onOpenChange={setOpenT}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between"
+                    className="w-fit md:w-[200px] justify-between"
                   >
                     {selectedValues.length > 0
                       ? (() => {
@@ -527,7 +495,7 @@ function DashBoardComponent() {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between"
+                    className="w-fit md:w-[200px] justify-between"
                   >
                     {/* {value
                   ? loc.find((framework) => framework.value === value)
@@ -598,7 +566,7 @@ function DashBoardComponent() {
               <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
                 <ChartContainer
                   config={chartConfig}
-                  className="aspect-auto h-[500px] w-full pb-4"
+                  className="aspect-auto h-[500px] w-full pb-5"
                 >
                   {/* <AreaChart data={chartData[selectedLocation]}> */}
                   <AreaChart
@@ -647,11 +615,7 @@ function DashBoardComponent() {
                       minTickGap={32}
                       tickFormatter={(value) => {
                         const date = new Date(value);
-                        return date.toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        });
+                        return date.toLocaleDateString("en-GB");
                       }}
                     />
                     {/* {!isMobile && ( */}
@@ -661,7 +625,7 @@ function DashBoardComponent() {
                       tickMargin={5}
                       tickCount={5}
                       label={{
-                        value: "Gross & Net (bbls)",
+                        value: "Oil Rate and Gross Rate (blpd)",
                         angle: -90,
                         position: "insideLeft",
                       }}
@@ -679,11 +643,7 @@ function DashBoardComponent() {
                         <ChartTooltipContent
                           className="min-w-[170px] p-2"
                           labelFormatter={(value) => {
-                            return new Date(value).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            });
+                            return new Date(value).toLocaleDateString("en-GB");
                           }}
                           indicator="dot"
                         />
@@ -697,13 +657,15 @@ function DashBoardComponent() {
                         fill="var(--color-gross)"
                         stroke="var(--color-gross)"
                         strokeWidth={2}
-                        // dot={false}
-                        dot={{
-                          fill: "var(--color-gross)",
-                          fillOpacity: 1,
-                        }}
+                        dot={
+                          !isMobile && {
+                            fill: "var(--color-gross)",
+                            fillOpacity: 1,
+                            r: 1.5,
+                          }
+                        }
                         activeDot={{
-                          r: 5,
+                          r: 4,
                         }}
                       />
                     )}
@@ -713,15 +675,18 @@ function DashBoardComponent() {
                         type="natural"
                         // fill="url(#fillNet)"
                         fill="var(--color-net)"
+                        fillOpacity={0.8}
                         stroke="var(--color-net)"
                         strokeWidth={2}
-                        // dot={false}
-                        dot={{
-                          fill: "var(--color-net)",
-                          fillOpacity: 1,
-                        }}
+                        dot={
+                          !isMobile && {
+                            fill: "var(--color-net)",
+                            fillOpacity: 1,
+                            r: 1.5,
+                          }
+                        }
                         activeDot={{
-                          r: 5,
+                          r: 4,
                         }}
                       />
                     )}
@@ -732,13 +697,15 @@ function DashBoardComponent() {
                       stroke="var(--color-netTarget)"
                       strokeWidth={2}
                       fill="none"
-                      // dot={false}
                       strokeDasharray={"5 5"}
                       activeDot={{
                         r: 0,
                       }}
                     />
-                    <ChartLegend content={<ChartLegendContent />} />
+                    <ChartLegend
+                      verticalAlign="top"
+                      content={<ChartLegendContent />}
+                    />
                   </AreaChart>
                 </ChartContainer>
               </CardContent>
@@ -753,7 +720,7 @@ function DashBoardComponent() {
         </Card>
         <Card className="col-span-full @7xl:col-span-2 pb-0">
           <CardHeader>
-            <CardTitle>Strings Up by Day</CardTitle>
+            <CardTitle>String Status</CardTitle>
             {/* <CardDescription>{`Chart Data displayed for ${fromDate} to ${toDate}`}</CardDescription> */}
           </CardHeader>
           {aggregatedData.length > 0 ? (
@@ -781,11 +748,7 @@ function DashBoardComponent() {
                       tickMargin={18}
                       tickFormatter={(value) => {
                         const date = new Date(value);
-                        return date.toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        });
+                        return date.toLocaleDateString("en-GB");
                       }}
                     />
                     {/* {!isMobile && ( */}
@@ -809,11 +772,7 @@ function DashBoardComponent() {
                       content={
                         <ChartTooltipContent
                           labelFormatter={(value) => {
-                            return new Date(value).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            });
+                            return new Date(value).toLocaleDateString("en-GB");
                           }}
                           indicator="dot"
                         />
@@ -824,12 +783,14 @@ function DashBoardComponent() {
                       type="natural"
                       stroke="var(--color-stringsUp)"
                       strokeWidth={2}
-                      // dot={false}
-                      dot={{
-                        fill: "var(--color-stringsUp)",
-                      }}
+                      dot={
+                        !isMobile && {
+                          fill: "var(--color-stringsUp)",
+                          r: 1,
+                        }
+                      }
                       activeDot={{
-                        r: 5,
+                        r: 4,
                       }}
                     />
                   </LineChart>
@@ -859,7 +820,7 @@ function DashBoardComponent() {
         </Card>
         <Card className="col-span-full @7xl:col-span-2 pb-0">
           <CardHeader>
-            <CardTitle>Basic Sediment and Water (%) by Day</CardTitle>
+            <CardTitle>Basic Sediment and Water(%)</CardTitle>
             {/* <CardDescription>{`Chart Data displayed for ${fromDate} to ${toDate}`}</CardDescription> */}
           </CardHeader>
           {aggregatedData.length > 0 ? (
@@ -888,11 +849,7 @@ function DashBoardComponent() {
                       tickMargin={8}
                       tickFormatter={(value) => {
                         const date = new Date(value);
-                        return date.toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                          year: "numeric",
-                        });
+                        return date.toLocaleDateString("en-GB");
                       }}
                     />
                     {/* {!isMobile && ( */}
@@ -916,11 +873,7 @@ function DashBoardComponent() {
                       content={
                         <ChartTooltipContent
                           labelFormatter={(value) => {
-                            return new Date(value).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            });
+                            return new Date(value).toLocaleDateString("en-GB");
                           }}
                           indicator="dot"
                         />
@@ -931,12 +884,14 @@ function DashBoardComponent() {
                       type="natural"
                       stroke="var(--color-bsw)"
                       strokeWidth={2}
-                      // dot={false}
-                      dot={{
-                        fill: "var(--color-bsw)",
-                      }}
+                      dot={
+                        !isMobile && {
+                          fill: "var(--color-bsw)",
+                          r: 1,
+                        }
+                      }
                       activeDot={{
-                        r: 5,
+                        r: 4,
                       }}
                     />
                   </LineChart>
@@ -975,7 +930,7 @@ function DashBoardComponent() {
 export default function ProductionDashboard() {
   return (
     <>
-      <SiteHeader title="GAS/OIL PRODUCTION DATA" />
+      <SiteHeader title="PRODUCTION DATA" />
       <Suspense>
         <DashBoardComponent />
       </Suspense>

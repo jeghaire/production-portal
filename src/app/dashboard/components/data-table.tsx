@@ -29,6 +29,8 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 
+// import { useRouter, useSearchParams } from "next/navigation";
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -47,6 +49,19 @@ export function DataTable<TData, TValue>({
   const [globalFilter, setGlobalFilter] =
     React.useState<GlobalFilterTableState>();
   const [sorting, setSorting] = React.useState<SortingState>([]);
+
+  // const router = useRouter();
+  // const searchParams = useSearchParams();
+
+  // const selectedQueryParams = searchParams.getAll("loc");
+
+  // const columnParamMap: Record<string, string> = {
+  //   Location: "loc",
+  //   // Add more mappings here if needed
+  // };
+  // const paramColumnMap = Object.fromEntries(
+  //   Object.entries(columnParamMap).map(([col, param]) => [param, col])
+  // );
 
   const table = useReactTable({
     data,

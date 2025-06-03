@@ -81,7 +81,7 @@ const chartConfig = {
     color: "hsl(var(--chart-bsw))",
   },
   gross: {
-    label: "Gross Rate",
+    label: "Gross",
     color: "hsl(var(--chart-gross))",
   },
   net: {
@@ -625,7 +625,7 @@ function DashBoardComponent() {
                       tickMargin={5}
                       tickCount={5}
                       label={{
-                        value: "Oil Rate and Gross Rate (blpd)",
+                        value: "Oil Rate and Gross (blpd)",
                         angle: -90,
                         position: "insideLeft",
                       }}
@@ -675,8 +675,10 @@ function DashBoardComponent() {
                         type="natural"
                         // fill="url(#fillNet)"
                         fill="var(--color-net)"
-                        fillOpacity={0.8}
-                        stroke="var(--color-net)"
+                        fillOpacity={1}
+                        stroke={`hsl(0 70% 35.3%)`}
+                        // stroke={`hsl(0 74.7% 15.5%)`}
+                        // stroke="var(--color-net)"
                         strokeWidth={2}
                         dot={
                           !isMobile && {
@@ -820,7 +822,7 @@ function DashBoardComponent() {
         </Card>
         <Card className="col-span-full @7xl:col-span-2 pb-0">
           <CardHeader>
-            <CardTitle>Basic Sediment and Water(%)</CardTitle>
+            <CardTitle>Basic Sediment and Water</CardTitle>
             {/* <CardDescription>{`Chart Data displayed for ${fromDate} to ${toDate}`}</CardDescription> */}
           </CardHeader>
           {aggregatedData.length > 0 ? (

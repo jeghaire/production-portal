@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { logOut } from "@/lib/actions";
+import { IconLogout2 } from "@tabler/icons-react";
 
 export function SiteHeader({ title = "PRODUCTION DATA" }: { title?: string }) {
   return (
@@ -13,16 +15,11 @@ export function SiteHeader({ title = "PRODUCTION DATA" }: { title?: string }) {
         />
         <h1 className="text-base font-medium uppercase">{title}</h1>
         <div className="ml-auto flex items-center gap-2">
-          <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
-            <a
-              href="http://217.14.88.108/heosluploader/home/dashboard"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="dark:text-foreground"
-            >
-              HEOSL
-            </a>
-          </Button>
+          <form action={logOut}>
+            <Button variant="ghost" size="icon">
+              <IconLogout2 />
+            </Button>
+          </form>
         </div>
       </div>
     </header>

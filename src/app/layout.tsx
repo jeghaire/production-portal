@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { geistVF } from "@/app/fonts";
 import "./globals.css";
+import ThemeProvider from "./theme-provider";
 
 export const metadata: Metadata = {
   title: "HEOSL Production Portal",
@@ -17,7 +18,7 @@ export default function RootLayout({
       <body
         className={`${geistVF.variable} antialiased font-geistVF scroll-smooth`}
       >
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

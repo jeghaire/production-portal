@@ -52,7 +52,7 @@ export function ProductionCard({
       </CardHeader>
 
       <CardContent>
-        <p className="font-bold text-3xl @7xl:text-4xl">
+        <p className="font-bold text-3xl">
           {quantity.toLocaleString()}
           <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
             {unit}

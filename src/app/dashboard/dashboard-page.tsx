@@ -58,6 +58,19 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { ProductionCard } from "@/components/dashboard/production-card";
 import { LocationDifferenceCard } from "@/components/dashboard/location-difference-card";
 
+const netTargetByLocation: Record<string, number> = {
+  AFIESERE: 8706.18,
+  ERIEMU: 8552.08,
+  EVWRENI: 742.29,
+  KOKORI: 7413.71,
+  OLOMORO: 19787.31,
+  ORONI: 2655.44,
+  OWEH: 7641.43,
+  UZERE: 3471.81,
+};
+
+// const NET_TARGET = 48571;
+
 const loc = [
   { label: "AFIESERE", value: "AFIESERE" },
   { label: "ERIEMU", value: "ERIEMU" },
@@ -67,7 +80,6 @@ const loc = [
   { label: "ORONI", value: "ORONI" },
   { label: "OWEH", value: "OWEH" },
   { label: "UZERE", value: "UZERE" },
-  { label: "UZERE EAST", value: "UZERE EAST" },
 ];
 
 const options = [
@@ -97,8 +109,6 @@ const chartConfig = {
     color: "hsl(var(--chart-stringsup))",
   },
 } satisfies ChartConfig;
-
-const NET_TARGET = 48571;
 
 const productionCardData = [
   {
@@ -235,6 +245,7 @@ function DashBoardComponent() {
             net: 0,
             gross: 0,
             stringsUp: 0,
+            netTarget: 0,
             // New temporary variables for BSW calculation
             _totalWaterVolume: 0,
             _totalLiquidVolume: 0,
@@ -249,8 +260,11 @@ function DashBoardComponent() {
         // Other metrics can be summed directly
         aggregatedData[index].net += entry.net;
         aggregatedData[index].gross += entry.gross;
-        aggregatedData[index].netTarget = NET_TARGET;
         aggregatedData[index].stringsUp += entry.stringsUp;
+        // aggregatedData[index].netTarget = NET_TARGET;
+
+        // Add netTarget from current location
+        aggregatedData[index].netTarget += netTargetByLocation[location] || 0;
       });
     });
 

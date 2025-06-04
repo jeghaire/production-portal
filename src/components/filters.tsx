@@ -30,7 +30,6 @@ const LOCATIONS = [
   { label: "ORONI", value: "ORONI" },
   { label: "OWEH", value: "OWEH" },
   { label: "UZERE", value: "UZERE" },
-  { label: "UZERE EAST", value: "UZERE EAST" },
 ];
 
 // const YEARS = ["2025"];
@@ -96,8 +95,8 @@ function FilterBase({ searchParams }: FilterProps) {
         [filterType]: Array.isArray(value)
           ? value
           : value
-          ? [value]
-          : undefined,
+            ? [value]
+            : undefined,
       };
       setOptimisticFilters(newFilters);
       updateURL(newFilters);

@@ -67,11 +67,11 @@ export function LoginForm({
               <Input
                 id="email"
                 name="email"
-                type="email"
+                type="text"
                 placeholder="first.last@heosl.com"
                 required
-                pattern="[^@]+@heosl\.com"
-                title="Please use your HEOSL company email"
+                // pattern="[^@]+@heosl\.com"
+                // title="Please use your HEOSL company email"
               />
             </div>
             <div className="grid gap-3">

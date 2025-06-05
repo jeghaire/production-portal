@@ -57,6 +57,7 @@ import { columns } from "./components/columns";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ProductionCard } from "@/components/dashboard/production-card";
 import { LocationDifferenceCard } from "@/components/dashboard/location-difference-card";
+import { TankLevelChart } from "@/components/tank-level";
 
 const netTargetByLocation: Record<string, number> = {
   AFIESERE: 8706.18,
@@ -150,6 +151,24 @@ const productionCardData = [
     // ),
   },
 ];
+
+const tankLevelChartData = [
+  { tankID: "Tank 111", water: 1806, oil: 800 },
+  { tankID: "Tank 112", water: 305, oil: 200 },
+  { tankID: "Tank 113", water: 237, oil: 120 },
+  { tankID: "Tank 114", water: 73, oil: 190 },
+];
+
+const tankLevelChartConfig = {
+  water: {
+    label: "Water Level",
+    color: "hsl(var(--chart-gross))",
+  },
+  oil: {
+    label: "Oil Level",
+    color: "hsl(var(--chart-net))",
+  },
+} satisfies ChartConfig;
 
 function DashBoardComponent() {
   // const [selectedLocation, setSelectedLocation] = React.useState("EVWRENI");
@@ -935,6 +954,12 @@ function DashBoardComponent() {
             </div>
           )}
         </Card>
+        <TankLevelChart
+          title="Test"
+          description="Test test"
+          chartConfig={tankLevelChartConfig}
+          chartData={tankLevelChartData}
+        />
         <div className="col-span-full print:hidden">
           <DataTable data={tableData} columns={columns} />
         </div>

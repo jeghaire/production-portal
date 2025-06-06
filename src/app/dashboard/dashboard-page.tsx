@@ -954,12 +954,12 @@ function DashBoardComponent() {
             </div>
           )}
         </Card>
-        {/* <TankLevelChart
+        <TankLevelChart
           title="Test"
           description="Test test"
           chartConfig={tankLevelChartConfig}
           chartData={tankLevelChartData}
-        /> */}
+        />
         <div className="col-span-full print:hidden">
           <DataTable data={tableData} columns={columns} />
         </div>

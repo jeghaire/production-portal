@@ -16,14 +16,14 @@ const formatToUrlDate = (date: Date): string => {
   return format(date, "dd-MM-yyyy");
 };
 
-const parseUrlDate = (dateString: string): Date | undefined => {
+export const parseUrlDate = (dateString: string): Date | undefined => {
   if (!dateString) return undefined;
   const parts = dateString.split("-");
   if (parts.length !== 3) return undefined;
 
   // Create date in YYYY-MM-DD format which Date can parse reliably
   const isoFormat = `${parts[2]}-${parts[1]}-${parts[0]}`;
-  return new Date(isoFormat + "T00:00:00");
+  return new Date(isoFormat);
 };
 
 const LOCATIONS = [
@@ -224,7 +224,7 @@ function FilterBase({ searchParams }: FilterProps) {
                 <Calendar
                   mode="single"
                   selected={toDate}
-                  defaultMonth={toDate}
+                  defaultMonth={toDate || dayDate}
                   onSelect={(date) => handleRangeDateChange("to", date)}
                   disabled={(date) => {
                     const minDate = new Date("2024-12-31");
@@ -263,7 +263,7 @@ function FilterBase({ searchParams }: FilterProps) {
                 <Calendar
                   mode="single"
                   selected={dayDate}
-                  defaultMonth={dayDate}
+                  defaultMonth={dayDate || toDate}
                   onSelect={(date) => handleDayDateChange(date)}
                   captionLayout="dropdown-months"
                 />

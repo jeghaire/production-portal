@@ -59,6 +59,7 @@ import { ProductionCard } from "@/components/dashboard/production-card";
 import { LocationDifferenceCard } from "@/components/dashboard/location-difference-card";
 import { TankLevelChart } from "@/components/tank-level";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { parseUrlDate } from "@/components/filters";
 
 const netTargetByLocation: Record<string, number> = {
   AFIESERE: 8706.18,
@@ -230,8 +231,8 @@ function DashBoardComponent() {
     );
   }, [selectedQueryParams]);
 
-  const fromDate = from ? new Date(from) : null;
-  const toDate = to ? new Date(to) : null;
+  const fromDate = from ? parseUrlDate(from) : null;
+  const toDate = to ? parseUrlDate(to) : null;
 
   const tableData = Object.entries(chartData)
     .flatMap(([key, items]) =>
@@ -476,7 +477,7 @@ function DashBoardComponent() {
                 <CarouselNext className="!right-5 !top-2" />
               </Carousel>
             </Card>
-            <div className="md:col-span-1">
+            <div className="md:col-span-2">
               <TankLevelChart
                 title="Tank Levels"
                 description="Showing water and oil levels in tanks"
@@ -493,7 +494,7 @@ function DashBoardComponent() {
               id="chart"
             >
               <CardHeader className="flex flex-col @max-md:px-5 @xl:flex-row">
-                <div className="flex flex-col space-y-1 space-x-1 @7xl:flex flex-1">
+                <div className="flex flex-col space-y-1 space-x-1 @7xl:flex-row flex-1">
                   <CardTitle>OML 30 Production Perfomance</CardTitle>
                   {/* <CardDescription>
                 Showing total Oil Production for {selectedMonth[0] || "January"}{" "}
@@ -810,7 +811,7 @@ function DashBoardComponent() {
                 </>
               ) : (
                 <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[520]">
-                  <span>
+                  <span className="m-3">
                     No data available for the selected time period and
                     locations.
                   </span>
@@ -913,7 +914,7 @@ function DashBoardComponent() {
                 </>
               ) : (
                 <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[320]">
-                  <span>
+                  <span className="m-3">
                     No data available for the selected time period and
                     locations.
                   </span>
@@ -1017,7 +1018,7 @@ function DashBoardComponent() {
                 </>
               ) : (
                 <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[320]">
-                  <span>
+                  <span className="m-3">
                     No data available for the selected time period and
                     locations.
                   </span>

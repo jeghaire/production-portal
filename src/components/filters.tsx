@@ -2,24 +2,29 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useOptimistic, useTransition } from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { SearchParams } from "@/lib/url-state";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-// import DateRangePicker from "./dashboard/my-daterange-picker";
 import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { addDays, format, formatDate, subDays } from "date-fns";
+import { addDays, format, subDays } from "date-fns";
+
+const formatToUrlDate = (date: Date): string => {
+  return format(date, "dd-MM-yyyy");
+};
+
+const parseUrlDate = (dateString: string): Date | undefined => {
+  if (!dateString) return undefined;
+  const parts = dateString.split("-");
+  if (parts.length !== 3) return undefined;
+
+  // Create date in YYYY-MM-DD format which Date can parse reliably
+  const isoFormat = `${parts[2]}-${parts[1]}-${parts[0]}`;
+  return new Date(isoFormat + "T00:00:00");
+};
 
 const LOCATIONS = [
   { label: "AFIESERE", value: "AFIESERE" },
@@ -32,22 +37,6 @@ const LOCATIONS = [
   { label: "UZERE", value: "UZERE" },
 ];
 
-// const YEARS = ["2025"];
-// const MONTHS = [
-//   "January",
-//   "February",
-//   "March",
-//   "April",
-//   "May",
-//   "June",
-//   "July",
-//   "August",
-//   "September",
-//   "October",
-//   "November",
-//   "December",
-// ];
-
 interface FilterProps {
   searchParams: URLSearchParams;
 }
@@ -56,13 +45,14 @@ function FilterBase({ searchParams }: FilterProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
+  // Get activeTab from URL or default to 'day'
+  const activeTab = searchParams.get("tab") || "day";
+
   const initialFilters: SearchParams = {
     loc: searchParams.getAll("loc") || [],
-    yr: searchParams.get("yr") || undefined,
-    mnt: searchParams.get("mnt") || undefined,
     from: searchParams.get("from") || undefined,
     to: searchParams.get("to") || undefined,
-    // Add other filters as needed
+    day: searchParams.get("day") || undefined,
   };
 
   const [optimisticFilters, setOptimisticFilters] =
@@ -71,18 +61,24 @@ function FilterBase({ searchParams }: FilterProps) {
   const updateURL = (newFilters: SearchParams) => {
     const searchParams = new URLSearchParams();
 
+    // Always include the active tab
+    searchParams.set("tab", activeTab);
+
     Object.entries(newFilters).forEach(([key, value]) => {
+      // Skip undefined values and empty arrays
+      if (value === undefined || (Array.isArray(value) && value.length === 0)) {
+        return;
+      }
+
       if (Array.isArray(value)) {
         value.forEach((v) => searchParams.append(key, v));
-      } else if (value) {
+      } else {
         searchParams.set(key, value);
       }
     });
 
     const queryString = searchParams.toString();
-    router.push(
-      queryString ? `/dashboard?${queryString}#chart` : "/dashboard#chart"
-    );
+    router.push(`/dashboard?${queryString}#chart`, { scroll: false });
   };
 
   const handleFilterChange = (
@@ -97,6 +93,34 @@ function FilterBase({ searchParams }: FilterProps) {
           : value
             ? [value]
             : undefined,
+      };
+      setOptimisticFilters(newFilters);
+      updateURL(newFilters);
+    });
+  };
+
+  const handleDayDateChange = (date: Date | undefined) => {
+    startTransition(() => {
+      const newFilters = {
+        ...optimisticFilters,
+        day: date ? formatToUrlDate(date) : undefined,
+        from: undefined, // Clear from when using day view
+        to: undefined, // Clear to when using day view
+      };
+      setOptimisticFilters(newFilters);
+      updateURL(newFilters);
+    });
+  };
+
+  const handleRangeDateChange = (
+    type: "from" | "to",
+    date: Date | undefined
+  ) => {
+    startTransition(() => {
+      const newFilters = {
+        ...optimisticFilters,
+        [type]: date ? formatToUrlDate(date) : undefined,
+        day: undefined, // Clear date when using range view
       };
       setOptimisticFilters(newFilters);
       updateURL(newFilters);
@@ -125,11 +149,14 @@ function FilterBase({ searchParams }: FilterProps) {
     });
   };
 
+  const dayDate = optimisticFilters.day
+    ? parseUrlDate(optimisticFilters.day)
+    : undefined;
   const fromDate = optimisticFilters.from
-    ? new Date(optimisticFilters.from + "T00:00:00")
+    ? parseUrlDate(optimisticFilters.from)
     : undefined;
   const toDate = optimisticFilters.to
-    ? new Date(optimisticFilters.to + "T00:00:00")
+    ? parseUrlDate(optimisticFilters.to)
     : undefined;
 
   return (
@@ -137,138 +164,117 @@ function FilterBase({ searchParams }: FilterProps) {
       data-pending={isPending ? "" : undefined}
       className="flex-shrink-0 flex flex-col h-full"
     >
-      {/* <div className="p-2 flex flex-1 gap-2">
-        <DateRangePicker />
-      </div> */}
-      <div className="flex p-2 gap-3 flex-wrap">
-        <div className="flex flex-col flex-1 space-y-1">
-          <Label className="text-xs w-fit">Start Date</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className={cn(
-                  "w-fit text-left text-xs font-normal",
-                  !fromDate && "text-muted-foreground"
-                )}
-              >
-                {fromDate ? format(fromDate, "PPP") : <span>Pick a date</span>}
-                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={fromDate}
-                onSelect={(date) => {
-                  const value = date
-                    ? formatDate(date, "yyyy-MM-dd")
-                    : undefined;
-                  handleFilterChange("from", value);
-                }}
-                // disabled={(date) =>
-                //   date > new Date() || date < new Date("2024-12-31")
-                // }
-                disabled={(date) => {
-                  const minDate = new Date("2024-12-31");
-                  const maxDate = new Date();
-                  if (date < minDate || date > maxDate) return true;
-                  if (toDate && date > subDays(toDate, 1)) return true;
-                  return false;
-                }}
-                initialFocus
-              />
-            </PopoverContent>
-          </Popover>
-        </div>
+      {/* Date Range Filter - Only shown for 'range' tab */}
+      {activeTab === "range" && (
+        <div className="flex p-2 gap-3 flex-wrap">
+          <div className="flex flex-col flex-1 space-y-1">
+            <Label className="text-sm w-fit">Start Date</Label>
+            <Popover modal>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-full max-w-[170] text-left text-sm font-normal",
+                    !fromDate && "text-muted-foreground"
+                  )}
+                >
+                  {fromDate ? (
+                    format(fromDate, "PPP")
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 z-[100]" align="start">
+                <Calendar
+                  mode="single"
+                  defaultMonth={fromDate}
+                  selected={fromDate}
+                  onSelect={(date) => handleRangeDateChange("from", date)}
+                  disabled={(date) => {
+                    const minDate = new Date("2024-12-31");
+                    const maxDate = new Date();
+                    if (date < minDate || date > maxDate) return true;
+                    if (toDate && date > subDays(toDate, 1)) return true;
+                    return false;
+                  }}
+                  captionLayout="dropdown-months"
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
 
-        <div className="flex flex-col flex-1 space-y-1">
-          <Label className="text-xs w-fit">End Date</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                className={cn(
-                  "w-fit text-left text-xs font-normal",
-                  !toDate && "text-muted-foreground"
-                )}
-              >
-                {toDate ? format(toDate, "PPP") : <span>Pick a date</span>}
-                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar
-                mode="single"
-                selected={toDate}
-                onSelect={(date) => {
-                  const value = date
-                    ? formatDate(date, "yyyy-MM-dd")
-                    : undefined;
-                  handleFilterChange("to", value);
-                }}
-                // disabled={(date) =>
-                //   date > new Date() || date < new Date("1900-01-01")
-                // }
-                disabled={(date) => {
-                  const minDate = new Date("2024-12-31");
-                  const maxDate = new Date();
-                  if (date < minDate || date > maxDate) return true;
-                  if (fromDate && date < addDays(fromDate, 1)) return true;
-                  return false;
-                }}
-                initialFocus
-              />
-            </PopoverContent>
-          </Popover>
+          <div className="flex flex-col flex-1 space-y-1">
+            <Label className="text-sm w-fit">End Date</Label>
+            <Popover modal>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-full max-w-[170] text-left text-sm font-normal",
+                    !toDate && "text-muted-foreground"
+                  )}
+                >
+                  {toDate ? format(toDate, "PPP") : <span>Pick a date</span>}
+                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 z-100" align="start">
+                <Calendar
+                  mode="single"
+                  selected={toDate}
+                  defaultMonth={toDate}
+                  onSelect={(date) => handleRangeDateChange("to", date)}
+                  disabled={(date) => {
+                    const minDate = new Date("2024-12-31");
+                    const maxDate = new Date();
+                    if (date < minDate || date > maxDate) return true;
+                    if (fromDate && date < addDays(fromDate, 1)) return true;
+                    return false;
+                  }}
+                  captionLayout="dropdown-months"
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
-      </div>
-      {/* <div className="flex flex-wrap">
-        <div className="p-2 flex flex-col space-y-0.5">
-          <Label htmlFor="year" className="text-xs">
-            Year
-          </Label>
-          <Select
-            value={optimisticFilters.yr ?? ""}
-            // value={optimisticFilters.yr || "2025"}
-            onValueChange={(value) => handleFilterChange("yr", value)}
-          >
-            <SelectTrigger id="year" className="mt-1 text-xs">
-              <SelectValue placeholder="Select a year" />
-            </SelectTrigger>
-            <SelectContent>
-              {YEARS.map((yr) => (
-                <SelectItem key={yr} value={yr}>
-                  {yr}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="p-2 flex flex-col space-y-0.5">
-          <Label htmlFor="month" className="text-xs">
-            Month
-          </Label>
-          <Select
-            value={optimisticFilters.mnt ?? ""}
-            // value={optimisticFilters.mnt || MONTHS[new Date().getMonth()]}
-            onValueChange={(value) => handleFilterChange("mnt", value)}
-          >
-            <SelectTrigger id="month" className="mt-1 text-xs">
-              <SelectValue placeholder="Select a month" />
-            </SelectTrigger>
-            <SelectContent>
-              {MONTHS.map((mnt) => (
-                <SelectItem key={mnt} value={mnt}>
-                  {mnt}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div> */}
+      )}
 
-      <ScrollArea className="h-[300px] mt-2 p-2 space-y-4">
+      {/* Single Date Picker - Only shown for 'day' tab */}
+      {activeTab === "day" && (
+        <div className="p-2">
+          <div className="flex flex-col space-y-1">
+            <Label className="text-sm w-fit">Date</Label>
+            <Popover modal>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-full max-w-[170] text-left text-sm font-normal",
+                    !dayDate && "text-muted-foreground"
+                  )}
+                >
+                  {dayDate ? format(dayDate, "PPP") : <span>Pick a date</span>}
+                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 z-[100]" align="start">
+                <Calendar
+                  mode="single"
+                  selected={dayDate}
+                  defaultMonth={dayDate}
+                  onSelect={(date) => handleDayDateChange(date)}
+                  captionLayout="dropdown-months"
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+        </div>
+      )}
+
+      {/* Location Filter - Shown for both tabs */}
+      <div className="h-[300px] mt-2 p-2">
         <Label className="text-sm mb-2">Locations</Label>
         <div className="flex items-center space-x-2 py-1">
           <Checkbox
@@ -298,7 +304,7 @@ function FilterBase({ searchParams }: FilterProps) {
             </Label>
           </div>
         ))}
-      </ScrollArea>
+      </div>
 
       {Object.keys(optimisticFilters).length > 0 && (
         <div className="p-4 border-t">

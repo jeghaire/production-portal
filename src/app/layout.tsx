@@ -1,18 +1,17 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { geistVF } from "@/app/fonts";
-import ThemeProvider from "./theme-provider";
+import ThemeProvider from "../components/theme-provider";
 
 export const metadata: Metadata = {
   title: "HEOSL Production Portal",
   description: "HEOSL production view portal for reports and analytics",
-  manifest: "/manifest.json",
+  manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "HEOSL Production Portal",
   },
-  themeColor: "#000000",
   formatDetection: {
     telephone: false,
   },
@@ -39,7 +38,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: "cover",
-  themeColor: "#0A0A0A",
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
@@ -48,15 +47,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="manifest" href="/manifest.json" />
+        <link rel="manifest" href="/manifest.webmanifest" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
       </head>
       <body
         className={`${geistVF.variable} antialiased font-geistVF scroll-smooth`}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

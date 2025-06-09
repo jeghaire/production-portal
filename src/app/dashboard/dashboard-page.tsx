@@ -58,6 +58,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { ProductionCard } from "@/components/dashboard/production-card";
 import { LocationDifferenceCard } from "@/components/dashboard/location-difference-card";
 import { TankLevelChart } from "@/components/tank-level";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const netTargetByLocation: Record<string, number> = {
   AFIESERE: 8706.18,
@@ -177,6 +178,11 @@ function DashBoardComponent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const isMobile = useIsMobile();
+  // Get initial tab from URL (default to 'day')
+  const initialTab = searchParams.get("tab") || "day";
+
+  // Local state for immediate tab changes
+  const [activeTab, setActiveTab] = React.useState(initialTab);
 
   // Extract selected locations from query params
   const selectedQueryParams = searchParams.getAll("loc");
@@ -412,42 +418,89 @@ function DashBoardComponent() {
   //   selectedYear.length ? Number(selectedYear[0]) : 2025
   // );
 
+  // Sync local state when URL changes (like back/forward navigation)
+  React.useEffect(() => {
+    const urlTab = searchParams.get("tab") || "day";
+    setActiveTab(urlTab);
+  }, [searchParams]);
+
+  const handleTabChange = (newTab: string) => {
+    // Update local state immediately for responsive UI
+    setActiveTab(newTab);
+
+    // Update URL in the background
+    const params = new URLSearchParams(searchParams);
+    params.set("tab", newTab);
+    router.replace(`?${params.toString()}`, { scroll: false });
+  };
+
+  // // Get the active tab from URL params, default to 'day' if not present
+  // const activeTab = searchParams.get("tab") || "day";
+
+  // // Function to handle tab changes
+  // const handleTabChange = (newTab: string) => {
+  //   const params = new URLSearchParams(searchParams);
+  //   params.set("tab", newTab);
+  //   router.replace(`?${params.toString()}`, { scroll: false });
+  // };
+
   return (
     <>
-      <section className="p-5 grid grid-cols-1 @xl:grid-cols-2 @6xl:grid-cols-4 @7xl:grid-cols-4 gap-3">
-        {productionCardData.map((item, index) => (
-          <ProductionCard key={index} {...item} />
-        ))}
-        <Card>
-          <Carousel className="w-full">
-            <CarouselContent>
-              {carouselData.map(({ location, entries }, locIndex) => (
-                <CarouselItem key={locIndex} className="w-full">
-                  <LocationDifferenceCard
-                    location={location}
-                    entries={entries}
-                  />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="!left-5 !top-2" />
-            <CarouselNext className="!right-5 !top-2" />
-          </Carousel>
-        </Card>
-
-        <Card
-          className="col-span-full @container scroll-mt-8 pb-0 !gap-0"
-          id="chart"
-        >
-          <CardHeader className="flex flex-col @max-md:px-5 @xl:flex-row">
-            <div className="flex flex-col space-y-1 space-x-1 @7xl:flex flex-1">
-              <CardTitle>OML 30 Production Perfomance</CardTitle>
-              {/* <CardDescription>
+      <Tabs
+        defaultValue="day"
+        value={activeTab}
+        onValueChange={handleTabChange}
+      >
+        <TabsList className="m-4 mb-0">
+          <TabsTrigger value="day">By Day</TabsTrigger>
+          <TabsTrigger value="range">By Range</TabsTrigger>
+        </TabsList>
+        <TabsContent value="day">
+          <section className="p-4 grid grid-cols-1 @xl:grid-cols-2 @6xl:grid-cols-4 @7xl:grid-cols-4 gap-3">
+            {productionCardData.map((item, index) => (
+              <ProductionCard key={index} {...item} />
+            ))}
+            <Card>
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {carouselData.map(({ location, entries }, locIndex) => (
+                    <CarouselItem key={locIndex} className="w-full">
+                      <LocationDifferenceCard
+                        location={location}
+                        entries={entries}
+                      />
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="!left-5 !top-2" />
+                <CarouselNext className="!right-5 !top-2" />
+              </Carousel>
+            </Card>
+            <div className="md:col-span-1">
+              <TankLevelChart
+                title="Tank Levels"
+                description="Showing water and oil levels in tanks"
+                chartConfig={tankLevelChartConfig}
+                chartData={tankLevelChartData}
+              />
+            </div>
+          </section>
+        </TabsContent>
+        <TabsContent value="range">
+          <section className="p-5 grid grid-cols-1 @xl:grid-cols-2 @6xl:grid-cols-4 @7xl:grid-cols-4 gap-3">
+            <Card
+              className="col-span-full @container scroll-mt-8 pb-0 !gap-0"
+              id="chart"
+            >
+              <CardHeader className="flex flex-col @max-md:px-5 @xl:flex-row">
+                <div className="flex flex-col space-y-1 space-x-1 @7xl:flex flex-1">
+                  <CardTitle>OML 30 Production Perfomance</CardTitle>
+                  {/* <CardDescription>
                 Showing total Oil Production for {selectedMonth[0] || "January"}{" "}
                 {selectedYear[0] || 2025}
               </CardDescription> */}
-            </div>
-            {/* <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+                </div>
+                {/* <Select value={selectedLocation} onValueChange={setSelectedLocation}>
             <SelectTrigger
               className="w-[160px] rounded-lg sm:ml-auto"
               aria-label="Select a value"
@@ -466,372 +519,385 @@ function DashBoardComponent() {
               ))}
             </SelectContent>
           </Select> */}
-            <div className="flex md:flex-col @md:flex-row space-x-2 print:hidden">
-              <Popover open={openT} onOpenChange={setOpenT}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="w-fit md:w-[200px] justify-between"
-                  >
-                    {selectedValues.length > 0
-                      ? (() => {
-                          const selectedLabels = filterT
-                            .map(
-                              (value) =>
-                                options.find(
-                                  (framework) => framework.value === value
-                                )?.label
-                            )
-                            .filter(Boolean); // Removes any undefined values
-                          return selectedLabels.length > 2
-                            ? `${selectedLabels.slice(0, 2).join(", ")}...`
-                            : selectedLabels.join(", ");
-                        })()
-                      : "Filter Chart"}
-                    <IconSelector className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput placeholder="Search chart filters..." />
-                    <CommandList>
-                      <CommandEmpty>No location found.</CommandEmpty>
-                      <CommandGroup>
-                        {options.map((option) => (
-                          <CommandItem
-                            key={option.value}
-                            value={option.value}
-                            onSelect={() => toggleFilterT(option.value)}
-                          >
-                            <IconCheck
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                filterT.includes(option.value)
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {option.label}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
+                <div className="flex max-md:mt-2 md:flex-col flex-wrap gap-2 @md:flex-row print:hidden">
+                  <Popover open={openT} onOpenChange={setOpenT}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={open}
+                        className="w-full md:w-[200px] justify-between"
+                      >
+                        {selectedValues.length > 0
+                          ? (() => {
+                              const selectedLabels = filterT
+                                .map(
+                                  (value) =>
+                                    options.find(
+                                      (framework) => framework.value === value
+                                    )?.label
+                                )
+                                .filter(Boolean); // Removes any undefined values
+                              return selectedLabels.length > 2
+                                ? `${selectedLabels.slice(0, 2).join(", ")}...`
+                                : selectedLabels.join(", ");
+                            })()
+                          : "Filter Chart"}
+                        <IconSelector className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                      <Command>
+                        <CommandInput placeholder="Search chart filters..." />
+                        <CommandList>
+                          <CommandEmpty>No location found.</CommandEmpty>
+                          <CommandGroup>
+                            {options.map((option) => (
+                              <CommandItem
+                                key={option.value}
+                                value={option.value}
+                                onSelect={() => toggleFilterT(option.value)}
+                              >
+                                <IconCheck
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    filterT.includes(option.value)
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {option.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
 
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="w-fit md:w-[200px] justify-between"
-                  >
-                    {/* {value
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={open}
+                        className="w-full md:w-[200px] justify-between"
+                      >
+                        {/* {value
                   ? loc.find((framework) => framework.value === value)
                       ?.label
                   : "Select location..."} */}
-                    {selectedValues.length > 0
-                      ? // ? selectedValues
-                        //     .map(
-                        //       (value) =>
-                        //         loc.find((framework) => framework.value === value)
-                        //           ?.label
-                        //     )
-                        //     .join(", ")
-                        (() => {
-                          const selectedLabels = selectedValues
-                            .map(
-                              (value) =>
-                                loc.find(
-                                  (framework) => framework.value === value
-                                )?.label
-                            )
-                            .filter(Boolean); // Removes any undefined values
+                        {selectedValues.length > 0
+                          ? // ? selectedValues
+                            //     .map(
+                            //       (value) =>
+                            //         loc.find((framework) => framework.value === value)
+                            //           ?.label
+                            //     )
+                            //     .join(", ")
+                            (() => {
+                              const selectedLabels = selectedValues
+                                .map(
+                                  (value) =>
+                                    loc.find(
+                                      (framework) => framework.value === value
+                                    )?.label
+                                )
+                                .filter(Boolean); // Removes any undefined values
 
-                          return selectedLabels.length > 2
-                            ? `${selectedLabels.slice(0, 2).join(", ")}...`
-                            : selectedLabels.join(", ");
-                        })()
-                      : "ALL LOCATIONS"}
-                    <IconSelector className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput placeholder="Search locations..." />
-                    <CommandList>
-                      <CommandEmpty>No location found.</CommandEmpty>
-                      <CommandGroup>
-                        {loc.map((framework) => (
-                          <CommandItem
-                            key={framework.value}
-                            value={framework.value}
-                            // onSelect={(currentValue) => {
-                            //   setValue(currentValue === value ? "" : currentValue);
-                            //   setOpen(false);
-                            // }}
-                            onSelect={() => toggleSelection(framework.value)}
-                          >
-                            <IconCheck
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                selectedValues.includes(framework.value)
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                            {framework.label}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
-          </CardHeader>
-          {aggregatedData.length > 0 ? (
-            <>
-              <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-                <ChartContainer
-                  config={chartConfig}
-                  className="aspect-auto h-[500px] w-full pb-5"
-                >
-                  {/* <AreaChart data={chartData[selectedLocation]}> */}
-                  <AreaChart
-                    data={aggregatedData}
-                    syncId="chartSync"
-                    className="h-full"
-                  >
-                    <defs>
-                      <linearGradient id="fillNet" x1="0" y1="0" x2="0" y2="1">
-                        <stop
-                          offset="5%"
-                          stopColor="var(--color-net)"
-                          stopOpacity={0.8}
-                        />
-                        <stop
-                          offset="95%"
-                          stopColor="var(--color-net)"
-                          stopOpacity={0.1}
-                        />
-                      </linearGradient>
-                      <linearGradient
-                        id="fillGross"
-                        x1="0"
-                        y1="0"
-                        x2="0"
-                        y2="1"
+                              return selectedLabels.length > 2
+                                ? `${selectedLabels.slice(0, 2).join(", ")}...`
+                                : selectedLabels.join(", ");
+                            })()
+                          : "ALL LOCATIONS"}
+                        <IconSelector className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[200px] p-0">
+                      <Command>
+                        <CommandInput placeholder="Search locations..." />
+                        <CommandList>
+                          <CommandEmpty>No location found.</CommandEmpty>
+                          <CommandGroup>
+                            {loc.map((framework) => (
+                              <CommandItem
+                                key={framework.value}
+                                value={framework.value}
+                                // onSelect={(currentValue) => {
+                                //   setValue(currentValue === value ? "" : currentValue);
+                                //   setOpen(false);
+                                // }}
+                                onSelect={() =>
+                                  toggleSelection(framework.value)
+                                }
+                              >
+                                <IconCheck
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    selectedValues.includes(framework.value)
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {framework.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </CardHeader>
+              {aggregatedData.length > 0 ? (
+                <>
+                  <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
+                    <ChartContainer
+                      config={chartConfig}
+                      className="aspect-auto h-[500px] w-full pb-5"
+                    >
+                      {/* <AreaChart data={chartData[selectedLocation]}> */}
+                      <AreaChart
+                        data={aggregatedData}
+                        syncId="chartSync"
+                        className="h-full"
                       >
-                        <stop
-                          offset="5%"
-                          stopColor="var(--color-gross)"
-                          stopOpacity={0.8}
-                        />
-                        <stop
-                          offset="95%"
-                          stopColor="var(--color-gross)"
-                          stopOpacity={0.1}
-                        />
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid vertical={false} />
-                    <XAxis
-                      dataKey="date"
-                      tickLine={false}
-                      axisLine={false}
-                      tickMargin={8}
-                      minTickGap={32}
-                      tickFormatter={(value) => {
-                        const date = new Date(value);
-                        return date.toLocaleDateString("en-GB");
-                      }}
-                    />
-                    {/* {!isMobile && ( */}
-                    <YAxis
-                      tickLine={false}
-                      axisLine={false}
-                      tickMargin={5}
-                      tickCount={5}
-                      label={{
-                        value: "Oil Rate and Gross (blpd)",
-                        angle: -90,
-                        position: "insideLeft",
-                      }}
-                      tickFormatter={(tickItem) => {
-                        if (tickItem >= 1000) {
-                          return tickItem / 1000 + "k";
-                        }
-                        return tickItem;
-                      }}
-                    />
-                    {/* )} */}
-                    <ChartTooltip
-                      cursor={false}
-                      content={
-                        <ChartTooltipContent
-                          className="min-w-[170px] p-2"
-                          labelFormatter={(value) => {
-                            return new Date(value).toLocaleDateString("en-GB");
+                        <defs>
+                          <linearGradient
+                            id="fillNet"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="5%"
+                              stopColor="var(--color-net)"
+                              stopOpacity={0.8}
+                            />
+                            <stop
+                              offset="95%"
+                              stopColor="var(--color-net)"
+                              stopOpacity={0.1}
+                            />
+                          </linearGradient>
+                          <linearGradient
+                            id="fillGross"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="5%"
+                              stopColor="var(--color-gross)"
+                              stopOpacity={0.8}
+                            />
+                            <stop
+                              offset="95%"
+                              stopColor="var(--color-gross)"
+                              stopOpacity={0.1}
+                            />
+                          </linearGradient>
+                        </defs>
+                        <CartesianGrid vertical={false} />
+                        <XAxis
+                          dataKey="date"
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={8}
+                          minTickGap={32}
+                          tickFormatter={(value) => {
+                            const date = new Date(value);
+                            return date.toLocaleDateString("en-GB");
                           }}
-                          indicator="dot"
                         />
-                      }
-                    />
-                    {filterT.includes("gross") && (
-                      <Area
-                        dataKey="gross"
-                        type="natural"
-                        // fill="url(#fillGross)"
-                        fill="var(--color-gross)"
-                        stroke="var(--color-gross)"
-                        strokeWidth={2}
-                        dot={
-                          !isMobile && {
-                            fill: "var(--color-gross)",
-                            fillOpacity: 1,
-                            r: 1.5,
+                        {/* {!isMobile && ( */}
+                        <YAxis
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={5}
+                          tickCount={5}
+                          label={{
+                            value: "Oil Rate and Gross (blpd)",
+                            angle: -90,
+                            position: "insideLeft",
+                          }}
+                          tickFormatter={(tickItem) => {
+                            if (tickItem >= 1000) {
+                              return tickItem / 1000 + "k";
+                            }
+                            return tickItem;
+                          }}
+                        />
+                        {/* )} */}
+                        <ChartTooltip
+                          cursor={false}
+                          content={
+                            <ChartTooltipContent
+                              className="min-w-[170px] p-2"
+                              labelFormatter={(value) => {
+                                return new Date(value).toLocaleDateString(
+                                  "en-GB"
+                                );
+                              }}
+                              indicator="dot"
+                            />
                           }
-                        }
-                        activeDot={{
-                          r: 4,
-                        }}
-                      />
-                    )}
-                    {filterT.includes("net") && (
-                      <Area
-                        dataKey="net"
-                        type="natural"
-                        // fill="url(#fillNet)"
-                        fill="var(--color-net)"
-                        fillOpacity={1}
-                        stroke={`hsl(0 70% 35.3%)`}
-                        // stroke={`hsl(0 74.7% 15.5%)`}
-                        // stroke="var(--color-net)"
-                        strokeWidth={2}
-                        dot={
-                          !isMobile && {
-                            fill: "var(--color-net)",
-                            fillOpacity: 1,
-                            r: 1.5,
-                          }
-                        }
-                        activeDot={{
-                          r: 4,
-                        }}
-                      />
-                    )}
+                        />
+                        {filterT.includes("gross") && (
+                          <Area
+                            dataKey="gross"
+                            type="natural"
+                            // fill="url(#fillGross)"
+                            fill="var(--color-gross)"
+                            stroke="var(--color-gross)"
+                            strokeWidth={2}
+                            dot={
+                              !isMobile && {
+                                fill: "var(--color-gross)",
+                                fillOpacity: 1,
+                                r: 1.5,
+                              }
+                            }
+                            activeDot={{
+                              r: 4,
+                            }}
+                          />
+                        )}
+                        {filterT.includes("net") && (
+                          <Area
+                            dataKey="net"
+                            type="natural"
+                            // fill="url(#fillNet)"
+                            fill="var(--color-net)"
+                            fillOpacity={1}
+                            stroke={`hsl(0 70% 35.3%)`}
+                            // stroke={`hsl(0 74.7% 15.5%)`}
+                            // stroke="var(--color-net)"
+                            strokeWidth={2}
+                            dot={
+                              !isMobile && {
+                                fill: "var(--color-net)",
+                                fillOpacity: 1,
+                                r: 1.5,
+                              }
+                            }
+                            activeDot={{
+                              r: 4,
+                            }}
+                          />
+                        )}
 
-                    <Area
-                      dataKey="netTarget"
-                      type="natural"
-                      stroke="var(--color-netTarget)"
-                      strokeWidth={2}
-                      fill="none"
-                      strokeDasharray={"5 5"}
-                      activeDot={{
-                        r: 0,
-                      }}
-                    />
-                    <ChartLegend
-                      verticalAlign="top"
-                      content={<ChartLegendContent />}
-                    />
-                  </AreaChart>
-                </ChartContainer>
-              </CardContent>
-            </>
-          ) : (
-            <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[520]">
-              <span>
-                No data available for the selected time period and locations.
-              </span>
-            </div>
-          )}
-        </Card>
-        <Card className="col-span-full @7xl:col-span-2 pb-0">
-          <CardHeader>
-            <CardTitle>String Status</CardTitle>
-            {/* <CardDescription>{`Chart Data displayed for ${fromDate} to ${toDate}`}</CardDescription> */}
-          </CardHeader>
-          {aggregatedData.length > 0 ? (
-            <>
-              <CardContent>
-                <ChartContainer
-                  config={chartConfig}
-                  className="h-[400px] w-full pb-5"
-                >
-                  <LineChart
-                    syncId="chartSync"
-                    accessibilityLayer
-                    data={aggregatedData}
-                    margin={{
-                      right: 4,
-                      top: 4,
-                      bottom: 4,
-                    }}
-                  >
-                    <CartesianGrid vertical={false} />
-                    <XAxis
-                      dataKey="date"
-                      tickLine={false}
-                      axisLine={false}
-                      tickMargin={18}
-                      tickFormatter={(value) => {
-                        const date = new Date(value);
-                        return date.toLocaleDateString("en-GB");
-                      }}
-                    />
-                    {/* {!isMobile && ( */}
-                    <YAxis
-                      tickLine={false}
-                      axisLine={false}
-                      tickMargin={16}
-                      tickCount={4}
-                      type="number"
-                      domain={["dataMin", "auto"]}
-                      // allowDataOverflow={true}
-                      label={{
-                        value: "Strings Up",
-                        angle: -90,
-                        position: "insideLeft",
-                      }}
-                    />
-                    {/* )} */}
-                    <ChartTooltip
-                      cursor={false}
-                      content={
-                        <ChartTooltipContent
-                          labelFormatter={(value) => {
-                            return new Date(value).toLocaleDateString("en-GB");
+                        <Area
+                          dataKey="netTarget"
+                          type="natural"
+                          stroke="var(--color-netTarget)"
+                          strokeWidth={2}
+                          fill="none"
+                          strokeDasharray={"5 5"}
+                          activeDot={{
+                            r: 0,
                           }}
-                          indicator="dot"
                         />
-                      }
-                    />
-                    <Line
-                      dataKey="stringsUp"
-                      type="natural"
-                      stroke="var(--color-stringsUp)"
-                      strokeWidth={2}
-                      dot={
-                        !isMobile && {
-                          fill: "var(--color-stringsUp)",
-                          r: 1,
-                        }
-                      }
-                      activeDot={{
-                        r: 4,
-                      }}
-                    />
-                  </LineChart>
-                </ChartContainer>
-              </CardContent>
-              {/* <CardFooter>
+                        <ChartLegend
+                          verticalAlign="top"
+                          content={<ChartLegendContent />}
+                        />
+                      </AreaChart>
+                    </ChartContainer>
+                  </CardContent>
+                </>
+              ) : (
+                <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[520]">
+                  <span>
+                    No data available for the selected time period and
+                    locations.
+                  </span>
+                </div>
+              )}
+            </Card>
+            <Card className="col-span-full @7xl:col-span-2 pb-0">
+              <CardHeader>
+                <CardTitle>String Status</CardTitle>
+                {/* <CardDescription>{`Chart Data displayed for ${fromDate} to ${toDate}`}</CardDescription> */}
+              </CardHeader>
+              {aggregatedData.length > 0 ? (
+                <>
+                  <CardContent>
+                    <ChartContainer
+                      config={chartConfig}
+                      className="h-[400px] w-full pb-5"
+                    >
+                      <LineChart
+                        syncId="chartSync"
+                        accessibilityLayer
+                        data={aggregatedData}
+                        margin={{
+                          right: 4,
+                          top: 4,
+                          bottom: 4,
+                        }}
+                      >
+                        <CartesianGrid vertical={false} />
+                        <XAxis
+                          dataKey="date"
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={18}
+                          tickFormatter={(value) => {
+                            const date = new Date(value);
+                            return date.toLocaleDateString("en-GB");
+                          }}
+                        />
+                        {/* {!isMobile && ( */}
+                        <YAxis
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={16}
+                          tickCount={4}
+                          type="number"
+                          domain={["dataMin", "auto"]}
+                          // allowDataOverflow={true}
+                          label={{
+                            value: "Strings Up",
+                            angle: -90,
+                            position: "insideLeft",
+                          }}
+                        />
+                        {/* )} */}
+                        <ChartTooltip
+                          cursor={false}
+                          content={
+                            <ChartTooltipContent
+                              labelFormatter={(value) => {
+                                return new Date(value).toLocaleDateString(
+                                  "en-GB"
+                                );
+                              }}
+                              indicator="dot"
+                            />
+                          }
+                        />
+                        <Line
+                          dataKey="stringsUp"
+                          type="natural"
+                          stroke="var(--color-stringsUp)"
+                          strokeWidth={2}
+                          dot={
+                            !isMobile && {
+                              fill: "var(--color-stringsUp)",
+                              r: 1,
+                            }
+                          }
+                          activeDot={{
+                            r: 4,
+                          }}
+                        />
+                      </LineChart>
+                    </ChartContainer>
+                  </CardContent>
+                  {/* <CardFooter>
                 <div className="flex w-full items-start gap-2 text-sm mb-4">
                   <div className="grid gap-2">
                     <div className="flex items-center gap-2 font-medium leading-none">
@@ -844,95 +910,98 @@ function DashBoardComponent() {
                   </div>
                 </div>
               </CardFooter> */}
-            </>
-          ) : (
-            <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[320]">
-              <span>
-                No data available for the selected time period and locations.
-              </span>
-            </div>
-          )}
-        </Card>
-        <Card className="col-span-full @7xl:col-span-2 pb-0">
-          <CardHeader>
-            <CardTitle>Basic Sediment and Water</CardTitle>
-            {/* <CardDescription>{`Chart Data displayed for ${fromDate} to ${toDate}`}</CardDescription> */}
-          </CardHeader>
-          {aggregatedData.length > 0 ? (
-            <>
-              <CardContent>
-                <ChartContainer
-                  config={chartConfig}
-                  className="h-[400px] w-full pb-5"
-                >
-                  <LineChart
-                    syncId="chartSync"
-                    accessibilityLayer
-                    // data={chartDataLine}
-                    data={aggregatedData}
-                    margin={{
-                      right: 4,
-                      top: 4,
-                      bottom: 4,
-                    }}
-                  >
-                    <CartesianGrid vertical={false} />
-                    <XAxis
-                      dataKey="date"
-                      tickLine={false}
-                      axisLine={false}
-                      tickMargin={8}
-                      tickFormatter={(value) => {
-                        const date = new Date(value);
-                        return date.toLocaleDateString("en-GB");
-                      }}
-                    />
-                    {/* {!isMobile && ( */}
-                    <YAxis
-                      tickLine={false}
-                      axisLine={false}
-                      tickMargin={16}
-                      tickCount={4}
-                      type="number"
-                      domain={["dataMin", "auto"]}
-                      // allowDataOverflow={true}
-                      label={{
-                        value: "BSW (%)",
-                        angle: -90,
-                        position: "insideLeft",
-                      }}
-                    />
-                    {/* )} */}
-                    <ChartTooltip
-                      cursor={false}
-                      content={
-                        <ChartTooltipContent
-                          labelFormatter={(value) => {
-                            return new Date(value).toLocaleDateString("en-GB");
+                </>
+              ) : (
+                <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[320]">
+                  <span>
+                    No data available for the selected time period and
+                    locations.
+                  </span>
+                </div>
+              )}
+            </Card>
+            <Card className="col-span-full @7xl:col-span-2 pb-0">
+              <CardHeader>
+                <CardTitle>Basic Sediment and Water</CardTitle>
+                {/* <CardDescription>{`Chart Data displayed for ${fromDate} to ${toDate}`}</CardDescription> */}
+              </CardHeader>
+              {aggregatedData.length > 0 ? (
+                <>
+                  <CardContent>
+                    <ChartContainer
+                      config={chartConfig}
+                      className="h-[400px] w-full pb-5"
+                    >
+                      <LineChart
+                        syncId="chartSync"
+                        accessibilityLayer
+                        // data={chartDataLine}
+                        data={aggregatedData}
+                        margin={{
+                          right: 4,
+                          top: 4,
+                          bottom: 4,
+                        }}
+                      >
+                        <CartesianGrid vertical={false} />
+                        <XAxis
+                          dataKey="date"
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={8}
+                          tickFormatter={(value) => {
+                            const date = new Date(value);
+                            return date.toLocaleDateString("en-GB");
                           }}
-                          indicator="dot"
                         />
-                      }
-                    />
-                    <Line
-                      dataKey="bsw"
-                      type="natural"
-                      stroke="var(--color-bsw)"
-                      strokeWidth={2}
-                      dot={
-                        !isMobile && {
-                          fill: "var(--color-bsw)",
-                          r: 1,
-                        }
-                      }
-                      activeDot={{
-                        r: 4,
-                      }}
-                    />
-                  </LineChart>
-                </ChartContainer>
-              </CardContent>
-              {/* <CardFooter>
+                        {/* {!isMobile && ( */}
+                        <YAxis
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={16}
+                          tickCount={4}
+                          type="number"
+                          domain={["dataMin", "auto"]}
+                          // allowDataOverflow={true}
+                          label={{
+                            value: "BSW (%)",
+                            angle: -90,
+                            position: "insideLeft",
+                          }}
+                        />
+                        {/* )} */}
+                        <ChartTooltip
+                          cursor={false}
+                          content={
+                            <ChartTooltipContent
+                              labelFormatter={(value) => {
+                                return new Date(value).toLocaleDateString(
+                                  "en-GB"
+                                );
+                              }}
+                              indicator="dot"
+                            />
+                          }
+                        />
+                        <Line
+                          dataKey="bsw"
+                          type="natural"
+                          stroke="var(--color-bsw)"
+                          strokeWidth={2}
+                          dot={
+                            !isMobile && {
+                              fill: "var(--color-bsw)",
+                              r: 1,
+                            }
+                          }
+                          activeDot={{
+                            r: 4,
+                          }}
+                        />
+                      </LineChart>
+                    </ChartContainer>
+                  </CardContent>
+                  {/* <CardFooter>
                 <div className="flex w-full items-start gap-2 text-sm mb-4">
                   <div className="grid gap-2">
                     <div className="flex items-center gap-2 font-medium leading-none">
@@ -945,25 +1014,22 @@ function DashBoardComponent() {
                   </div>
                 </div>
               </CardFooter> */}
-            </>
-          ) : (
-            <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[320]">
-              <span>
-                No data available for the selected time period and locations.
-              </span>
+                </>
+              ) : (
+                <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[320]">
+                  <span>
+                    No data available for the selected time period and
+                    locations.
+                  </span>
+                </div>
+              )}
+            </Card>
+            <div className="col-span-full print:hidden">
+              <DataTable data={tableData} columns={columns} />
             </div>
-          )}
-        </Card>
-        <TankLevelChart
-          title="Test"
-          description="Test test"
-          chartConfig={tankLevelChartConfig}
-          chartData={tankLevelChartData}
-        />
-        <div className="col-span-full print:hidden">
-          <DataTable data={tableData} columns={columns} />
-        </div>
-      </section>
+          </section>
+        </TabsContent>
+      </Tabs>
     </>
   );
 }

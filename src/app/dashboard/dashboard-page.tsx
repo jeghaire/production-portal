@@ -165,11 +165,11 @@ const tankLevelChartData = [
 const tankLevelChartConfig = {
   water: {
     label: "Water Level",
-    color: "hsl(var(--chart-gross))",
+    color: "var(--color-cyan-700)",
   },
   oil: {
     label: "Oil Level",
-    color: "hsl(var(--chart-net))",
+    color: "var(--color-red-800)",
   },
 } satisfies ChartConfig;
 
@@ -478,7 +478,7 @@ function DashBoardComponent() {
                 <CarouselNext className="!right-5 !top-2" />
               </Carousel>
             </Card>
-            <div className="col-span-1">
+            <div className="col-span-1 md:col-span-2">
               <TankLevelChart
                 title="UPS Tank Levels"
                 description="Showing water and oil levels in tanks"
@@ -486,10 +486,56 @@ function DashBoardComponent() {
                 chartData={tankLevelChartData}
               />
             </div>
-            <div className="col-span-1">
-              <TFPIncidentChart />
+            <div className="col-span-1 md:col-span-2">
+              {/*  <CardHeader>
+                <CardTitle>TFP REPORT</CardTitle>
+              </CardHeader> */}
+              <CardContent className="grid grid-cols-1 md:grid-cols-2 p-0 gap-3">
+                <div className="col-span-1">
+                  <div className="rounded-lg h-full grid gap-2 grid-cols-1">
+                    <Card className="col-span-1 gap-0 p-4">
+                      <CardTitle>Endurance Time</CardTitle>
+                      <p className="font-bold text-3xl">
+                        2.8
+                        <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                          days
+                        </span>
+                      </p>
+                    </Card>
+                    <Card className="col-span-1 gap-0 p-4">
+                      <CardTitle>Available Ullage</CardTitle>
+                      <p className="font-bold text-3xl">
+                        771,573
+                        <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                          bbls
+                        </span>
+                      </p>
+                    </Card>
+                    <Card className="col-span-1 gap-0 p-4">
+                      <CardTitle>TFP Total Injectors</CardTitle>
+                      <p className="font-bold text-3xl">
+                        394,367
+                        <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                          bbls
+                        </span>
+                      </p>
+                    </Card>
+                    <Card className="col-span-1 gap-0 p-4">
+                      <CardTitle>FRM Total</CardTitle>
+                      <p className="font-bold text-3xl">
+                        389,314
+                        <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                          bbls
+                        </span>
+                      </p>
+                    </Card>
+                  </div>
+                </div>
+                <div className="col-span-1">
+                  <TFPIncidentChart />
+                </div>
+              </CardContent>
             </div>
-            <Card className="md:col-span-2"></Card>
           </section>
         </TabsContent>
         <TabsContent value="range">

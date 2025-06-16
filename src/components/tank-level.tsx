@@ -45,7 +45,7 @@ export function TankLevelChart({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-[300px] w-full">
+        <ChartContainer config={chartConfig} className="h-[260] w-full">
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -80,7 +80,7 @@ export function TankLevelChart({
               dataKey="oil"
               stackId="a"
               fill="var(--color-oil)"
-              radius={[5, 5, 0, 0]}
+              radius={[8, 8, 0, 0]}
             />
           </BarChart>
         </ChartContainer>

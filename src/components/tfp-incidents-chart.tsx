@@ -51,15 +51,16 @@ const chartConfig = {
 
 export function TFPIncidentChart() {
   return (
-    <Card>
+    <Card className="rounded-lg">
       <CardHeader>
         <CardTitle>TFP INCIDENTS - YTD</CardTitle>
-        <CardDescription>
-          Showing TPF incidents count - year to date
-        </CardDescription>
+        <CardDescription>Showing TFP incidents count - YTD</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-[300] w-full">
+        <ChartContainer
+          config={chartConfig}
+          className="h-full min-h-[260] w-full"
+        >
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -71,10 +72,7 @@ export function TFPIncidentChart() {
                 chartConfig[value as keyof typeof chartConfig]?.label
               }
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <YAxis
               tickLine={false}
               axisLine={false}

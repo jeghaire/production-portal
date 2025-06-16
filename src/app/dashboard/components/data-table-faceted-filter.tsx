@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Column } from "@tanstack/react-table";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -46,21 +46,21 @@ export function DataTableFacetedFilter<TData, TValue>({
   const facets = column?.getFacetedUniqueValues();
   const selectedValues = new Set(column?.getFilterValue() as string[]);
 
-  // Get all values for our param key from URL
-  const getUrlValues = () => {
-    return searchParams.getAll(paramKey);
-  };
+  // // Get all values for our param key from URL
+  // const getUrlValues = () => {
+  //   return searchParams.getAll(paramKey);
+  // };
 
-  // Sync from URL to filter state
-  useEffect(() => {
-    const urlValues = getUrlValues();
-    if (urlValues.length > 0) {
-      column?.setFilterValue(urlValues);
-    } else if (selectedValues.size > 0) {
-      // Clear if URL has no values but we have selected values
-      column?.setFilterValue(undefined);
-    }
-  }, [searchParams]);
+  // // Sync from URL to filter state
+  // useEffect(() => {
+  //   const urlValues = getUrlValues();
+  //   if (urlValues.length > 0) {
+  //     column?.setFilterValue(urlValues);
+  //   } else if (selectedValues.size > 0) {
+  //     // Clear if URL has no values but we have selected values
+  //     column?.setFilterValue(undefined);
+  //   }
+  // }, []);
 
   // Sync from filter state to URL
   const updateUrlParams = (values: string[]) => {

@@ -18,7 +18,7 @@ type User = {
 const user: User = {
   id: '1',
   name: 'Mavi',
-  email: 'jomavi.eghaire@heosl.com',
+  email: 'admin@heosl.com',
   password: '$2b$10$JDnne2Qd/ezPJvR3YpDrEu66ZArg1k9Felw5KO.dqEfDE2/dTAH1e', // 123456
 };
  
@@ -46,7 +46,7 @@ export const { auth, signIn, signOut } = NextAuth({
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
  
-          // const debugHash = await bcrypt.hash('123456', 10);
+          // const debugHash = await bcrypt.hash('admin', 10);
           // console.log(debugHash);
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;

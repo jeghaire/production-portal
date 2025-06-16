@@ -60,6 +60,7 @@ import { LocationDifferenceCard } from "@/components/dashboard/location-differen
 import { TankLevelChart } from "@/components/tank-level";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { parseUrlDate } from "@/components/filters";
+import { TFPIncidentChart } from "@/components/tfp-incidents-chart";
 
 const netTargetByLocation: Record<string, number> = {
   AFIESERE: 8706.18,
@@ -155,10 +156,10 @@ const productionCardData = [
 ];
 
 const tankLevelChartData = [
-  { tankID: "Tank 111", water: 1806, oil: 800 },
-  { tankID: "Tank 112", water: 305, oil: 200 },
-  { tankID: "Tank 113", water: 237, oil: 120 },
-  { tankID: "Tank 114", water: 73, oil: 190 },
+  { tankID: "Tank 111", water: 0.5, oil: 6.5 },
+  { tankID: "Tank 112", water: 0.5, oil: 2.5 },
+  { tankID: "Tank 113", water: 0.5, oil: 2.5 },
+  { tankID: "Tank 114", water: 0.5, oil: 2.8 },
 ];
 
 const tankLevelChartConfig = {
@@ -477,14 +478,18 @@ function DashBoardComponent() {
                 <CarouselNext className="!right-5 !top-2" />
               </Carousel>
             </Card>
-            <div className="md:col-span-2">
+            <div className="col-span-1">
               <TankLevelChart
-                title="Tank Levels"
+                title="UPS Tank Levels"
                 description="Showing water and oil levels in tanks"
                 chartConfig={tankLevelChartConfig}
                 chartData={tankLevelChartData}
               />
             </div>
+            <div className="col-span-1">
+              <TFPIncidentChart />
+            </div>
+            <Card className="md:col-span-2"></Card>
           </section>
         </TabsContent>
         <TabsContent value="range">

@@ -26,7 +26,7 @@ export function DataTableToolbar<TData>({
           placeholder="Filter Table..."
           value={table.getState().globalFilter ?? ""}
           onChange={(event) => table.setGlobalFilter(event.target.value)}
-          className="h-9 w-full max-w-[400px] lg:w-[350px]"
+          className="h-8 w-full max-w-[400px] lg:w-[350px]"
         />
         {table.getColumn("Location") && (
           <DataTableFacetedFilter
@@ -42,7 +42,6 @@ export function DataTableToolbar<TData>({
               { label: "ORONI", value: "ORONI" },
               { label: "OWEH", value: "OWEH" },
               { label: "UZERE", value: "UZERE" },
-              { label: "UZERE EAST", value: "UZERE EAST" },
             ]}
           />
         )}

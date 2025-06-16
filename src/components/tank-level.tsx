@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -41,11 +41,11 @@ export function TankLevelChart({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="uppercase">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-[300px] w-full pb-5">
+        <ChartContainer config={chartConfig} className="h-[300px] w-full">
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -57,17 +57,30 @@ export function TankLevelChart({
             />
             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
             <ChartLegend content={<ChartLegendContent />} />
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              tickMargin={10}
+              type="number"
+              label={{
+                value: title,
+                angle: -90,
+                position: "left",
+                dx: 10,
+                // offset: 10,
+              }}
+            />
             <Bar
               dataKey="water"
               stackId="a"
               fill="var(--color-water)"
-              radius={[0, 0, 4, 4]}
+              radius={[0, 0, 0, 0]}
             />
             <Bar
               dataKey="oil"
               stackId="a"
               fill="var(--color-oil)"
-              radius={[4, 4, 0, 0]}
+              radius={[5, 5, 0, 0]}
             />
           </BarChart>
         </ChartContainer>

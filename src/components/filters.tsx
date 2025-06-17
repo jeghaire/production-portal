@@ -34,7 +34,11 @@ const LOCATIONS = [
   { label: "OLOMORO", value: "OLOMORO" },
   { label: "ORONI", value: "ORONI" },
   { label: "OWEH", value: "OWEH" },
-  { label: "UZERE", value: "UZERE" },
+  { label: "UZERE WEST", value: "UZERE WEST" },
+  {
+    label: "UZERE EAST (OML 30 - 14.695%)",
+    value: "UZERE EAST (OML 30 - 14.695%)",
+  },
 ];
 
 interface FilterProps {
@@ -78,7 +82,7 @@ function FilterBase({ searchParams }: FilterProps) {
     });
 
     const queryString = searchParams.toString();
-    router.push(`/dashboard?${queryString}#chart`, { scroll: false });
+    router.push(`/dashboard?${queryString}`, { scroll: false });
   };
 
   const handleFilterChange = (
@@ -266,6 +270,12 @@ function FilterBase({ searchParams }: FilterProps) {
                   defaultMonth={dayDate || toDate}
                   onSelect={(date) => handleDayDateChange(date)}
                   captionLayout="dropdown-months"
+                  disabled={(date) => {
+                    const minDate = new Date("2024-12-31");
+                    const maxDate = new Date();
+                    if (date < minDate || date > maxDate) return true;
+                    return false;
+                  }}
                 />
               </PopoverContent>
             </Popover>

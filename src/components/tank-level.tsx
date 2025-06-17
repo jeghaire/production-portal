@@ -55,7 +55,11 @@ export function TankLevelChart({
               axisLine={false}
               // tickFormatter={(value) => value.slice(0, 3)}
             />
-            <ChartTooltip content={<ChartTooltipContent hideLabel />} />
+            <ChartTooltip
+              content={
+                <ChartTooltipContent className="min-w-[150px]" hideLabel />
+              }
+            />
             <ChartLegend content={<ChartLegendContent />} />
             <YAxis
               tickLine={false}

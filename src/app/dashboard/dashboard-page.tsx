@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React from "react";
 import {
   Area,
   AreaChart,
@@ -10,14 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import {
-  Card,
-  CardContent,
-  // CardDescription,
-  // CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -26,8 +19,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import chartData from "@/lib/data.json";
-import { cn } from "@/lib/utils";
+import { cn, convertToApiDateFormat } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -51,7 +43,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { SiteHeader } from "@/components/site-header";
 import { DataTable } from "./components/data-table";
 import { columns } from "./components/columns";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -61,6 +52,79 @@ import { TankLevelChart } from "@/components/tank-level";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { parseUrlDate } from "@/components/filters";
 import { TFPIncidentChart } from "@/components/tfp-incidents-chart";
+import {
+  ChartDataEntry,
+  LocationEntry,
+  OutputFormat,
+  StorageSummary,
+  TankLevelChartEntry,
+  xProductionData,
+  xTotals,
+} from "@/lib/definitions";
+
+function getActualsWithTarget(
+  data: Record<string, ChartDataEntry[]>,
+  netTargetByLocation: Record<string, number>,
+  targetDay: string
+): LocationEntry[] {
+  const targetDate = new Date(targetDay);
+
+  return Object.keys(data).map((location) => {
+    const entries = [...data[location]].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
+    const match = entries.find(
+      (item) => new Date(item.date).toDateString() === targetDate.toDateString()
+    );
+
+    return {
+      location,
+      entry: match
+        ? {
+            date: new Date(match.date).toLocaleDateString("en-GB"),
+            value: match.net,
+          }
+        : null,
+      target: netTargetByLocation[location] ?? 0,
+    };
+  });
+}
+
+function getProductionTotals(
+  data: xProductionData,
+  selectedDate: string
+): xTotals {
+  let totalGrossForDay = 0;
+  let totalNetForDay = 0;
+  let cumulativeNetUpToDate = 0;
+
+  const selected = new Date(selectedDate);
+  const selectedYearStart = new Date(selected.getFullYear(), 0, 1); // Jan 1st
+
+  for (const entries of Object.values(data)) {
+    for (const entry of entries) {
+      const entryDate = new Date(entry.date);
+
+      // Total for the selected day
+      if (entry.date === selectedDate) {
+        totalGrossForDay += entry.gross;
+        totalNetForDay += entry.net;
+      }
+
+      // Cumulative total net from Jan 1 to selectedDate (inclusive)
+      if (entryDate >= selectedYearStart && entryDate <= selected) {
+        cumulativeNetUpToDate += entry.net;
+      }
+    }
+  }
+
+  return {
+    totalGrossForDay: Number(totalGrossForDay.toFixed(2)),
+    totalNetForDay: Number(totalNetForDay.toFixed(2)),
+    cumulativeNetUpToDate: Number(cumulativeNetUpToDate.toFixed(2)),
+  };
+}
 
 const netTargetByLocation: Record<string, number> = {
   AFIESERE: 8706.18,
@@ -70,7 +134,8 @@ const netTargetByLocation: Record<string, number> = {
   OLOMORO: 19787.31,
   ORONI: 2655.44,
   OWEH: 7641.43,
-  UZERE: 3471.81,
+  "UZERE WEST": 3471.81,
+  "UZERE EAST (OML 30 - 14.695%)": 0,
 };
 
 // const NET_TARGET = 48571;
@@ -83,7 +148,11 @@ const loc = [
   { label: "OLOMORO", value: "OLOMORO" },
   { label: "ORONI", value: "ORONI" },
   { label: "OWEH", value: "OWEH" },
-  { label: "UZERE", value: "UZERE" },
+  { label: "UZERE WEST", value: "UZERE WEST" },
+  {
+    label: "UZERE EAST (OML 30 - 14.695%)",
+    value: "UZERE EAST (OML 30 - 14.695%)",
+  },
 ];
 
 const options = [
@@ -155,13 +224,6 @@ const productionCardData = [
   },
 ];
 
-const tankLevelChartData = [
-  { tankID: "Tank 111", water: 0.5, oil: 6.5 },
-  { tankID: "Tank 112", water: 0.5, oil: 2.5 },
-  { tankID: "Tank 113", water: 0.5, oil: 2.5 },
-  { tankID: "Tank 114", water: 0.5, oil: 2.8 },
-];
-
 const tankLevelChartConfig = {
   water: {
     label: "Water Level",
@@ -173,7 +235,17 @@ const tankLevelChartConfig = {
   },
 } satisfies ChartConfig;
 
-function DashBoardComponent() {
+type Props = {
+  chartData: OutputFormat;
+  tankLevelChartData: TankLevelChartEntry[];
+  storageData: StorageSummary | null;
+};
+
+export default function ProductionDashboard({
+  chartData,
+  tankLevelChartData,
+  storageData,
+}: Props) {
   // const [selectedLocation, setSelectedLocation] = React.useState("EVWRENI");
   const [open, setOpen] = React.useState(false);
   const [openT, setOpenT] = React.useState(false);
@@ -192,6 +264,9 @@ function DashBoardComponent() {
   // const selectedYear = searchParams.getAll("yr");
   const from = searchParams.get("from");
   const to = searchParams.get("to");
+  const day = convertToApiDateFormat(searchParams.get("day") || "16-06-2025");
+
+  // console.dir(chartData, { depth: null });
 
   // Set initial state from query params
   const [selectedValues, setSelectedValues] = React.useState(
@@ -258,6 +333,9 @@ function DashBoardComponent() {
     });
   });
 
+  const result = getProductionTotals(chartData, day);
+  console.log(result);
+
   const getAggregatedData = (filteredData: Record<string, any[]>) => {
     const locations =
       selectedValues.length > 0 ? selectedValues : Object.keys(chartData);
@@ -312,113 +390,11 @@ function DashBoardComponent() {
 
   const aggregatedData = getAggregatedData(filteredChartData);
 
-  const result: Record<string, { date: string; net: number }[]> = {};
-  const data = { ...chartData };
-
-  for (const key in data) {
-    // Ensure TypeScript knows key is a valid key of data
-    const sorted = [...data[key as keyof typeof data]].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
-    // Take the first two elements (most recent dates)
-    result[key] = sorted.slice(0, 2);
-  }
-
-  const carouselData = Object.entries(result).map(([location, items]) => ({
-    location, // "AFIESERE", "ERIEMU", etc.
-    entries: items.map((item) => ({
-      date: new Date(item.date).toLocaleDateString("en-GB"), // "DD/MM/YYYY"
-      value: item.net, // or item.gross, item.stringsUp, etc.
-      rawData: item, // Keep original data for calculations
-    })),
-  }));
-
-  // function getMonthDataByName(
-  //   data: Record<
-  //     string,
-  //     {
-  //       date: string;
-  //       bsw: number;
-  //       net: number;
-  //       gross: number;
-  //       stringsUp: number;
-  //     }[]
-  //   >,
-  //   monthName: string,
-  //   year: number
-  // ) {
-  //   const monthIndex = new Date(`${monthName} 1, ${year}`).getMonth();
-
-  //   // Filter data for the selected month
-  //   const filteredData = Object.keys(data).reduce(
-  //     (acc, location) => {
-  //       acc[location] = data[location].filter((entry) => {
-  //         const entryDate = new Date(entry.date);
-  //         return (
-  //           entryDate.getMonth() === monthIndex &&
-  //           entryDate.getFullYear() === year
-  //         );
-  //       });
-  //       return acc;
-  //     },
-  //     {} as Record<
-  //       string,
-  //       {
-  //         date: string;
-  //         bsw: number;
-  //         net: number;
-  //         gross: number;
-  //         stringsUp: number;
-  //       }[]
-  //     >
-  //   );
-
-  //   // Check if the total number of entries is less than 20
-  //   // const totalEntries = Object.values(filteredData).flat().length;
-
-  //   // if (totalEntries < 20) {
-  //   //   // Get data from the previous month
-  //   //   const previousMonthIndex = (monthIndex - 1 + 12) % 12;
-  //   //   const previousYear = monthIndex === 0 ? year - 1 : year;
-
-  //   //   const previousMonthData = Object.keys(data).reduce((acc, location) => {
-  //   //     acc[location] = data[location].filter((entry) => {
-  //   //       const entryDate = new Date(entry.date);
-  //   //       return (
-  //   //         entryDate.getMonth() === previousMonthIndex &&
-  //   //         entryDate.getFullYear() === previousYear
-  //   //       );
-  //   //     });
-  //   //     return acc;
-  //   //   }, {});
-
-  //   //   // Merge data from the selected month and the previous month
-  //   //   Object.keys(filteredData).forEach((location) => {
-  //   //     filteredData[location] = [
-  //   //       ...filteredData[location],
-  //   //       ...(previousMonthData[location] || []),
-  //   //     ];
-  //   //   });
-  //   // }
-
-  //   return filteredData;
-  // }
-
-  // // Usage:
-  // const filteredData: Record<
-  //   string,
-  //   {
-  //     date: string;
-  //     bsw: number;
-  //     net: number;
-  //     gross: number;
-  //     stringsUp: number;
-  //   }[]
-  // > = getMonthDataByName(
-  //   chartData,
-  //   selectedMonth.length ? selectedMonth[0].slice(0, 3) : "Jan",
-  //   selectedYear.length ? Number(selectedYear[0]) : 2025
-  // );
+  const carouselData = getActualsWithTarget(
+    chartData,
+    netTargetByLocation,
+    day
+  );
 
   // Sync local state when URL changes (like back/forward navigation)
   React.useEffect(() => {
@@ -436,16 +412,6 @@ function DashBoardComponent() {
     router.replace(`?${params.toString()}`, { scroll: false });
   };
 
-  // // Get the active tab from URL params, default to 'day' if not present
-  // const activeTab = searchParams.get("tab") || "day";
-
-  // // Function to handle tab changes
-  // const handleTabChange = (newTab: string) => {
-  //   const params = new URLSearchParams(searchParams);
-  //   params.set("tab", newTab);
-  //   router.replace(`?${params.toString()}`, { scroll: false });
-  // };
-
   return (
     <>
       <Tabs
@@ -453,10 +419,28 @@ function DashBoardComponent() {
         value={activeTab}
         onValueChange={handleTabChange}
       >
-        <TabsList className="m-4 mb-0">
-          <TabsTrigger value="day">By Day</TabsTrigger>
-          <TabsTrigger value="range">By Range</TabsTrigger>
-        </TabsList>
+        <div className="flex flex-col sm:flex-row sm:items-end">
+          <TabsList className="m-4 mb-0">
+            <TabsTrigger value="day">By Day</TabsTrigger>
+            <TabsTrigger value="range">By Range</TabsTrigger>
+          </TabsList>
+          {activeTab === "day" && (
+            <div className="flex ml-auto text-sm mr-5 mt-6 sm:mt-0 space-x-2">
+              {[
+                { text: "WTI", value: 73.06 },
+                { text: "Brent", value: 74.68 },
+              ].map(({ text, value }) => (
+                <p key={text}>
+                  {text}:
+                  <span className="font-medium text-base ml-1 font-mono">
+                    ${value}
+                  </span>
+                </p>
+              ))}
+            </div>
+          )}
+        </div>
+
         <TabsContent value="day">
           <section className="p-4 grid grid-cols-1 @xl:grid-cols-2 @6xl:grid-cols-4 @7xl:grid-cols-4 gap-3">
             {productionCardData.map((item, index) => (
@@ -465,11 +449,12 @@ function DashBoardComponent() {
             <Card>
               <Carousel className="w-full">
                 <CarouselContent>
-                  {carouselData.map(({ location, entries }, locIndex) => (
-                    <CarouselItem key={locIndex} className="w-full">
+                  {carouselData.map(({ location, entry, target }) => (
+                    <CarouselItem key={location} className="w-full">
                       <LocationDifferenceCard
                         location={location}
-                        entries={entries}
+                        entry={entry}
+                        target={target}
                       />
                     </CarouselItem>
                   ))}
@@ -496,7 +481,7 @@ function DashBoardComponent() {
                     <Card className="col-span-1 gap-0 p-4">
                       <CardTitle>Endurance Time</CardTitle>
                       <p className="font-bold text-3xl">
-                        2.8
+                        {storageData?.enduranceDays || 0}
                         <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
                           days
                         </span>
@@ -505,7 +490,7 @@ function DashBoardComponent() {
                     <Card className="col-span-1 gap-0 p-4">
                       <CardTitle>Available Ullage</CardTitle>
                       <p className="font-bold text-3xl">
-                        771,573
+                        {storageData?.availuilage || 0}
                         <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
                           bbls
                         </span>
@@ -1082,17 +1067,6 @@ function DashBoardComponent() {
           </section>
         </TabsContent>
       </Tabs>
-    </>
-  );
-}
-
-export default function ProductionDashboard() {
-  return (
-    <>
-      <SiteHeader title="PRODUCTION DATA" />
-      <Suspense>
-        <DashBoardComponent />
-      </Suspense>
     </>
   );
 }

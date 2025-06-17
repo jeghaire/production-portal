@@ -41,7 +41,11 @@ export function DataTableToolbar<TData>({
               { label: "OLOMORO", value: "OLOMORO" },
               { label: "ORONI", value: "ORONI" },
               { label: "OWEH", value: "OWEH" },
-              { label: "UZERE", value: "UZERE" },
+              { label: "UZERE WEST", value: "UZERE WEST" },
+              {
+                label: "UZERE EAST (OML 30 - 14.695%)",
+                value: "UZERE EAST (OML 30 - 14.695%)",
+              },
             ]}
           />
         )}

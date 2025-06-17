@@ -6,31 +6,31 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { ReactNode } from "react";
 
 interface ProductionCardProps {
   title: string;
-  badgeValue: string | number;
+  // badgeValue: string | number;
   description: string;
   quantity: number;
   percentOfTarget: number;
   progressValue: number;
   unit?: string;
-  badgeIcon?: ReactNode;
+  // badgeIcon?: ReactNode;
   footer?: ReactNode;
 }
 
 export function ProductionCard({
   title,
-  badgeValue,
+  // badgeValue,
   description,
   quantity,
   percentOfTarget,
   progressValue,
   unit = "bbl",
-  badgeIcon,
+  // badgeIcon,
   footer,
 }: ProductionCardProps) {
   const targetValue = (quantity * (100 / percentOfTarget)).toFixed(2);
@@ -40,13 +40,13 @@ export function ProductionCard({
       <CardHeader className="gap-0">
         <div className="flex items-end justify-between">
           <CardTitle>{title}</CardTitle>
-          <Badge
+          {/* <Badge
             variant="outline"
             className="text-xs font-mono border-transparent bg-muted text-muted-foreground dark:border-muted dark:bg-muted dark:text-muted-foreground"
           >
             {badgeIcon}
             <span className="tracking-wider">{badgeValue}</span>
-          </Badge>
+          </Badge> */}
         </div>
         <CardDescription className="text-sm">{description}</CardDescription>
       </CardHeader>

@@ -3,16 +3,10 @@ import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './lib/auth.config';
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
+import { User } from './lib/definitions';
 // import postgres from 'postgres';
  
 // const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-};
 
 // Hardcoded user for testing
 const user: User = {

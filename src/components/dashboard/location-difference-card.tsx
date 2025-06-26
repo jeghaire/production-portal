@@ -13,9 +13,15 @@ type Props = {
   location: string;
   entry: Entry | null; // the actual from that day
   target: number; // benchmark target
+  selectedDate?: string;
 };
 
-export function LocationDifferenceCard({ location, target, entry }: Props) {
+export function LocationDifferenceCard({
+  location,
+  target,
+  entry,
+  selectedDate,
+}: Props) {
   const actualRaw = entry?.value ?? 0;
   const targetRaw = target;
 
@@ -50,7 +56,7 @@ export function LocationDifferenceCard({ location, target, entry }: Props) {
     <CardContent className="flex flex-col items-center justify-start px-4">
       <div className="flex flex-col items-center justify-center mb-5">
         <CardDescription className="text-sm">
-          {entry?.date || "N/A"}
+          {entry?.date || selectedDate}
         </CardDescription>
         <CardTitle className="text-lg mb-0">{location}</CardTitle>
       </div>
@@ -81,7 +87,7 @@ export function LocationDifferenceCard({ location, target, entry }: Props) {
 
         <div className="flex items-center leading-none flex-col">
           <span className="font-bold font-mono text-3xl">
-            {actual.display}
+            {entry?.date ? actual.display : "n/a"}
             <span className="text-[27px] font-semibold">{actual.suffix}</span>
           </span>
           <span className="text-[10px]">Actual</span>

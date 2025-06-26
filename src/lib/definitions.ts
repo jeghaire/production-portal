@@ -1,5 +1,12 @@
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+};
+
 export type RawTankEntry = {
-  tanknid: number;
+  tanknumber: string;
   tanklevel: number;
   waterbottom: number;
 };
@@ -30,7 +37,7 @@ export type RawStorageEntry = {
 
 export interface StorageSummary {
   enduranceDays: number | string;
-  availuilage: number;
+  availullage: number;
 }
 
 

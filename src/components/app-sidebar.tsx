@@ -63,7 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="relative w-[76px] h-auto aspect-[154/135] rounded-none p-0"
+              className="relative w-[76px] h-auto aspect-[154/135] rounded-none"
             >
               <Link href="/">
                 <Image

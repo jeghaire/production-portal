@@ -17,6 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Type for a single data point
 type ChartDataItem = {
@@ -38,6 +39,8 @@ export function TankLevelChart({
   title,
   description,
 }: TankLevelChartProps) {
+  const isMobile = useIsMobile();
+
   return (
     <Card>
       <CardHeader>
@@ -53,7 +56,6 @@ export function TankLevelChart({
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              // tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip
               content={
@@ -61,19 +63,20 @@ export function TankLevelChart({
               }
             />
             <ChartLegend content={<ChartLegendContent />} />
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              tickMargin={10}
-              type="number"
-              label={{
-                value: title,
-                angle: -90,
-                position: "left",
-                dx: 10,
-                // offset: 10,
-              }}
-            />
+            {!isMobile && (
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                tickMargin={10}
+                type="number"
+                label={{
+                  value: title,
+                  angle: -90,
+                  position: "center",
+                  dx: -10,
+                }}
+              />
+            )}
             <Bar
               dataKey="water"
               stackId="a"

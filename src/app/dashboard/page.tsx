@@ -14,41 +14,26 @@ import {
 } from "@/lib/definitions";
 import { convertToApiDateFormat } from "@/lib/utils";
 
-// https://217.14.88.108/prod/home/dailyprod?publickey=123456789
-// https://217.14.88.108/prod/home/dailystorage?publickey=123456789&datecreated=2/3/2025
-// https://217.14.88.108/prod/home/dailyTank?publickey=123456789&datecreated=2/3/2025
-// https://217.14.88.108/prod/home/logina?publickey=123456789&username=d&pwd=kd
-
 async function getDailyTankLevel(date: string) {
   const res = await fetch(
-    `https://217.14.88.108/prod/home/dailyTank?publickey=123456789&datecreated=${date}`
+    `${process.env.NEXT_PUBLIC_API_URL}/dailyTank?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`
   );
   return res.json();
 }
 
 async function getDailyProductionData() {
   const res = await fetch(
-    `https://217.14.88.108/prod/home/dailyprod?publickey=123456789`
+    `${process.env.NEXT_PUBLIC_API_URL}/dailyprod?publickey=${process.env.NEXT_PUBLIC_API_KEY}`
   );
   return res.json();
 }
 
 async function getDailyStorageData(date: string) {
   const res = await fetch(
-    `https://217.14.88.108/prod/home/dailystorage?publickey=123456789&datecreated=${date}`
+    `${process.env.NEXT_PUBLIC_API_URL}/dailystorage?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`
   );
   return res.json();
 }
-
-// function transformStorageData(raw: RawStorageEntry[]): StorageSummary | null {
-//   const entry = raw[0]; // assuming one entry per day
-//   if (!entry) return null;
-
-//   return {
-//     enduranceDays: entry.endurancedays,
-//     availuilage: entry.availuilage,
-//   };
-// }
 
 function formatEnduranceDays(value: number): number | string {
   // If it's a whole number, return as integer
@@ -63,7 +48,7 @@ function transformStorageData(raw: RawStorageEntry[]): StorageSummary | null {
 
   return {
     enduranceDays: formatEnduranceDays(entry.endurancedays),
-    availuilage: entry.availuilage,
+    availullage: entry.availuilage,
   };
 }
 
@@ -72,7 +57,7 @@ export default async function ProductionDashboardPage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const { day = "16-06-2025" } = await searchParams;
+  const { day = new Date().toLocaleDateString("en-GB") } = await searchParams;
   // Ensure day is always a string
   const dayStr = Array.isArray(day) ? day[0] : day;
   const session = await auth();
@@ -85,7 +70,7 @@ export default async function ProductionDashboardPage({
   const dailyStorageData = getDailyStorageData(convertToApiDateFormat(dayStr));
   const productionData = getDailyProductionData();
 
-  // Initiate both requests in parallel
+  // Initiate all requests in parallel
   const [tankLevel, prodRawData, storageRaw] = await Promise.all([
     dailyTankLevelData,
     productionData,
@@ -94,7 +79,7 @@ export default async function ProductionDashboardPage({
 
   function transformTankData(rawData: RawTankEntry[]): TankLevelChartEntry[] {
     return rawData.map((entry) => ({
-      tankID: `Tank ${entry.tanknid}`,
+      tankID: `Tank ${entry.tanknumber}`,
       water: entry.waterbottom,
       oil: entry.tanklevel, //parseFloat((entry.tanklevel - entry.waterbottom).toFixed(3)),
     }));

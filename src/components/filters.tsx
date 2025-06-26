@@ -9,12 +9,8 @@ import { SearchParams } from "@/lib/url-state";
 import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { CalendarIcon } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatToUrlDate } from "@/lib/utils";
 import { addDays, format, subDays } from "date-fns";
-
-const formatToUrlDate = (date: Date): string => {
-  return format(date, "dd-MM-yyyy");
-};
 
 export const parseUrlDate = (dateString: string): Date | undefined => {
   if (!dateString) return undefined;
@@ -38,6 +34,10 @@ const LOCATIONS = [
   {
     label: "UZERE EAST (OML 30 - 14.695%)",
     value: "UZERE EAST (OML 30 - 14.695%)",
+  },
+  {
+    label: "UZERE EAST (100%)",
+    value: "UZERE EAST (100%)",
   },
 ];
 
@@ -284,7 +284,7 @@ function FilterBase({ searchParams }: FilterProps) {
       )}
 
       {/* Location Filter - Shown for both tabs */}
-      <div className="h-[300px] mt-2 p-2">
+      <div className="h-[320px] mt-2 p-2">
         <Label className="text-sm mb-2">Locations</Label>
         <div className="flex items-center space-x-2 py-1">
           <Checkbox

@@ -19,7 +19,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { cn, convertToApiDateFormat } from "@/lib/utils";
+import { cn, convertToApiDateFormat, formatToUrlDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -61,6 +61,7 @@ import {
   xProductionData,
   xTotals,
 } from "@/lib/definitions";
+import { subDays } from "date-fns";
 
 function getActualsWithTarget(
   data: Record<string, ChartDataEntry[]>,
@@ -106,8 +107,11 @@ function getProductionTotals(
     for (const entry of entries) {
       const entryDate = new Date(entry.date);
 
+      console.log(entryDate);
+      console.log(selected);
+
       // Total for the selected day
-      if (entry.date === selectedDate) {
+      if (entryDate === selected) {
         totalGrossForDay += entry.gross;
         totalNetForDay += entry.net;
       }
@@ -136,6 +140,7 @@ const netTargetByLocation: Record<string, number> = {
   OWEH: 7641.43,
   "UZERE WEST": 3471.81,
   "UZERE EAST (OML 30 - 14.695%)": 0,
+  "UZERE EAST (100%)": 0,
 };
 
 // const NET_TARGET = 48571;
@@ -152,6 +157,10 @@ const loc = [
   {
     label: "UZERE EAST (OML 30 - 14.695%)",
     value: "UZERE EAST (OML 30 - 14.695%)",
+  },
+  {
+    label: "UZERE EAST (100%)",
+    value: "UZERE EAST (100%)",
   },
 ];
 
@@ -204,24 +213,24 @@ const productionCardData = [
     progressValue: 76,
     unit: "bopd",
   },
-  {
-    title: "Year to Date Oil Production",
-    badgeValue: "12%",
-    badgeIcon: <IconArrowUp className="!h-4 !w-4 mr-1" />,
-    description: "Barrels of Oil",
-    quantity: 3143740.26,
-    percentOfTarget: 27.5,
-    progressValue: 27.5,
-    unit: "bbls",
-    // footer: (
-    //   <div className="flex items-center gap-2">
-    //     <IconAlertCircleFilled className="w-3.5" />
-    //     <p className="text-xs text-muted-foreground">
-    //       Prices are subject to the rate of the US dollar!
-    //     </p>
-    //   </div>
-    // ),
-  },
+  // {
+  //   title: "Year to Date Oil Production",
+  //   badgeValue: "12%",
+  //   badgeIcon: <IconArrowUp className="!h-4 !w-4 mr-1" />,
+  //   description: "Barrels of Oil",
+  //   quantity: 3143740.26,
+  //   percentOfTarget: 27.5,
+  //   progressValue: 27.5,
+  //   unit: "bbls",
+  //   footer: (
+  //     <div className="flex items-center gap-2">
+  //       <IconAlertCircleFilled className="w-3.5" />
+  //       <p className="text-xs text-muted-foreground">
+  //         Prices are subject to the rate of the US dollar!
+  //       </p>
+  //     </div>
+  //   ),
+  // },
 ];
 
 const tankLevelChartConfig = {
@@ -260,12 +269,10 @@ export default function ProductionDashboard({
 
   // Extract selected locations from query params
   const selectedQueryParams = searchParams.getAll("loc");
-  // const selectedMonth = searchParams.getAll("mnt");
-  // const selectedYear = searchParams.getAll("yr");
   const from = searchParams.get("from");
   const to = searchParams.get("to");
-  const day = convertToApiDateFormat(searchParams.get("day") || "16-06-2025");
-
+  const dayFromURL =
+    searchParams.get("day") || formatToUrlDate(subDays(new Date(), 1));
   // console.dir(chartData, { depth: null });
 
   // Set initial state from query params
@@ -322,6 +329,24 @@ export default function ProductionDashboard({
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
+  function formatDateToDDMMYYYY(dateString: string) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0"); // day with leading zero
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // month with leading zero (0-based)
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
+  const tableDataDaily = Object.entries(chartData)
+    .flatMap(([key, items]) =>
+      items.map((item) => ({ ...item, location: key }))
+    )
+    .filter((item) => {
+      const formattedItemDate = formatDateToDDMMYYYY(item.date);
+      return formattedItemDate === dayFromURL;
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   const filteredChartData: Record<string, any[]> = {};
 
   Object.entries(chartData).forEach(([location, entries]) => {
@@ -333,8 +358,11 @@ export default function ProductionDashboard({
     });
   });
 
-  const result = getProductionTotals(chartData, day);
-  console.log(result);
+  const result = getProductionTotals(
+    chartData,
+    convertToApiDateFormat(dayFromURL)
+  );
+  // console.log("Result/n", result);
 
   const getAggregatedData = (filteredData: Record<string, any[]>) => {
     const locations =
@@ -393,7 +421,7 @@ export default function ProductionDashboard({
   const carouselData = getActualsWithTarget(
     chartData,
     netTargetByLocation,
-    day
+    convertToApiDateFormat(dayFromURL)
   );
 
   // Sync local state when URL changes (like back/forward navigation)
@@ -446,6 +474,14 @@ export default function ProductionDashboard({
             {productionCardData.map((item, index) => (
               <ProductionCard key={index} {...item} />
             ))}
+            <ProductionCard
+              title="Year to Date Oil Production"
+              description="Barrels of Oil"
+              quantity={result.cumulativeNetUpToDate}
+              percentOfTarget={27.5}
+              progressValue={27.5}
+              unit="bbls"
+            />
             <Card>
               <Carousel className="w-full">
                 <CarouselContent>
@@ -455,6 +491,7 @@ export default function ProductionDashboard({
                         location={location}
                         entry={entry}
                         target={target}
+                        selectedDate={dayFromURL}
                       />
                     </CarouselItem>
                   ))}
@@ -471,55 +508,53 @@ export default function ProductionDashboard({
                 chartData={tankLevelChartData}
               />
             </div>
-            <div className="col-span-1 md:col-span-2">
-              {/*  <CardHeader>
-                <CardTitle>TFP REPORT</CardTitle>
-              </CardHeader> */}
-              <CardContent className="grid grid-cols-1 md:grid-cols-2 p-0 gap-3">
-                <div className="col-span-1">
-                  <div className="rounded-lg h-full grid gap-2 grid-cols-1">
-                    <Card className="col-span-1 gap-0 p-4">
-                      <CardTitle>Endurance Time</CardTitle>
-                      <p className="font-bold text-3xl">
-                        {storageData?.enduranceDays || 0}
-                        <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
-                          days
-                        </span>
-                      </p>
-                    </Card>
-                    <Card className="col-span-1 gap-0 p-4">
-                      <CardTitle>Available Ullage</CardTitle>
-                      <p className="font-bold text-3xl">
-                        {storageData?.availuilage || 0}
-                        <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
-                          bbls
-                        </span>
-                      </p>
-                    </Card>
-                    <Card className="col-span-1 gap-0 p-4">
-                      <CardTitle>TFP Total Injectors</CardTitle>
-                      <p className="font-bold text-3xl">
-                        394,367
-                        <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
-                          bbls
-                        </span>
-                      </p>
-                    </Card>
-                    <Card className="col-span-1 gap-0 p-4">
-                      <CardTitle>FRM Total</CardTitle>
-                      <p className="font-bold text-3xl">
-                        389,314
-                        <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
-                          bbls
-                        </span>
-                      </p>
-                    </Card>
-                  </div>
-                </div>
-                <div className="col-span-1">
-                  <TFPIncidentChart />
-                </div>
-              </CardContent>
+            <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 p-0 gap-3">
+              {/* <div className="col-span-1"> */}
+              <div className="rounded-lg h-full grid gap-2 grid-cols-2">
+                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
+                  <CardTitle>Endurance Time</CardTitle>
+                  <p className="font-bold text-2xl">
+                    {storageData?.enduranceDays || 0}
+                    <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                      days
+                    </span>
+                  </p>
+                </Card>
+                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
+                  <CardTitle>Available Ullage</CardTitle>
+                  <p className="font-bold text-2xl">
+                    {storageData?.availullage || 0}
+                    <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                      bbls
+                    </span>
+                  </p>
+                </Card>
+                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
+                  <CardTitle>TFP Total Injectors</CardTitle>
+                  <p className="font-bold text-2xl">
+                    394,367
+                    <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                      bbls
+                    </span>
+                  </p>
+                </Card>
+                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
+                  <CardTitle>FRM Total</CardTitle>
+                  <p className="font-bold text-2xl">
+                    389,314
+                    <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                      bbls
+                    </span>
+                  </p>
+                </Card>
+              </div>
+              {/* </div> */}
+              <div className="col-span-1">
+                <TFPIncidentChart />
+              </div>
+            </div>
+            <div className="col-span-full print:hidden">
+              <DataTable data={tableDataDaily} columns={columns} />
             </div>
           </section>
         </TabsContent>

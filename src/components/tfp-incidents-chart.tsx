@@ -22,6 +22,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const description = "A bar chart with an active bar";
 
@@ -50,6 +51,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function TFPIncidentChart() {
+  const isMobile = useIsMobile()
   return (
     <Card className="rounded-lg">
       <CardHeader>
@@ -73,6 +75,7 @@ export function TFPIncidentChart() {
               }
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                {!isMobile && (
             <YAxis
               tickLine={false}
               axisLine={false}
@@ -83,13 +86,11 @@ export function TFPIncidentChart() {
                 angle: -90,
                 position: "center",
                 dx: -10,
-                // offset: 10,
               }}
-            />
+            />)}
             <Bar
               dataKey="count"
               strokeWidth={2}
-              //   radius={8}
               radius={[8, 8, 0, 0]}
               activeBar={({ ...props }) => {
                 return (

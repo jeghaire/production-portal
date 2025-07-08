@@ -27,12 +27,13 @@ export function LoginForm({
       <form action={formAction}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
-            <a href="#" className="relative w-[80px] h-auto aspect-[154/135]">
+            <a href="#" className="relative w-[80px] h-auto aspect-square">
               <Image
-                src="/heosl_logo.png"
-                className="object-contain object-left-top"
                 alt=""
                 fill
+                src="/heosl_logo.jpg"
+                className="object-contain object-left-top"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <span className="sr-only">HEOSL</span>
             </a>

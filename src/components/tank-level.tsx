@@ -47,51 +47,59 @@ export function TankLevelChart({
         <CardTitle className="uppercase">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig} className="h-[260] w-full">
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="tankID"
-              tickLine={false}
-              tickMargin={10}
-              axisLine={false}
-            />
-            <ChartTooltip
-              content={
-                <ChartTooltipContent className="min-w-[150px]" hideLabel />
-              }
-            />
-            <ChartLegend content={<ChartLegendContent />} />
-            {!isMobile && (
-              <YAxis
+      {chartData.length !== 0 ? (
+        <CardContent>
+          <ChartContainer config={chartConfig} className="h-[260] w-full">
+            <BarChart accessibilityLayer data={chartData}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="tankID"
                 tickLine={false}
-                axisLine={false}
                 tickMargin={10}
-                type="number"
-                label={{
-                  value: title,
-                  angle: -90,
-                  position: "center",
-                  dx: -10,
-                }}
+                axisLine={false}
               />
-            )}
-            <Bar
-              dataKey="water"
-              stackId="a"
-              fill="var(--color-water)"
-              radius={[0, 0, 0, 0]}
-            />
-            <Bar
-              dataKey="oil"
-              stackId="a"
-              fill="var(--color-oil)"
-              radius={[8, 8, 0, 0]}
-            />
-          </BarChart>
-        </ChartContainer>
-      </CardContent>
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent className="min-w-[150px]" hideLabel />
+                }
+              />
+              <ChartLegend content={<ChartLegendContent />} />
+              {!isMobile && (
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={10}
+                  type="number"
+                  label={{
+                    value: title,
+                    angle: -90,
+                    position: "center",
+                    dx: -25,
+                  }}
+                />
+              )}
+              <Bar
+                dataKey="water"
+                stackId="a"
+                fill="var(--color-water)"
+                radius={[0, 0, 0, 0]}
+              />
+              <Bar
+                dataKey="oil"
+                stackId="a"
+                fill="var(--color-oil)"
+                radius={[8, 8, 0, 0]}
+              />
+            </BarChart>
+          </ChartContainer>
+        </CardContent>
+      ) : (
+        <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[320]">
+          <span className="m-3">
+            No data available for the selected time period and locations.
+          </span>
+        </div>
+      )}
     </Card>
   );
 }

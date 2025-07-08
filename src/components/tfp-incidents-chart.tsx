@@ -85,7 +85,7 @@ export function TFPIncidentChart() {
                 value: "TFP Incidents count",
                 angle: -90,
                 position: "center",
-                dx: -10,
+                dx: -25,
               }}
             />)}
             <Bar

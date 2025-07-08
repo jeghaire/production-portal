@@ -56,7 +56,7 @@ export function LocationDifferenceCard({
     <CardContent className="flex flex-col items-center justify-start px-4">
       <div className="flex flex-col items-center justify-center mb-5">
         <CardDescription className="text-sm">
-          {entry?.date || selectedDate}
+          {entry?.date || selectedDate && selectedDate.replace(/-/g, '/')}
         </CardDescription>
         <CardTitle className="text-lg mb-0">{location}</CardTitle>
       </div>

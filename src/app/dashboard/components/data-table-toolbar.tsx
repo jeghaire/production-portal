@@ -32,7 +32,6 @@ export function DataTableToolbar<TData>({
           <DataTableFacetedFilter
             column={table.getColumn("Location")}
             title="Location"
-            paramKey="loc"
             options={[
               { label: "AFIESERE", value: "AFIESERE" },
               { label: "ERIEMU", value: "ERIEMU" },

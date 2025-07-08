@@ -19,7 +19,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { cn, convertToApiDateFormat, formatToUrlDate } from "@/lib/utils";
+import { cn, formatToApiDateFormat, formatToUrlDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -106,9 +106,6 @@ function getProductionTotals(
   for (const entries of Object.values(data)) {
     for (const entry of entries) {
       const entryDate = new Date(entry.date);
-
-      console.log(entryDate);
-      console.log(selected);
 
       // Total for the selected day
       if (entryDate === selected) {
@@ -360,7 +357,7 @@ export default function ProductionDashboard({
 
   const result = getProductionTotals(
     chartData,
-    convertToApiDateFormat(dayFromURL)
+    formatToApiDateFormat(dayFromURL)
   );
   // console.log("Result/n", result);
 
@@ -421,7 +418,7 @@ export default function ProductionDashboard({
   const carouselData = getActualsWithTarget(
     chartData,
     netTargetByLocation,
-    convertToApiDateFormat(dayFromURL)
+    formatToApiDateFormat(dayFromURL)
   );
 
   // Sync local state when URL changes (like back/forward navigation)

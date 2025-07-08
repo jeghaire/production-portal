@@ -51,6 +51,7 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.webmanifest" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="HEOSL" />
       </head>
       <body
         className={`${geistVF.variable} antialiased font-geistVF scroll-smooth`}

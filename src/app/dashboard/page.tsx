@@ -12,7 +12,7 @@ import {
   TankLevelChartEntry,
   TransformedEntry,
 } from "@/lib/definitions";
-import { convertToApiDateFormat } from "@/lib/utils";
+import { formatToApiDateFormat, formatToUrlDate } from "@/lib/utils";
 
 async function getDailyTankLevel(date: string) {
   const res = await fetch(
@@ -57,7 +57,12 @@ export default async function ProductionDashboardPage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const { day = new Date().toLocaleDateString("en-GB") } = await searchParams;
+  // Extract the 'day' parameter from searchParams, defaulting to yesterday's date
+  // If 'day' is an array, take the first element
+
+  // If 'day' is not provided, use yesterday's date formatted as dd-MM-yyyy
+  // This ensures that the date is always in the correct format for the API
+  const { day = formatToUrlDate(new Date(new Date().setDate(new Date().getDate()-1))) } = await searchParams;
   // Ensure day is always a string
   const dayStr = Array.isArray(day) ? day[0] : day;
   const session = await auth();
@@ -66,8 +71,8 @@ export default async function ProductionDashboardPage({
     redirect("/login"); // Redirect if no session
   }
 
-  const dailyTankLevelData = getDailyTankLevel(convertToApiDateFormat(dayStr));
-  const dailyStorageData = getDailyStorageData(convertToApiDateFormat(dayStr));
+  const dailyTankLevelData = getDailyTankLevel(formatToApiDateFormat(dayStr));
+  const dailyStorageData = getDailyStorageData(formatToApiDateFormat(dayStr));
   const productionData = getDailyProductionData();
 
   // Initiate all requests in parallel

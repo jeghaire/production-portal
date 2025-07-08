@@ -63,14 +63,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="relative w-[76px] h-auto aspect-[154/135] rounded-none"
+              className="relative w-[76px] h-auto aspect-square rounded-none"
             >
               <Link href="/">
                 <Image
-                  src="/heosl_logo.png"
-                  alt=""
                   fill
+                  alt=""
+                  src="/heosl_logo.jpg"
                   className="object-contain object-left-top"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
               </Link>
             </SidebarMenuButton>

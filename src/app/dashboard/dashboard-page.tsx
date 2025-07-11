@@ -51,7 +51,6 @@ import { LocationDifferenceCard } from "@/components/dashboard/location-differen
 import { TankLevelChart } from "@/components/tank-level";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { parseUrlDate } from "@/components/filters";
-import { TFPIncidentChart } from "@/components/tfp-incidents-chart";
 import {
   ChartDataEntry,
   LocationEntry,

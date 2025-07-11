@@ -62,6 +62,7 @@ import {
   xTotals,
 } from "@/lib/definitions";
 import { subDays } from "date-fns";
+import { GasFlaringTable } from "@/components/gas-flaring-card";
 
 function getActualsWithTarget(
   data: Record<string, ChartDataEntry[]>,
@@ -449,7 +450,7 @@ export default function ProductionDashboard({
             <TabsTrigger value="day">By Day</TabsTrigger>
             <TabsTrigger value="range">By Range</TabsTrigger>
           </TabsList>
-          {activeTab === "day" && (
+          {/* {activeTab === "day" && (
             <div className="flex ml-auto text-sm mr-5 mt-6 sm:mt-0 space-x-2">
               {[
                 { text: "WTI", value: 73.06 },
@@ -463,11 +464,31 @@ export default function ProductionDashboard({
                 </p>
               ))}
             </div>
-          )}
+          )} */}
         </div>
 
         <TabsContent value="day">
           <section className="p-4 grid grid-cols-1 @xl:grid-cols-2 @6xl:grid-cols-4 @7xl:grid-cols-4 gap-3">
+           <div className="col-span-full">
+              <Card>
+              <div className="flex ml-auto text-sm mr-5 mt-6 sm:mt-0 space-x-2">
+              {[
+                { text: "Natural Gas", value: "$3.37" },
+                { text: "Brent", value: "$69.25" },
+                { text: "Days since last LTI", value: "618" },
+                { text: "TFP Incidents YTD", value:  "12 MECH.| 1 TPI"},
+                { text: "Rotating Equipment Availability", value: "90%" },
+              ].map(({ text, value }) => (
+                <p key={text}>
+                  {text}:
+                  <span className="font-medium text-base ml-1 font-mono">
+                    {value}
+                  </span>
+                </p>
+              ))}
+            </div>
+              </Card>
+            </div>
             {productionCardData.map((item, index) => (
               <ProductionCard key={index} {...item} />
             ))}
@@ -547,7 +568,8 @@ export default function ProductionDashboard({
               </div>
               {/* </div> */}
               <div className="col-span-1">
-                <TFPIncidentChart />
+                {/* <TFPIncidentChart /> */}
+                <GasFlaringTable/>
               </div>
             </div>
             <div className="col-span-full print:hidden">

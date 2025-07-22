@@ -62,7 +62,6 @@ import {
 } from "@/lib/definitions";
 import { subDays } from "date-fns";
 import { GasFlaringTable } from "@/components/gas-flaring-card";
-import { DateTitle } from "@/components/date-title";
 
 function getActualsWithTarget(
   data: Record<string, ChartDataEntry[]>,
@@ -450,31 +449,22 @@ export default function ProductionDashboard({
         value={activeTab}
         onValueChange={handleTabChange}
       >
-        <div className="flex flex-col sm:flex-row sm:items-end">
-          <TabsList className="m-4 mb-0">
-            <TabsTrigger value="day">By Day</TabsTrigger>
-            <TabsTrigger value="range">By Range</TabsTrigger>
-          </TabsList>
-          <div className="flex ml-auto text-sm mr-5 mt-6 sm:mt-0 space-x-2">
-            <span className="font-medium">
-              <DateTitle />
-            </span>
-          </div>
-        </div>
+        <TabsList className="m-4 mb-0">
+          <TabsTrigger value="day">By Day</TabsTrigger>
+          <TabsTrigger value="range">By Range</TabsTrigger>
+        </TabsList>
 
         <TabsContent value="day">
           <section className="p-4 grid grid-cols-1 @xl:grid-cols-2 @6xl:grid-cols-4 @7xl:grid-cols-4 gap-3">
-            <Card className="col-span-full p-4 grid grid-cols-1 @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm mr-5 mt-6 sm:mt-0 w-full max-w-screen">
+            <Card className="col-span-full p-4 sm:grid flex @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm mr-5 mt-6 sm:mt-0 w-full max-w-screen">
               <div className="flex flex-col gap-y-1">
                 {[
                   { text: "Natural Gas", value: "$3.37" },
                   { text: "Brent", value: "$69.25" },
                 ].map(({ text, value }) => (
                   <p key={text}>
-                    {text}:
-                    <span className="font-medium text-base ml-1 font-mono">
-                      {value}
-                    </span>
+                    <span>{text}:</span>
+                    <span className="ml-1 font-mono font-medium">{value}</span>
                   </p>
                 ))}
               </div>
@@ -485,8 +475,8 @@ export default function ProductionDashboard({
                   { text: "Rotating Equipment Availability", value: "90%" },
                 ].map(({ text, value }) => (
                   <p key={text}>
-                    <span className="font-medium">{text}:</span>
-                    <span className="text-base ml-1 font-mono">{value}</span>
+                    <span>{text}:</span>
+                    <span className="ml-1 font-mono font-medium">{value}</span>
                   </p>
                 ))}
               </div>
@@ -503,7 +493,7 @@ export default function ProductionDashboard({
               unit="bbls"
             />
             <Card>
-              <Carousel className="w-full">
+              <Carousel className="w-full min-h-[150px]">
                 <CarouselContent>
                   {carouselData.map(({ location, entry, target }) => (
                     <CarouselItem key={location} className="w-full">
@@ -530,34 +520,25 @@ export default function ProductionDashboard({
             </div>
             <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 p-0 gap-3">
               <div className="rounded-lg h-full grid gap-2 grid-cols-2">
-                <Card className="col-span-2 gap-0 p-3 flex flex-col justify-between">
-                  <CardTitle>Flare Gas Values</CardTitle>
-                  {/* <p className="font-bold text-2xl">
-                    394,367
-                    <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
-                      bbls
-                    </span>
-                  </p> */}
-                </Card>
-                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
+                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between min-h-[130px]">
                   <CardTitle>Endurance Time</CardTitle>
                   <p className="font-bold text-2xl">
-                    {storageData?.enduranceDays || 0}
+                    {(storageData?.enduranceDays ?? 0).toLocaleString("en-US")}
                     <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
                       days
                     </span>
                   </p>
                 </Card>
-                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
+                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between min-h-[130px]">
                   <CardTitle>Available Ullage</CardTitle>
                   <p className="font-bold text-2xl">
-                    {storageData?.availullage || 0}
+                    {(storageData?.availullage ?? 0).toLocaleString("en-US")}
                     <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
                       bbls
                     </span>
                   </p>
                 </Card>
-                {/* <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
+                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between min-h-[130px]">
                   <CardTitle>TFP Total Injectors</CardTitle>
                   <p className="font-bold text-2xl">
                     394,367
@@ -566,7 +547,7 @@ export default function ProductionDashboard({
                     </span>
                   </p>
                 </Card>
-                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
+                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between min-h-[130px]">
                   <CardTitle>FRM Total</CardTitle>
                   <p className="font-bold text-2xl">
                     389,314
@@ -574,7 +555,7 @@ export default function ProductionDashboard({
                       bbls
                     </span>
                   </p>
-                </Card> */}
+                </Card>
               </div>
               <div className="col-span-1">
                 <GasFlaringTable />
@@ -591,7 +572,7 @@ export default function ProductionDashboard({
               className="col-span-full @container scroll-mt-8 pb-0 !gap-0"
               id="chart"
             >
-              <CardHeader className="flex flex-col @max-md:px-5 @xl:flex-row">
+              <CardHeader className="flex flex-col @max-md:px-5 @xl:flex-row pb-5">
                 <div className="flex flex-col space-y-1 space-x-1 @7xl:flex-row flex-1">
                   <CardTitle>OML 30 Production Perfomance</CardTitle>
                   {/* <CardDescription>

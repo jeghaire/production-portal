@@ -33,7 +33,7 @@ export function DateTitle({ tabDefault = "day" }: { tabDefault?: string }) {
     display = `from ${format(parseDate(fromStr!), "dd MMM yyyy")} to ${format(parseDate(toStr!), "dd MMM yyyy")}`;
   }
   //  className="ml-2 text-xs font-normal text-muted-foreground"
-  return display ? <span className="ml-1">{display}</span> : null;
+  return display ? <span className="min-[470]:ml-1">{display}</span> : null;
 }
 
 function parseDate(str: string) {

@@ -21,7 +21,7 @@ const gasFlaringData = [
 
 export function GasFlaringTable() {
   return (
-    <Card className="p-2 sm:p-4 gap-4">
+    <Card className="p-3 sm:p-4 gap-4">
       <CardTitle>Gas Flared (MMSCFD)</CardTitle>
       <Table className="caption-none">
         <TableHeader>

@@ -21,8 +21,8 @@ async function getDailyTankLevel(date: string) {
     );
 
     if (!res.ok) {
-      // const errorText = await res.text();
-      // console.error("Tank level fetch failed:", res.status, errorText);
+      const errorText = await res.text();
+      console.error("Tank level fetch failed:", res.status, errorText);
       return []; // Fallback: empty array
     }
 
@@ -38,6 +38,11 @@ async function getDailyProductionData() {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/dailyprod?publickey=${process.env.NEXT_PUBLIC_API_KEY}`
     );
+
+    // const res = await fetch(apiUrl, { headers });
+    // console.log("Status:", res.status);
+    // const text = await res.text();
+    // console.log("Response Text:", text); // See actual server response
 
     if (!res.ok) {
       const errorText = await res.text();

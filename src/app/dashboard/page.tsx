@@ -15,24 +15,60 @@ import {
 import { formatToApiDateFormat, formatToUrlDate } from "@/lib/utils";
 
 async function getDailyTankLevel(date: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/dailyTank?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`
-  );
-  return res.json();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/dailyTank?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}&limit=1000`
+    );
+
+    if (!res.ok) {
+      // const errorText = await res.text();
+      // console.error("Tank level fetch failed:", res.status, errorText);
+      return []; // Fallback: empty array
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Tank level fetch exception:", error);
+    return []; // Fallback: empty array
+  }
 }
 
 async function getDailyProductionData() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/dailyprod?publickey=${process.env.NEXT_PUBLIC_API_KEY}`
-  );
-  return res.json();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/dailyprod?publickey=${process.env.NEXT_PUBLIC_API_KEY}`
+    );
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Production data fetch failed:", res.status, errorText);
+      return [];
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Production data fetch exception:", error);
+    return [];
+  }
 }
 
 async function getDailyStorageData(date: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/dailystorage?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`
-  );
-  return res.json();
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/dailystorage?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`
+    );
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Storage data fetch failed:", res.status, errorText);
+      return [];
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Storage data fetch exception:", error);
+    return [];
+  }
 }
 
 function formatEnduranceDays(value: number): number | string {
@@ -62,7 +98,11 @@ export default async function ProductionDashboardPage({
 
   // If 'day' is not provided, use yesterday's date formatted as dd-MM-yyyy
   // This ensures that the date is always in the correct format for the API
-  const { day = formatToUrlDate(new Date(new Date().setDate(new Date().getDate()-1))) } = await searchParams;
+  const {
+    day = formatToUrlDate(
+      new Date(new Date().setDate(new Date().getDate() - 1))
+    ),
+  } = await searchParams;
   // Ensure day is always a string
   const dayStr = Array.isArray(day) ? day[0] : day;
   const session = await auth();

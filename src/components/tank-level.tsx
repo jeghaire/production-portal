@@ -49,7 +49,7 @@ export function TankLevelChart({
       </CardHeader>
       {chartData.length !== 0 ? (
         <CardContent>
-          <ChartContainer config={chartConfig} className="h-[260] w-full">
+          <ChartContainer config={chartConfig} className="h-full w-full">
             <BarChart accessibilityLayer data={chartData}>
               <CartesianGrid vertical={false} />
               <XAxis

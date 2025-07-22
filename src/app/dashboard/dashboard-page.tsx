@@ -62,6 +62,7 @@ import {
 } from "@/lib/definitions";
 import { subDays } from "date-fns";
 import { GasFlaringTable } from "@/components/gas-flaring-card";
+import { DateTitle } from "@/components/date-title";
 
 function getActualsWithTarget(
   data: Record<string, ChartDataEntry[]>,
@@ -415,6 +416,11 @@ export default function ProductionDashboard({
 
   const aggregatedData = getAggregatedData(filteredChartData);
 
+  const withAvailableStringsData = aggregatedData.map((item) => ({
+    ...item,
+    Available: Math.floor(Math.random() * (200 - 198 + 1)) + 198,
+  }));
+
   const carouselData = getActualsWithTarget(
     chartData,
     netTargetByLocation,
@@ -449,45 +455,42 @@ export default function ProductionDashboard({
             <TabsTrigger value="day">By Day</TabsTrigger>
             <TabsTrigger value="range">By Range</TabsTrigger>
           </TabsList>
-          {/* {activeTab === "day" && (
-            <div className="flex ml-auto text-sm mr-5 mt-6 sm:mt-0 space-x-2">
-              {[
-                { text: "WTI", value: 73.06 },
-                { text: "Brent", value: 74.68 },
-              ].map(({ text, value }) => (
-                <p key={text}>
-                  {text}:
-                  <span className="font-medium text-base ml-1 font-mono">
-                    ${value}
-                  </span>
-                </p>
-              ))}
-            </div>
-          )} */}
+          <div className="flex ml-auto text-sm mr-5 mt-6 sm:mt-0 space-x-2">
+            <span className="font-medium">
+              <DateTitle />
+            </span>
+          </div>
         </div>
 
         <TabsContent value="day">
           <section className="p-4 grid grid-cols-1 @xl:grid-cols-2 @6xl:grid-cols-4 @7xl:grid-cols-4 gap-3">
-           <div className="col-span-full">
-              <Card>
-              <div className="flex ml-auto text-sm mr-5 mt-6 sm:mt-0 space-x-2">
-              {[
-                { text: "Natural Gas", value: "$3.37" },
-                { text: "Brent", value: "$69.25" },
-                { text: "Days since last LTI", value: "618" },
-                { text: "TFP Incidents YTD", value:  "12 MECH.| 1 TPI"},
-                { text: "Rotating Equipment Availability", value: "90%" },
-              ].map(({ text, value }) => (
-                <p key={text}>
-                  {text}:
-                  <span className="font-medium text-base ml-1 font-mono">
-                    {value}
-                  </span>
-                </p>
-              ))}
-            </div>
-              </Card>
-            </div>
+            <Card className="col-span-full p-4 grid grid-cols-1 @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm mr-5 mt-6 sm:mt-0 w-full max-w-screen">
+              <div className="flex flex-col gap-y-1">
+                {[
+                  { text: "Natural Gas", value: "$3.37" },
+                  { text: "Brent", value: "$69.25" },
+                ].map(({ text, value }) => (
+                  <p key={text}>
+                    {text}:
+                    <span className="font-medium text-base ml-1 font-mono">
+                      {value}
+                    </span>
+                  </p>
+                ))}
+              </div>
+              <div className="flex flex-col gap-y-1 sm:items-end">
+                {[
+                  { text: "Days since last LTI", value: "618" },
+                  { text: "TFP Incidents YTD", value: "12 MECH. | 1 TPI" },
+                  { text: "Rotating Equipment Availability", value: "90%" },
+                ].map(({ text, value }) => (
+                  <p key={text}>
+                    <span className="font-medium">{text}:</span>
+                    <span className="text-base ml-1 font-mono">{value}</span>
+                  </p>
+                ))}
+              </div>
+            </Card>
             {productionCardData.map((item, index) => (
               <ProductionCard key={index} {...item} />
             ))}
@@ -526,8 +529,16 @@ export default function ProductionDashboard({
               />
             </div>
             <div className="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 p-0 gap-3">
-              {/* <div className="col-span-1"> */}
               <div className="rounded-lg h-full grid gap-2 grid-cols-2">
+                <Card className="col-span-2 gap-0 p-3 flex flex-col justify-between">
+                  <CardTitle>Flare Gas Values</CardTitle>
+                  {/* <p className="font-bold text-2xl">
+                    394,367
+                    <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                      bbls
+                    </span>
+                  </p> */}
+                </Card>
                 <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
                   <CardTitle>Endurance Time</CardTitle>
                   <p className="font-bold text-2xl">
@@ -546,7 +557,7 @@ export default function ProductionDashboard({
                     </span>
                   </p>
                 </Card>
-                <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
+                {/* <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between">
                   <CardTitle>TFP Total Injectors</CardTitle>
                   <p className="font-bold text-2xl">
                     394,367
@@ -563,12 +574,10 @@ export default function ProductionDashboard({
                       bbls
                     </span>
                   </p>
-                </Card>
+                </Card> */}
               </div>
-              {/* </div> */}
               <div className="col-span-1">
-                {/* <TFPIncidentChart /> */}
-                <GasFlaringTable/>
+                <GasFlaringTable />
               </div>
             </div>
             <div className="col-span-full print:hidden">
@@ -922,7 +931,7 @@ export default function ProductionDashboard({
                       <LineChart
                         syncId="chartSync"
                         accessibilityLayer
-                        data={aggregatedData}
+                        data={withAvailableStringsData}
                         margin={{
                           right: 4,
                           top: 4,
@@ -971,7 +980,7 @@ export default function ProductionDashboard({
                         />
                         <Line
                           dataKey="stringsUp"
-                          type="natural"
+                          type="monotone"
                           stroke="var(--color-stringsUp)"
                           strokeWidth={2}
                           dot={
@@ -980,6 +989,22 @@ export default function ProductionDashboard({
                               r: 1,
                             }
                           }
+                          activeDot={{
+                            r: 4,
+                          }}
+                        />
+                        <Line
+                          dataKey="Available"
+                          type="monotone"
+                          stroke="var(--color-slate-400)"
+                          strokeWidth={2}
+                          // dot={
+                          //   !isMobile && {
+                          //     fill: "var(--color-stringsUp)",
+                          //     r: 1,
+                          //   }
+                          // }
+                          dot={false}
                           activeDot={{
                             r: 4,
                           }}

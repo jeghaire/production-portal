@@ -7,6 +7,7 @@ import { logOut } from "@/lib/actions";
 import { IconLogout2 } from "@tabler/icons-react";
 import { ModeToggle } from "./mode-toggle";
 import { cn } from "@/lib/utils";
+import { DateTitle } from "./date-title";
 
 export function LogOutButton({
   className,
@@ -36,7 +37,10 @@ export function SiteHeader({ title = "PRODUCTION DATA" }: { title?: string }) {
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
         />
-        <h1 className="text-base font-medium uppercase">{title}</h1>
+        <h1 className="text-base flex flex-col min-[470px]:flex-row min-[470px]:items-center">
+          <span className="font-medium uppercase">{title}</span>
+          <DateTitle />
+        </h1>
         <div className="ml-auto flex items-center gap-2">
           <ModeToggle />
           <Separator

@@ -56,41 +56,41 @@ export function LocationDifferenceCard({
     <CardContent className="flex flex-col items-center justify-start px-4">
       <div className="flex flex-col items-center justify-center mb-5">
         <CardDescription className="text-sm">
-          {entry?.date || selectedDate && selectedDate.replace(/-/g, '/')}
+          {entry?.date || (selectedDate && selectedDate.replace(/-/g, "/"))}
         </CardDescription>
         <CardTitle className="text-lg mb-0">{location}</CardTitle>
       </div>
 
       <div className="flex items-start w-full justify-between">
         <div className="flex items-center leading-none flex-col">
-          <span className="font-bold font-mono text-3xl">
+          <span className="font-semibold text-3xl">
             {targetFormatted.display}
-            <span className="text-[27px] font-semibold">
+            <span className="font-medium font-mono">
               {targetFormatted.suffix}
             </span>
           </span>
-          <span className="text-[10px]">Target</span>
+          <span className="text-[11px] font-mono">Target</span>
         </div>
 
         <div
           className={`flex items-center leading-none mt-2 flex-col ${colorClass}`}
         >
           <IconComponent className="w-8 h-8 mb-1" />
-          <span className="font-bold font-mono text-2xl">
+          <span className="font-semibold text-2xl">
             {diffFormatted.display}
-            <span className="text-[23px] font-semibold">
+            <span className="text-[23px] font-medium font-mono">
               {diffFormatted.suffix}
             </span>
           </span>
-          <span className="text-[10px]">difference</span>
+          <span className="text-[11px] font-mono">difference</span>
         </div>
 
         <div className="flex items-center leading-none flex-col">
-          <span className="font-bold font-mono text-3xl">
+          <span className="font-semibold text-3xl">
             {entry?.date ? actual.display : "n/a"}
-            <span className="text-[27px] font-semibold">{actual.suffix}</span>
+            <span className="font-medium font-mono">{actual.suffix}</span>
           </span>
-          <span className="text-[10px]">Actual</span>
+          <span className="text-[11px] font-mono">Actual</span>
         </div>
       </div>
     </CardContent>

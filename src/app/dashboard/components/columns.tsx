@@ -76,9 +76,7 @@ export const columns: ColumnDef<ProductionData>[] = [
       });
       return <span>{date}</span>;
     },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
+    // Remove filterFn for global search compatibility
   },
   {
     id: "Gross",

@@ -20,6 +20,11 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { cn, formatToApiDateFormat, formatToUrlDate } from "@/lib/utils";
+import {
+  fetchActuals,
+  fetchCumYear,
+  getActualsWithTarget,
+} from "@/lib/fetch-actuals";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -35,7 +40,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useSearchParams, useRouter } from "next/navigation";
-import { IconArrowUp, IconCheck, IconSelector } from "@tabler/icons-react";
+import { IconCheck, IconSelector } from "@tabler/icons-react";
 import {
   Carousel,
   CarouselContent,
@@ -52,80 +57,40 @@ import { TankLevelChart } from "@/components/tank-level";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { parseUrlDate } from "@/components/filters";
 import {
-  ChartDataEntry,
-  LocationEntry,
   OutputFormat,
   StorageSummary,
   TankLevelChartEntry,
-  xProductionData,
-  xTotals,
 } from "@/lib/definitions";
 import { subDays } from "date-fns";
-import { GasFlaringTable } from "@/components/gas-flaring-card";
+import GasFlaringTable from "@/components/gas-flaring-card";
 
-function getActualsWithTarget(
-  data: Record<string, ChartDataEntry[]>,
-  netTargetByLocation: Record<string, number>,
-  targetDay: string
-): LocationEntry[] {
-  const targetDate = new Date(targetDay);
+const options = [
+  { label: "NET", value: "net" },
+  { label: "GROSS", value: "gross" },
+];
 
-  return Object.keys(data).map((location) => {
-    const entries = [...data[location]].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
-
-    const match = entries.find(
-      (item) => new Date(item.date).toDateString() === targetDate.toDateString()
-    );
-
-    return {
-      location,
-      entry: match
-        ? {
-            date: new Date(match.date).toLocaleDateString("en-GB"),
-            value: match.net,
-          }
-        : null,
-      target: netTargetByLocation[location] ?? 0,
-    };
-  });
-}
-
-function getProductionTotals(
-  data: xProductionData,
-  selectedDate: string
-): xTotals {
-  let totalGrossForDay = 0;
-  let totalNetForDay = 0;
-  let cumulativeNetUpToDate = 0;
-
-  const selected = new Date(selectedDate);
-  const selectedYearStart = new Date(selected.getFullYear(), 0, 1); // Jan 1st
-
-  for (const entries of Object.values(data)) {
-    for (const entry of entries) {
-      const entryDate = new Date(entry.date);
-
-      // Total for the selected day
-      if (entryDate === selected) {
-        totalGrossForDay += entry.gross;
-        totalNetForDay += entry.net;
-      }
-
-      // Cumulative total net from Jan 1 to selectedDate (inclusive)
-      if (entryDate >= selectedYearStart && entryDate <= selected) {
-        cumulativeNetUpToDate += entry.net;
-      }
-    }
-  }
-
-  return {
-    totalGrossForDay: Number(totalGrossForDay.toFixed(2)),
-    totalNetForDay: Number(totalNetForDay.toFixed(2)),
-    cumulativeNetUpToDate: Number(cumulativeNetUpToDate.toFixed(2)),
-  };
-}
+const chartConfig = {
+  bsw: {
+    label: "BSW",
+    color: "hsl(var(--chart-bsw))",
+  },
+  gross: {
+    label: "Gross",
+    color: "hsl(var(--chart-gross))",
+  },
+  net: {
+    label: "Oil Rate",
+    color: "hsl(var(--chart-net))",
+  },
+  stringsUp: {
+    label: "Strings Up",
+    color: "hsl(var(--chart-stringsup))",
+  },
+  netTarget: {
+    label: "Net Target",
+    color: "hsl(var(--chart-stringsup))",
+  },
+} satisfies ChartConfig;
 
 const netTargetByLocation: Record<string, number> = {
   AFIESERE: 8706.18,
@@ -161,75 +126,6 @@ const loc = [
   },
 ];
 
-const options = [
-  { label: "NET", value: "net" },
-  { label: "GROSS", value: "gross" },
-];
-
-const chartConfig = {
-  bsw: {
-    label: "BSW",
-    color: "hsl(var(--chart-bsw))",
-  },
-  gross: {
-    label: "Gross",
-    color: "hsl(var(--chart-gross))",
-  },
-  net: {
-    label: "Oil Rate",
-    color: "hsl(var(--chart-net))",
-  },
-  stringsUp: {
-    label: "Strings Up",
-    color: "hsl(var(--chart-stringsup))",
-  },
-  netTarget: {
-    label: "Net Target",
-    color: "hsl(var(--chart-stringsup))",
-  },
-} satisfies ChartConfig;
-
-const productionCardData = [
-  {
-    title: "Gross Liquid Production",
-    badgeValue: "53%",
-    badgeIcon: <IconArrowUp className="!h-4 !w-4 mr-1" />,
-    description: "Barrels of Liquid Per Day",
-    quantity: 170420,
-    percentOfTarget: 60,
-    progressValue: 60,
-    unit: "blpd",
-  },
-  {
-    title: "Net Oil Production",
-    badgeValue: "46%",
-    badgeIcon: <IconArrowUp className="!h-4 !w-4 mr-1" />,
-    description: "Barrels of Oil Per Day",
-    quantity: 45240,
-    percentOfTarget: 76,
-    progressValue: 76,
-    unit: "bopd",
-  },
-  // {
-  //   title: "Year to Date Oil Production",
-  //   badgeValue: "12%",
-  //   badgeIcon: <IconArrowUp className="!h-4 !w-4 mr-1" />,
-  //   description: "Barrels of Oil",
-  //   quantity: 3143740.26,
-  //   percentOfTarget: 27.5,
-  //   progressValue: 27.5,
-  //   unit: "bbls",
-  //   footer: (
-  //     <div className="flex items-center gap-2">
-  //       <IconAlertCircleFilled className="w-3.5" />
-  //       <p className="text-xs text-muted-foreground">
-  //         Prices are subject to the rate of the US dollar!
-  //       </p>
-  //     </div>
-  //   ),
-  // },
-];
-
 const tankLevelChartConfig = {
   water: {
     label: "Water Level",
@@ -252,6 +148,18 @@ export default function ProductionDashboard({
   tankLevelChartData,
   storageData,
 }: Props) {
+  const [actuals, setActuals] = React.useState<{
+    grossActual?: number;
+    grossTarget?: number;
+    netActual?: number;
+    netTarget?: number;
+  }>({});
+
+  const [yearCum, setYearCum] = React.useState<{
+    netActual?: number;
+    netTarget?: number;
+  }>({});
+
   // const [selectedLocation, setSelectedLocation] = React.useState("EVWRENI");
   const [open, setOpen] = React.useState(false);
   const [openT, setOpenT] = React.useState(false);
@@ -277,6 +185,40 @@ export default function ProductionDashboard({
     selectedQueryParams.length > 0 ? selectedQueryParams : []
   );
   const [filterT, setFilterT] = React.useState(["net", "gross"]);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchActuals("2025-7-25");
+        setActuals({
+          grossActual: data.grossactual,
+          grossTarget: data.grosstarget,
+          netActual: data.netactual,
+          netTarget: data.nettarget,
+        });
+      } catch {
+        setActuals({});
+      }
+    };
+    fetchData();
+  }, []);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchCumYear();
+        setYearCum({
+          netActual: data.netactual,
+          netTarget: data.nettarget,
+        });
+        console.log("dsfd", data);
+      } catch {
+        // Silently fail and reset state
+        setYearCum({});
+      }
+    };
+    fetchData();
+  }, []);
 
   // Function to update selected locations
   const toggleSelection = (currentValue: string) =>
@@ -355,10 +297,10 @@ export default function ProductionDashboard({
     });
   });
 
-  const result = getProductionTotals(
-    chartData,
-    formatToApiDateFormat(dayFromURL)
-  );
+  // const result = getProductionTotals(
+  //   chartData,
+  //   formatToApiDateFormat(dayFromURL)
+  // );
   // console.log("Result/n", result);
 
   const getAggregatedData = (filteredData: Record<string, any[]>) => {
@@ -415,10 +357,10 @@ export default function ProductionDashboard({
 
   const aggregatedData = getAggregatedData(filteredChartData);
 
-  const withAvailableStringsData = aggregatedData.map((item) => ({
-    ...item,
-    Available: Math.floor(Math.random() * (200 - 198 + 1)) + 198,
-  }));
+  // const withAvailableStringsData = aggregatedData.map((item) => ({
+  //   ...item,
+  //   stringsTotal: Math.floor(Math.random() * (157 - 156 + 1)) + 157,
+  // }));
 
   const carouselData = getActualsWithTarget(
     chartData,
@@ -456,7 +398,7 @@ export default function ProductionDashboard({
 
         <TabsContent value="day">
           <section className="p-4 grid grid-cols-1 @xl:grid-cols-2 @6xl:grid-cols-4 @7xl:grid-cols-4 gap-3">
-            <Card className="col-span-full p-4 sm:grid flex @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm mr-5 mt-6 sm:mt-0 w-full max-w-screen">
+            <Card className="font-mono col-span-full p-4 flex flex-col sm:grid @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm w-full">
               <div className="flex flex-col gap-y-1">
                 {[
                   { text: "Natural Gas", value: "$3.37" },
@@ -464,7 +406,7 @@ export default function ProductionDashboard({
                 ].map(({ text, value }) => (
                   <p key={text}>
                     <span>{text}:</span>
-                    <span className="ml-1 font-mono font-medium">{value}</span>
+                    <span className="ml-1 font-medium">{value}</span>
                   </p>
                 ))}
               </div>
@@ -476,20 +418,31 @@ export default function ProductionDashboard({
                 ].map(({ text, value }) => (
                   <p key={text}>
                     <span>{text}:</span>
-                    <span className="ml-1 font-mono font-medium">{value}</span>
+                    <span className="ml-1 font-medium">{value}</span>
                   </p>
                 ))}
               </div>
             </Card>
-            {productionCardData.map((item, index) => (
-              <ProductionCard key={index} {...item} />
-            ))}
+            <ProductionCard
+              title="Gross Liquid Production"
+              description="Barrels of Liquid Per Day"
+              actual={actuals.grossActual ?? 0}
+              target={actuals.grossTarget ?? 0}
+              unit="blpd"
+            />
+            <ProductionCard
+              title="Net Oil Production"
+              description="Barrels of Oil Per Day"
+              actual={actuals.netActual ?? 0}
+              target={actuals.netTarget ?? 0}
+              unit="bopd"
+            />
             <ProductionCard
               title="Year to Date Oil Production"
               description="Barrels of Oil"
-              quantity={result.cumulativeNetUpToDate}
-              percentOfTarget={27.5}
-              progressValue={27.5}
+              // actual={result.cumulativeNetUpToDate}
+              actual={yearCum.netActual ?? 0}
+              target={yearCum.netTarget ?? 0}
               unit="bbls"
             />
             <Card>
@@ -522,36 +475,36 @@ export default function ProductionDashboard({
               <div className="rounded-lg h-full grid gap-2 grid-cols-2">
                 <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between min-h-[130px]">
                   <CardTitle>Endurance Time</CardTitle>
-                  <p className="font-bold text-2xl">
+                  <p className="font-semibold text-2xl">
                     {(storageData?.enduranceDays ?? 0).toLocaleString("en-US")}
-                    <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                    <span className="font-mono ml-1 text-base tracking-tighter font-normal text-muted-foreground">
                       days
                     </span>
                   </p>
                 </Card>
                 <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between min-h-[130px]">
                   <CardTitle>Available Ullage</CardTitle>
-                  <p className="font-bold text-2xl">
+                  <p className="font-semibold text-2xl">
                     {(storageData?.availullage ?? 0).toLocaleString("en-US")}
-                    <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                    <span className="font-mono ml-1 text-base tracking-tighter font-normal text-muted-foreground">
                       bbls
                     </span>
                   </p>
                 </Card>
                 <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between min-h-[130px]">
                   <CardTitle>TFP Total Injectors</CardTitle>
-                  <p className="font-bold text-2xl">
-                    394,367
-                    <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                  <p className="font-semibold text-2xl">
+                    354,974
+                    <span className="font-mono ml-1 text-base tracking-tighter font-normal text-muted-foreground">
                       bbls
                     </span>
                   </p>
                 </Card>
                 <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between min-h-[130px]">
                   <CardTitle>FRM Total</CardTitle>
-                  <p className="font-bold text-2xl">
-                    389,314
-                    <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+                  <p className="font-semibold text-2xl">
+                    348,997
+                    <span className="font-mono ml-1 text-base tracking-tighter font-normal text-muted-foreground">
                       bbls
                     </span>
                   </p>
@@ -890,7 +843,7 @@ export default function ProductionDashboard({
                 </>
               ) : (
                 <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[520]">
-                  <span className="m-3">
+                  <span className="m-3 text-muted-foreground">
                     No data available for the selected time period and
                     locations.
                   </span>
@@ -912,7 +865,8 @@ export default function ProductionDashboard({
                       <LineChart
                         syncId="chartSync"
                         accessibilityLayer
-                        data={withAvailableStringsData}
+                        data={aggregatedData}
+                        // data={withAvailableStringsData}
                         margin={{
                           right: 4,
                           top: 4,
@@ -975,9 +929,9 @@ export default function ProductionDashboard({
                           }}
                         />
                         <Line
-                          dataKey="Available"
+                          dataKey="stringsTotal"
                           type="monotone"
-                          stroke="var(--color-slate-400)"
+                          stroke="var(--color-emerald-600)"
                           strokeWidth={2}
                           // dot={
                           //   !isMobile && {
@@ -1009,7 +963,7 @@ export default function ProductionDashboard({
                 </>
               ) : (
                 <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[320]">
-                  <span className="m-3">
+                  <span className="m-3 text-muted-foreground">
                     No data available for the selected time period and
                     locations.
                   </span>
@@ -1113,7 +1067,7 @@ export default function ProductionDashboard({
                 </>
               ) : (
                 <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[320]">
-                  <span className="m-3">
+                  <span className="m-3 text-muted-foreground">
                     No data available for the selected time period and
                     locations.
                   </span>

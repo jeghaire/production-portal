@@ -35,10 +35,6 @@ const LOCATIONS = [
     label: "UZERE EAST (OML 30 - 14.695%)",
     value: "UZERE EAST (OML 30 - 14.695%)",
   },
-  {
-    label: "UZERE EAST (100%)",
-    value: "UZERE EAST (100%)",
-  },
 ];
 
 interface FilterProps {

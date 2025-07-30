@@ -7,21 +7,44 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardTitle } from "./ui/card";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { fetchGasFlared } from "@/lib/fetch-gas-flared";
 
-const gasFlaringData = [
-  { id: 1, location: "AFIESERE", amount: 4.44 },
-  { location: "ERIEMU", amount: 8.78 },
-  { location: "EVWRENI", amount: 0.15 },
-  { location: "KOKORI", amount: 2.17 },
-  { location: "OLOMORO", amount: 21.44 },
-  { location: "ORONI", amount: 1.76 },
-  { location: "OWEH", amount: 8.04 },
-  { location: "UZERE WEST", amount: 2.96 },
-];
+export default function GasFlaringCard() {
+  const searchParams = useSearchParams();
+  const [data, setData] = useState<any[]>([]);
+  // Get day param or default to previous day
+  let day = searchParams.get("day");
+  if (!day) {
+    const now = new Date();
+    now.setDate(now.getDate() - 1);
+    const dd = String(now.getDate()).padStart(2, "0");
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const yyyy = now.getFullYear();
+    day = `${dd}-${mm}-${yyyy}`;
+  }
 
-export function GasFlaringTable() {
+  function toApiDate(str: string | null) {
+    if (!str) return "";
+    const [dd, mm, yyyy] = str.split("-");
+    return `${parseInt(mm)}/${parseInt(dd)}/${yyyy}`;
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiDate = toApiDate(day);
+        const result = await fetchGasFlared(apiDate);
+        setData(result);
+      } catch {
+        setData([]);
+      }
+    };
+    fetchData();
+  }, [day]);
+
   return (
-    <Card className="p-3 sm:p-4 gap-4">
+    <Card className="p-3 sm:p-4 gap-4 h-full">
       <CardTitle>Gas Flared (MMSCFD)</CardTitle>
       <Table className="caption-none">
         <TableHeader>
@@ -31,18 +54,44 @@ export function GasFlaringTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {gasFlaringData.map((entry) => (
-            <TableRow key={entry.location}>
-              <TableCell className="font-medium w-">{entry.location}</TableCell>
-              <TableCell className="text-right">{entry.amount}</TableCell>
+          {data.length === 0 ? (
+            <TableRow>
+              <TableCell
+                colSpan={2}
+                className="text-center py-6 text-muted-foreground h-[200px]"
+              >
+                <p>
+                  No data available for the selected time period and locations
+                </p>
+              </TableCell>
             </TableRow>
-          ))}
-          <TableRow>
-            <TableCell className="text-base font-medium">Total</TableCell>
-            <TableCell className="text-right font-medium">
-              {gasFlaringData.reduce((sum, { amount }) => sum + amount, 0)}
-            </TableCell>
-          </TableRow>
+          ) : (
+            <>
+              {data.map((entry) => (
+                <TableRow key={entry.fieldname.trim()}>
+                  <TableCell className="font-medium">
+                    {entry.fieldname.trim()}
+                  </TableCell>
+                  <TableCell className="text-right font-mono">
+                    {entry.flaredgas}
+                  </TableCell>
+                </TableRow>
+              ))}
+              <TableRow>
+                <TableCell className="text-base font-medium">Total</TableCell>
+                <TableCell className="text-right font-medium font-mono">
+                  {Number(
+                    data
+                      .reduce(
+                        (sum, { flaredgas }) => sum + (Number(flaredgas) || 0),
+                        0
+                      )
+                      .toFixed(3)
+                  ).toLocaleString()}
+                </TableCell>
+              </TableRow>
+            </>
+          )}
         </TableBody>
       </Table>
     </Card>

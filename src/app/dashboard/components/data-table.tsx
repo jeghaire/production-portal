@@ -30,6 +30,24 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 
 // import { useRouter, useSearchParams } from "next/navigation";
+import { rankItem } from "@tanstack/match-sorter-utils";
+
+function customGlobalFilterFn(row: any, columnId: string, filterValue: string) {
+  const value = row.getValue(columnId);
+
+  // Normalize date columns to DD/MM/YYYY for global search
+  if (columnId === "Date" && typeof value === "string") {
+    const dateObj = new Date(value);
+    if (!isNaN(dateObj.getTime())) {
+      const formatted = `${String(dateObj.getDate()).padStart(2, "0")}/${String(dateObj.getMonth() + 1).padStart(2, "0")}/${dateObj.getFullYear()}`;
+      return rankItem(formatted, filterValue).passed;
+    }
+    return rankItem(value, filterValue).passed;
+  }
+
+  // Default fuzzy search for other columns
+  return rankItem(String(value), filterValue).passed;
+}
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -73,7 +91,11 @@ export function DataTable<TData, TValue>({
       columnFilters,
       globalFilter,
     },
+    initialState: {
+      pagination: { pageSize: 9 },
+    },
     enableRowSelection: true,
+    globalFilterFn: customGlobalFilterFn,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,

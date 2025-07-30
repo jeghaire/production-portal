@@ -95,7 +95,7 @@ export function TankLevelChart({
         </CardContent>
       ) : (
         <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[320]">
-          <span className="m-3">
+          <span className="m-3 text-muted-foreground">
             No data available for the selected time period and locations.
           </span>
         </div>

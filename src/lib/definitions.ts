@@ -76,6 +76,8 @@ export type RawDataEntry = {
   createduser: string;
   allocation: number;
   grossactualraw: number;
+  stringsTotal: number | null;
+  stringsDown: number | null;
   omlnid: number;
   oml: string;
   fieldname: string;
@@ -88,6 +90,7 @@ export type RawDataEntry = {
 
 export type TransformedEntry = {
   date: string; // in YYYY-MM-DD
+  stringsTotal: number;
   stringsUp: number;
   gross: number;
   net: number;

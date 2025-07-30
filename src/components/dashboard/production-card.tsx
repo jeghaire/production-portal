@@ -12,28 +12,24 @@ import { ReactNode } from "react";
 
 interface ProductionCardProps {
   title: string;
-  // badgeValue: string | number;
   description: string;
-  quantity: number;
-  percentOfTarget: number;
-  progressValue: number;
+  actual: number;
+  target: number;
   unit?: string;
-  // badgeIcon?: ReactNode;
   footer?: ReactNode;
+  // badgeIcon?: ReactNode;
+  // badgeValue: string | number;
 }
 
 export function ProductionCard({
   title,
-  // badgeValue,
   description,
-  quantity,
-  percentOfTarget,
-  progressValue,
-  unit = "bbl",
-  // badgeIcon,
+  actual = 0,
+  target = 0,
+  unit = "bbls",
   footer,
 }: ProductionCardProps) {
-  const targetValue = (quantity * (100 / percentOfTarget)).toFixed(2);
+  const actualToTargetPercentage = (actual / target) * 100;
 
   return (
     <Card>
@@ -52,17 +48,23 @@ export function ProductionCard({
       </CardHeader>
 
       <CardContent>
-        <p className="font-bold text-3xl">
-          {quantity.toLocaleString()}
-          <span className="ml-1 text-base tracking-tighter font-normal text-muted-foreground">
+        <p className="font-semibold text-3xl">
+          {Number.isInteger(actual)
+            ? actual.toLocaleString()
+            : Number(actual.toFixed(2)).toLocaleString()}
+          <span className="font-mono ml-1 text-base tracking-tighter font-normal text-muted-foreground">
             {unit}
           </span>
         </p>
-        <p className="mt-5 flex items-center justify-between text-muted-foreground text-xs">
-          <span className="truncate">{`${percentOfTarget}% of target`}</span>
-          <span className="text-nowrap">{targetValue}</span>
+        <p className="font-mono mt-5 flex items-center justify-between text-muted-foreground text-xs">
+          <span className="truncate">{`${actualToTargetPercentage.toFixed(1)}% of target`}</span>
+          <span className="text-nowrap">
+            {Number.isInteger(target)
+              ? target.toLocaleString()
+              : Number(target.toFixed(2)).toLocaleString()}
+          </span>
         </p>
-        <Progress value={progressValue} className="mt-1 h-1.5" />
+        <Progress value={actualToTargetPercentage} className="mt-1 h-1.5" />
       </CardContent>
 
       {footer && (

@@ -18,7 +18,7 @@ export function DateTitle({ tabDefault = "day" }: { tabDefault?: string }) {
     if (!dateStr) {
       dateStr = format(subDays(today, 1), "dd-MM-yyyy");
     }
-    display = `for ${format(parseDate(dateStr), "dd MMM yyyy")}`;
+    display = `${format(parseDate(dateStr), "dd MMM yyyy")}`;
   } else if (tab === "range") {
     let fromStr = from;
     let toStr = to;
@@ -30,10 +30,12 @@ export function DateTitle({ tabDefault = "day" }: { tabDefault?: string }) {
     } else if (fromStr && !toStr) {
       toStr = format(today, "dd-MM-yyyy");
     }
-    display = `from ${format(parseDate(fromStr!), "dd MMM yyyy")} to ${format(parseDate(toStr!), "dd MMM yyyy")}`;
+    display = `${format(parseDate(fromStr!), "dd MMM yyyy")} to ${format(parseDate(toStr!), "dd MMM yyyy")}`;
   }
   //  className="ml-2 text-xs font-normal text-muted-foreground"
-  return display ? <span className="min-[470]:ml-1">{display}</span> : null;
+  return display ? (
+    <span className="min-[470]:ml-1 font-mono text-sm">- {display}</span>
+  ) : null;
 }
 
 function parseDate(str: string) {

@@ -145,6 +145,7 @@ export default async function ProductionDashboardPage({
 
       const transformedEntry: TransformedEntry = {
         date,
+        stringsTotal: entry.stringsTotal ?? entry.stringsup,
         stringsUp: entry.stringsup,
         gross: entry.grossactual,
         net: entry.netactual,

@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
-import { geistVF } from "@/app/fonts";
+import { mono, inter } from "@/app/fonts";
 import ThemeProvider from "../components/theme-provider";
 
 export const metadata: Metadata = {
@@ -54,7 +54,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="HEOSL" />
       </head>
       <body
-        className={`${geistVF.variable} antialiased font-geistVF scroll-smooth`}
+        className={`${inter.variable} ${mono.variable} antialiased font-inter scroll-smooth`}
       >
         <ThemeProvider
           attribute="class"

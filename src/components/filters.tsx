@@ -275,38 +275,45 @@ function FilterBase({ searchParams }: FilterProps) {
         </div>
       )}
 
-      {/* Location Filter - Shown for both tabs */}
-      <div className="h-[320px] mt-2 p-2">
-        <Label className="text-sm mb-2">Locations</Label>
-        <div className="flex items-center space-x-2 py-1">
-          <Checkbox
-            id="list-all"
-            checked={optimisticFilters.loc?.length === LOCATIONS.length}
-            onCheckedChange={() => {
-              const allSelected =
-                optimisticFilters.loc?.length === LOCATIONS.length;
-              const newLocs = allSelected
-                ? undefined
-                : LOCATIONS.map((l) => l.value);
-              handleFilterChange("loc", newLocs);
-            }}
-          />
-          <Label htmlFor="list-all">ALL LOCATIONS</Label>
-        </div>
-
-        {LOCATIONS.map((list) => (
-          <div key={list.label} className="flex items-center space-x-2 py-1">
+      {/* Location Filter - Only shown for 'range' tab */}
+      {/* Location Filter - Only shown for 'range' tab, but space retained for layout */}
+      {activeTab === "range" ? (
+        <div className="h-[290px] mt-2 p-2">
+          <Label className="text-sm mb-2">Locations</Label>
+          <div className="flex items-center space-x-2 py-1">
             <Checkbox
-              id={`list-${list.label.toLowerCase()}`}
-              checked={optimisticFilters.loc?.includes(list.value) || false}
-              onCheckedChange={() => handleListToggle(list.value)}
+              id="list-all"
+              checked={optimisticFilters.loc?.length === LOCATIONS.length}
+              onCheckedChange={() => {
+                const allSelected =
+                  optimisticFilters.loc?.length === LOCATIONS.length;
+                const newLocs = allSelected
+                  ? undefined
+                  : LOCATIONS.map((l) => l.value);
+                handleFilterChange("loc", newLocs);
+              }}
+              disabled={activeTab !== "range"}
             />
-            <Label htmlFor={`list-${list.label.toLowerCase()}`}>
-              {list.label}
-            </Label>
+            <Label htmlFor="list-all">ALL LOCATIONS</Label>
           </div>
-        ))}
-      </div>
+
+          {LOCATIONS.map((list) => (
+            <div key={list.label} className="flex items-center space-x-2 py-1">
+              <Checkbox
+                id={`list-${list.label.toLowerCase()}`}
+                checked={optimisticFilters.loc?.includes(list.value) || false}
+                onCheckedChange={() => handleListToggle(list.value)}
+                disabled={activeTab !== "range"}
+              />
+              <Label htmlFor={`list-${list.label.toLowerCase()}`}>
+                {list.label}
+              </Label>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="h-[360px] mt-2 p-2" />
+      )}
 
       {Object.keys(optimisticFilters).length > 0 && (
         <div className="p-4 border-t">

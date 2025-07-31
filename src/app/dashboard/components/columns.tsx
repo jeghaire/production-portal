@@ -126,4 +126,19 @@ export const columns: ColumnDef<ProductionData>[] = [
       return value.includes(row.getValue(id));
     },
   },
+  {
+    id: "Strings Available",
+    accessorKey: "stringsTotal",
+    header: "Strings Available",
+    cell: ({ row }) => {
+      return (
+        <span>
+          {(row.getValue("Strings Available") as number)?.toLocaleString()}
+        </span>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
+  },
 ];

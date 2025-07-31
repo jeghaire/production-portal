@@ -17,6 +17,7 @@ interface ProductionCardProps {
   target: number;
   unit?: string;
   footer?: ReactNode;
+  hideProgress?: boolean;
   // badgeIcon?: ReactNode;
   // badgeValue: string | number;
 }
@@ -28,6 +29,7 @@ export function ProductionCard({
   target = 0,
   unit = "bbls",
   footer,
+  hideProgress = false,
 }: ProductionCardProps) {
   const actualToTargetPercentage = (actual / target) * 100;
 
@@ -56,15 +58,19 @@ export function ProductionCard({
             {unit}
           </span>
         </p>
-        <p className="font-mono mt-5 flex items-center justify-between text-muted-foreground text-xs">
-          <span className="truncate">{`${actualToTargetPercentage.toFixed(1)}% of target`}</span>
-          <span className="text-nowrap">
-            {Number.isInteger(target)
-              ? target.toLocaleString()
-              : Number(target.toFixed(2)).toLocaleString()}
-          </span>
-        </p>
-        <Progress value={actualToTargetPercentage} className="mt-1 h-1.5" />
+        {!hideProgress && (
+          <>
+            <p className="font-mono mt-5 flex items-center justify-between text-muted-foreground text-xs">
+              <span className="truncate">{`${actualToTargetPercentage.toFixed(1)}% of target`}</span>
+              <span className="text-nowrap">
+                {Number.isInteger(target)
+                  ? target.toLocaleString()
+                  : Number(target.toFixed(2)).toLocaleString()}
+              </span>
+            </p>
+            <Progress value={actualToTargetPercentage} className="mt-1 h-1.5" />
+          </>
+        )}
       </CardContent>
 
       {footer && (

@@ -100,8 +100,6 @@ const netTargetByLocation: Record<string, number> = {
   ORONI: 2655.44,
   OWEH: 7641.43,
   "UZERE WEST": 3471.81,
-  "UZERE EAST (OML 30 - 14.695%)": 0,
-  "UZERE EAST (100%)": 0,
 };
 
 // const NET_TARGET = 48571;
@@ -115,14 +113,6 @@ const loc = [
   { label: "ORONI", value: "ORONI" },
   { label: "OWEH", value: "OWEH" },
   { label: "UZERE WEST", value: "UZERE WEST" },
-  {
-    label: "UZERE EAST (OML 30 - 14.695%)",
-    value: "UZERE EAST (OML 30 - 14.695%)",
-  },
-  {
-    label: "UZERE EAST (100%)",
-    value: "UZERE EAST (100%)",
-  },
 ];
 
 const tankLevelChartConfig = {
@@ -269,7 +259,17 @@ export default function ProductionDashboard({
   const fromDate = from ? parseUrlDate(from) : null;
   const toDate = to ? parseUrlDate(to) : null;
 
-  const tableData = Object.entries(chartData)
+  // Sort locations alphabetically and entries by date ascending
+  const sortedChartData = Object.keys(chartData)
+    .sort((a, b) => a.localeCompare(b))
+    .reduce((acc, key) => {
+      acc[key] = [...chartData[key]].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      );
+      return acc;
+    }, {} as OutputFormat);
+
+  const tableData = Object.entries(sortedChartData)
     .flatMap(([key, items]) =>
       items.map((item) => ({ ...item, location: key }))
     )
@@ -289,7 +289,7 @@ export default function ProductionDashboard({
     return `${day}-${month}-${year}`;
   }
 
-  const tableDataDaily = Object.entries(chartData)
+  const tableDataDaily = Object.entries(sortedChartData)
     .flatMap(([key, items]) =>
       items.map((item) => ({ ...item, location: key }))
     )
@@ -301,7 +301,7 @@ export default function ProductionDashboard({
 
   const filteredChartData: Record<string, any[]> = {};
 
-  Object.entries(chartData).forEach(([location, entries]) => {
+  Object.entries(sortedChartData).forEach(([location, entries]) => {
     filteredChartData[location] = entries.filter((entry) => {
       const entryDate = new Date(entry.date);
       return (
@@ -376,7 +376,7 @@ export default function ProductionDashboard({
   // }));
 
   const carouselData = getActualsWithTarget(
-    chartData,
+    sortedChartData,
     netTargetByLocation,
     formatToApiDateFormat(dayFromURL)
   );
@@ -414,8 +414,8 @@ export default function ProductionDashboard({
             <Card className="font-mono col-span-full p-4 flex flex-col sm:grid @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm w-full">
               <div className="flex flex-col gap-y-1">
                 {[
-                  { text: "Natural Gas", value: "$3.37" },
-                  { text: "Brent", value: "$69.25" },
+                  { text: "Natural Gas", value: "$3.05" },
+                  { text: "Brent", value: "$68.69" },
                 ].map(({ text, value }) => (
                   <p key={text}>
                     <span>{text}:</span>
@@ -425,7 +425,7 @@ export default function ProductionDashboard({
               </div>
               <div className="flex flex-col gap-y-1 sm:items-end">
                 {[
-                  { text: "Days since last LTI", value: "618" },
+                  { text: "Days since last LTI", value: "2,758" },
                   { text: "TFP Incidents YTD", value: "12 MECH. | 1 TPI" },
                   { text: "Rotating Equipment Availability", value: "92%" },
                 ].map(({ text, value }) => (
@@ -457,6 +457,7 @@ export default function ProductionDashboard({
               actual={yearCum.netActual ?? 0}
               target={yearCum.netTarget ?? 0}
               unit="bbls"
+              hideProgress
             />
             <Card>
               <Carousel className="w-full min-h-[150px]">

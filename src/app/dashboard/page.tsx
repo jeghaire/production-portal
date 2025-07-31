@@ -27,8 +27,7 @@ async function getDailyTankLevel(date: string) {
     }
 
     return await res.json();
-  } catch (error) {
-    console.error("Tank level fetch exception:", error);
+  } catch {
     return []; // Fallback: empty array
   }
 }
@@ -51,8 +50,7 @@ async function getDailyProductionData() {
     }
 
     return await res.json();
-  } catch (error) {
-    console.error("Production data fetch exception:", error);
+  } catch {
     return [];
   }
 }
@@ -70,8 +68,7 @@ async function getDailyStorageData(date: string) {
     }
 
     return await res.json();
-  } catch (error) {
-    console.error("Storage data fetch exception:", error);
+  } catch {
     return [];
   }
 }

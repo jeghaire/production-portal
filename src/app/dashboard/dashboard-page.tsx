@@ -19,7 +19,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { cn, formatToApiDateFormat, formatToUrlDate } from "@/lib/utils";
+import { cn, formatToApiDateFormat } from "@/lib/utils";
 import {
   fetchActuals,
   fetchCumYear,
@@ -61,7 +61,6 @@ import {
   StorageSummary,
   TankLevelChartEntry,
 } from "@/lib/definitions";
-import { subDays } from "date-fns";
 import GasFlaringTable from "@/components/gas-flaring-card";
 
 const options = [
@@ -176,8 +175,23 @@ export default function ProductionDashboard({
   const selectedQueryParams = searchParams.getAll("loc");
   const from = searchParams.get("from");
   const to = searchParams.get("to");
-  const dayFromURL =
-    searchParams.get("day") || formatToUrlDate(subDays(new Date(), 1));
+  // Get day param or default to previous day
+  let dayFromURL = searchParams.get("day");
+  if (!dayFromURL) {
+    const now = new Date();
+    now.setDate(now.getDate() - 1);
+    const dd = String(now.getDate()).padStart(2, "0");
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const yyyy = now.getFullYear();
+    dayFromURL = `${dd}-${mm}-${yyyy}`;
+  }
+
+  // Convert dd-MM-yyyy to yyyy-M-d for fetchActuals
+  function toApiDate(str: string | null) {
+    if (!str) return "";
+    const [dd, mm, yyyy] = str.split("-");
+    return `${yyyy}-${parseInt(mm)}-${parseInt(dd)}`;
+  }
   // console.dir(chartData, { depth: null });
 
   // Set initial state from query params
@@ -189,7 +203,8 @@ export default function ProductionDashboard({
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchActuals("2025-7-25");
+        const apiDate = toApiDate(dayFromURL);
+        const data = await fetchActuals(apiDate);
         setActuals({
           grossActual: data.grossactual,
           grossTarget: data.grosstarget,
@@ -201,7 +216,7 @@ export default function ProductionDashboard({
       }
     };
     fetchData();
-  }, []);
+  }, [dayFromURL]);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -211,9 +226,7 @@ export default function ProductionDashboard({
           netActual: data.netactual,
           netTarget: data.nettarget,
         });
-        console.log("dsfd", data);
       } catch {
-        // Silently fail and reset state
         setYearCum({});
       }
     };

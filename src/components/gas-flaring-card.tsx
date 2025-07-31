@@ -46,54 +46,47 @@ export default function GasFlaringCard() {
   return (
     <Card className="p-3 sm:p-4 gap-4 h-full">
       <CardTitle>Gas Flared (MMSCFD)</CardTitle>
-      <Table className="caption-none">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Location</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {data.length === 0 ? (
+      {data.length === 0 ? (
+        <div className="text-sm grid place-items-center h-full hover:bg-muted/50 transition-colors min-h-[100]">
+          <span className="m-3 text-muted-foreground">
+            No data available for the selected time period and locations.
+          </span>
+        </div>
+      ) : (
+        <Table className="caption-none">
+          <TableHeader>
             <TableRow>
-              <TableCell
-                colSpan={2}
-                className="text-center py-6 text-muted-foreground h-[200px]"
-              >
-                <p>
-                  No data available for the selected time period and locations
-                </p>
-              </TableCell>
+              <TableHead>Location</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
             </TableRow>
-          ) : (
-            <>
-              {data.map((entry) => (
-                <TableRow key={entry.fieldname.trim()}>
-                  <TableCell className="font-medium">
-                    {entry.fieldname.trim()}
-                  </TableCell>
-                  <TableCell className="text-right font-mono">
-                    {entry.flaredgas}
-                  </TableCell>
-                </TableRow>
-              ))}
-              <TableRow>
-                <TableCell className="text-base font-medium">Total</TableCell>
-                <TableCell className="text-right font-medium font-mono">
-                  {Number(
-                    data
-                      .reduce(
-                        (sum, { flaredgas }) => sum + (Number(flaredgas) || 0),
-                        0
-                      )
-                      .toFixed(3)
-                  ).toLocaleString()}
+          </TableHeader>
+          <TableBody>
+            {data.map((entry) => (
+              <TableRow key={entry.fieldname.trim()}>
+                <TableCell className="font-medium">
+                  {entry.fieldname.trim()}
+                </TableCell>
+                <TableCell className="text-right font-mono">
+                  {entry.flaredgas}
                 </TableCell>
               </TableRow>
-            </>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+            <TableRow>
+              <TableCell className="text-base font-medium">Total</TableCell>
+              <TableCell className="text-right font-medium font-mono">
+                {Number(
+                  data
+                    .reduce(
+                      (sum, { flaredgas }) => sum + (Number(flaredgas) || 0),
+                      0
+                    )
+                    .toFixed(3)
+                ).toLocaleString()}
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      )}
     </Card>
   );
 }

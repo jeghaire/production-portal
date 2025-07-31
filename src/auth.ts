@@ -2,33 +2,26 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './lib/auth.config';
 import { z } from 'zod';
-import bcrypt from 'bcrypt';
 import { User } from './lib/definitions';
-// import postgres from 'postgres';
  
-// const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+async function getUser(email: string, password:string): Promise<User | undefined> {
+   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/logina?publickey=${process.env.NEXT_PUBLIC_API_KEY}&username=${encodeURIComponent(email)}&pwd=${encodeURIComponent(password)}`;
 
-// Hardcoded user for testing
-const user: User = {
-  id: '1',
-  name: 'Mavi',
-  email: 'admin@heosl.com',
-  password: '$2b$10$JDnne2Qd/ezPJvR3YpDrEu66ZArg1k9Felw5KO.dqEfDE2/dTAH1e', // 123456
-};
- 
-async function getUser(email: string): Promise<User | undefined> {
-  if (email === user.email) {
-    return user;
+   try {
+    const res = await fetch(apiUrl, { method: "GET" });
+    const result = await res.json();
+    if (result.status === "Success" && result.code === "0") {
+    return {
+      id: email,
+      name: email,
+      email: email,
+      password: '',
+    }}
+  } catch {
+    return undefined;
   }
-  return undefined;
 
-  // try {
-  //   const user = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
-  //   return user[0];
-  // } catch (error) {
-  //   console.error('Failed to fetch user:', error);
-  //   throw new Error('Failed to fetch user.');
-  // }
+  return undefined;
 }
  
 export const { auth, signIn, signOut } = NextAuth({
@@ -37,18 +30,15 @@ export const { auth, signIn, signOut } = NextAuth({
     Credentials({
       async authorize(credentials) {
         const parsedCredentials = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
+          .object({ email: z.string(), password: z.string()})
           .safeParse(credentials);
  
-          // const debugHash = await bcrypt.hash('admin', 10);
-          // console.log(debugHash);
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
-          const user = await getUser(email);
+          const user = await getUser(email, password);
+          console.log(user)
           if (!user) return null;
-
-          const passwordsMatch = await bcrypt.compare(password, user.password);
-          if (passwordsMatch) return user;
+          return user
         }
      
         return null;

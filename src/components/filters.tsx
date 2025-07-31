@@ -31,10 +31,6 @@ const LOCATIONS = [
   { label: "ORONI", value: "ORONI" },
   { label: "OWEH", value: "OWEH" },
   { label: "UZERE WEST", value: "UZERE WEST" },
-  {
-    label: "UZERE EAST (OML 30 - 14.695%)",
-    value: "UZERE EAST (OML 30 - 14.695%)",
-  },
 ];
 
 interface FilterProps {

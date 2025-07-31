@@ -92,7 +92,7 @@ export function DataTable<TData, TValue>({
       globalFilter,
     },
     initialState: {
-      pagination: { pageSize: 9 },
+      pagination: { pageSize: 8 },
     },
     enableRowSelection: true,
     globalFilterFn: customGlobalFilterFn,

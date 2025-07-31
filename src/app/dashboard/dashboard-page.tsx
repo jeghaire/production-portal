@@ -427,7 +427,7 @@ export default function ProductionDashboard({
                 {[
                   { text: "Days since last LTI", value: "618" },
                   { text: "TFP Incidents YTD", value: "12 MECH. | 1 TPI" },
-                  { text: "Rotating Equipment Availability", value: "90%" },
+                  { text: "Rotating Equipment Availability", value: "92%" },
                 ].map(({ text, value }) => (
                   <p key={text}>
                     <span>{text}:</span>

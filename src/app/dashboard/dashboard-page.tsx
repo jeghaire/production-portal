@@ -168,7 +168,7 @@ export default function ProductionDashboard({
   let dayFromURL = searchParams.get("day");
   if (!dayFromURL) {
     const now = new Date();
-    now.setDate(now.getDate() - 1);
+    // now.setDate(now.getDate() - 1);
     const dd = String(now.getDate()).padStart(2, "0");
     const mm = String(now.getMonth() + 1).padStart(2, "0");
     const yyyy = now.getFullYear();
@@ -273,7 +273,6 @@ export default function ProductionDashboard({
   //   chartData,
   //   formatToApiDateFormat(dayFromURL)
   // );
-  // console.log("Result/n", result);
 
   const getAggregatedData = (filteredData: Record<string, any[]>) => {
     const locations =

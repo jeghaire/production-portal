@@ -13,6 +13,7 @@ import {
   TransformedEntry,
 } from "@/lib/definitions";
 import { formatToApiDateFormat } from "@/lib/utils";
+import { format } from "date-fns";
 
 async function getDailyTankLevel(date: string) {
   try {
@@ -37,11 +38,6 @@ async function getDailyProductionData() {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/dailyprod?publickey=${process.env.NEXT_PUBLIC_API_KEY}`
     );
-
-    // const res = await fetch(apiUrl, { headers });
-    // console.log("Status:", res.status);
-    // const text = await res.text();
-    // console.log("Response Text:", text); // See actual server response
 
     if (!res.ok) {
       const errorText = await res.text();
@@ -165,31 +161,24 @@ export default async function ProductionDashboardPage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  // Extract the 'day' parameter from searchParams, defaulting to yesterday's date
-  // If 'day' is an array, take the first element
-
-  // If 'day' is not provided, use yesterday's date formatted as dd-MM-yyyy
-  // This ensures that the date is always in the correct format for the API
-  const {
-    // day = formatToUrlDate(
-    //   new Date(new Date().setDate(new Date().getDate() - 1))
-    // ),
-    day = "01-08-2025",
-  } = await searchParams;
-  // Ensure day is always a string
-  const dayStr = Array.isArray(day) ? day[0] : day;
+  // If 'day' is not provided, use today's date formatted as dd-MM-yyyy
+  const { day = format(new Date(), "dd-MM-yyyy") } = await searchParams
   const session = await auth();
 
   if (!session) {
     redirect("/login"); // Redirect if no session
   }
 
-  const dailyTankLevelData = getDailyTankLevel(formatToApiDateFormat(dayStr));
-  const dailyStorageData = getDailyStorageData(formatToApiDateFormat(dayStr));
+  const dailyTankLevelData = getDailyTankLevel(
+    formatToApiDateFormat(day.toString())
+  );
+  const dailyStorageData = getDailyStorageData(
+    formatToApiDateFormat(day.toString())
+  );
   const productionData = getDailyProductionData();
-  const prodCumData = getDailyProdCumData(toApiDate(dayStr));
+  const prodCumData = getDailyProdCumData(toApiDate(day.toString()));
   const prodCumYearData = getDailyProdCumYearData();
-  const getGasFlaring = getGasFlaringData(toApiDate2(dayStr));
+  const getGasFlaring = getGasFlaringData(toApiDate2(day.toString()));
 
   // Initiate all requests in parallel
   const [tankLevel, prodRawData, storageRaw, prodCum, prodCumYear, gasFlared] =

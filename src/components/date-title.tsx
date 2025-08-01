@@ -1,5 +1,5 @@
 import { useSearchParams } from "next/navigation";
-import { format, startOfYear, subDays } from "date-fns";
+import { format, startOfYear } from "date-fns";
 
 export function DateTitle({ tabDefault = "day" }: { tabDefault?: string }) {
   const searchParams = useSearchParams();
@@ -13,10 +13,10 @@ export function DateTitle({ tabDefault = "day" }: { tabDefault?: string }) {
 
   let display = "";
 
-  if (tab === "day" || tab === "to") {
+  if (tab === "day") {
     let dateStr = day;
     if (!dateStr) {
-      dateStr = format(subDays(today, 1), "dd-MM-yyyy");
+      dateStr = format(today, "dd-MM-yyyy");
     }
     display = `${format(parseDate(dateStr), "dd MMM yyyy")}`;
   } else if (tab === "range") {

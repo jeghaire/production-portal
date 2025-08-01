@@ -54,12 +54,10 @@ export default function DateRangePicker({
 
   const handleCalendarSelect = (range: DateRange | undefined) => {
     setDate(range);
-    console.log("Selected range:", range);
   };
 
   const handleClear = () => {
     setDate(undefined);
-    console.log("Date range cleared");
   };
 
   return (

@@ -373,8 +373,8 @@ export default function ProductionDashboard({
             <Card className="font-mono col-span-full p-4 flex flex-col sm:grid @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm w-full">
               <div className="flex flex-col gap-y-1">
                 {[
-                  { text: "Natural Gas", value: "$3.10" },
-                  { text: "Brent", value: "$71.90" },
+                  { text: "Natural Gas", value: "$3.17" },
+                  { text: "Brent", value: "$69.21" },
                 ].map(({ text, value }) => (
                   <p key={text}>
                     <span>{text}:</span>
@@ -386,7 +386,7 @@ export default function ProductionDashboard({
                 {[
                   { text: "Days since last LTI", value: "2,759" },
                   { text: "TFP Incidents YTD", value: "12 MECH. | 1 TPI" },
-                  { text: "Rotating Equipment Availability", value: "92%" },
+                  { text: "Rotating Equipment Availability", value: "95%" },
                 ].map(({ text, value }) => (
                   <p key={text}>
                     <span>{text}:</span>
@@ -466,7 +466,7 @@ export default function ProductionDashboard({
                 <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between min-h-[130px]">
                   <CardTitle>TFP Total Injectors</CardTitle>
                   <p className="font-semibold text-2xl">
-                    354,974
+                    335,643
                     <span className="font-mono ml-1 text-base tracking-tighter font-normal text-muted-foreground">
                       bbls
                     </span>
@@ -475,7 +475,7 @@ export default function ProductionDashboard({
                 <Card className="col-span-1 gap-0 p-3 flex flex-col justify-between min-h-[130px]">
                   <CardTitle>FRM Total</CardTitle>
                   <p className="font-semibold text-2xl">
-                    348,997
+                    329,097
                     <span className="font-mono ml-1 text-base tracking-tighter font-normal text-muted-foreground">
                       bbls
                     </span>

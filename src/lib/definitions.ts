@@ -35,6 +35,27 @@ export type RawStorageEntry = {
   datecreated: string;
 };
 
+type GasProductionEntry = {
+  gasprodid: number;
+  gasprodnid: number;
+  fieldnid: number;
+  gasproddate: string; // Format: "/Date(1738537200000)/"
+  gaslift: number;
+  flaredgas: number;
+  fuelgas: number;
+  gasproduced: number;
+  comments: string | null;
+  datecreated: string | null;
+  createdby: string | null;
+  dateedited: string | null;
+  editedby: string | null;
+  fieldname: string;
+  blockfield: number;
+};
+
+export type GasProductionResponse = GasProductionEntry[];
+
+
 export interface StorageSummary {
   enduranceDays: number | string;
   availullage: number;

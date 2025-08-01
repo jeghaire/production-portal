@@ -17,7 +17,7 @@ import { formatToApiDateFormat, formatToUrlDate } from "@/lib/utils";
 async function getDailyTankLevel(date: string) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/dailyTank?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}&limit=1000`
+      `${process.env.NEXT_PUBLIC_API_URL}/dailyTank?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`
     );
 
     if (!res.ok) {
@@ -73,6 +73,76 @@ async function getDailyStorageData(date: string) {
   }
 }
 
+async function getDailyProdCumData(date: string) {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/dailyProdCum?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`;
+
+  try {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Storage data fetch failed:", res.status, errorText);
+      return [];
+    }
+
+    const data = await res.json();
+    return data[0];
+  } catch {
+    return [];
+  }
+}
+
+async function getDailyProdCumYearData() {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/dailyProdCumYear?publickey=${process.env.NEXT_PUBLIC_API_KEY}`;
+
+  try {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Storage data fetch failed:", res.status, errorText);
+      return [];
+    }
+
+    const data = await res.json();
+    return data[0];
+  } catch {
+    return [];
+  }
+}
+
+async function getGasFlaringData(date: string) {
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/dailyGasFlared?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`;
+
+  try {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Storage data fetch failed:", res.status, errorText);
+      return [];
+    }
+
+    const data = await res.json();
+    return data;
+  } catch {
+    return [];
+  }
+}
+
+// Convert dd-MM-yyyy to yyyy-M-d for fetchActuals
+function toApiDate(str: string) {
+  if (!str) return "";
+  const [dd, mm, yyyy] = str.split("-");
+  return `${yyyy}-${parseInt(mm)}-${parseInt(dd)}`;
+}
+
+function toApiDate2(str: string) {
+  if (!str) return "";
+  const [dd, mm, yyyy] = str.split("-");
+  return `${parseInt(mm)}/${parseInt(dd)}/${yyyy}`;
+}
+
 function formatEnduranceDays(value: number): number | string {
   // If it's a whole number, return as integer
   if (Number.isInteger(value)) return value;
@@ -116,13 +186,20 @@ export default async function ProductionDashboardPage({
   const dailyTankLevelData = getDailyTankLevel(formatToApiDateFormat(dayStr));
   const dailyStorageData = getDailyStorageData(formatToApiDateFormat(dayStr));
   const productionData = getDailyProductionData();
+  const prodCumData = getDailyProdCumData(toApiDate(dayStr));
+  const prodCumYearData = getDailyProdCumYearData();
+  const getGasFlaring = getGasFlaringData(toApiDate2(dayStr));
 
   // Initiate all requests in parallel
-  const [tankLevel, prodRawData, storageRaw] = await Promise.all([
-    dailyTankLevelData,
-    productionData,
-    dailyStorageData,
-  ]);
+  const [tankLevel, prodRawData, storageRaw, prodCum, prodCumYear, gasFlared] =
+    await Promise.all([
+      dailyTankLevelData,
+      productionData,
+      dailyStorageData,
+      prodCumData,
+      prodCumYearData,
+      getGasFlaring,
+    ]);
 
   function transformTankData(rawData: RawTankEntry[]): TankLevelChartEntry[] {
     return rawData.map((entry) => ({
@@ -176,6 +253,9 @@ export default async function ProductionDashboardPage({
           chartData={prodData}
           tankLevelChartData={tankLevelChartData}
           storageData={storageData}
+          prodCum={prodCum}
+          prodCumYear={prodCumYear}
+          gasFlared={gasFlared}
         />
       </Suspense>
     </>

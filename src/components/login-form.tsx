@@ -29,8 +29,9 @@ export function LoginForm({
           <div className="flex flex-col items-center gap-2">
             <a href="#" className="relative w-[80px] h-auto aspect-square">
               <Image
-                alt=""
                 fill
+                priority
+                alt="HEOSL Logo"
                 src="/heosl_logo.jpg"
                 className="object-contain object-left-top"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

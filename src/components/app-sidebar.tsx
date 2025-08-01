@@ -68,7 +68,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Link href="/">
                 <Image
                   fill
-                  alt=""
+                  priority
+                  alt="HEOSL Logo"
                   src="/heosl_logo.jpg"
                   className="object-contain object-left-top"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

@@ -20,11 +20,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { cn, formatToApiDateFormat } from "@/lib/utils";
-import {
-  fetchActuals,
-  fetchCumYear,
-  getActualsWithTarget,
-} from "@/lib/fetch-actuals";
+import { getActualsWithTarget } from "@/lib/fetch-actuals";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -57,6 +53,7 @@ import { TankLevelChart } from "@/components/tank-level";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { parseUrlDate } from "@/components/filters";
 import {
+  GasProductionResponse,
   OutputFormat,
   StorageSummary,
   TankLevelChartEntry,
@@ -130,25 +127,27 @@ type Props = {
   chartData: OutputFormat;
   tankLevelChartData: TankLevelChartEntry[];
   storageData: StorageSummary | null;
+  prodCum: {
+    grossactual?: number;
+    grosstarget?: number;
+    netactual?: number;
+    nettarget?: number;
+  };
+  prodCumYear: {
+    netactual?: number;
+    nettarget?: number;
+  };
+  gasFlared: GasProductionResponse;
 };
 
 export default function ProductionDashboard({
   chartData,
   tankLevelChartData,
   storageData,
+  prodCum,
+  prodCumYear,
+  gasFlared,
 }: Props) {
-  const [actuals, setActuals] = React.useState<{
-    grossActual?: number;
-    grossTarget?: number;
-    netActual?: number;
-    netTarget?: number;
-  }>({});
-
-  const [yearCum, setYearCum] = React.useState<{
-    netActual?: number;
-    netTarget?: number;
-  }>({});
-
   // const [selectedLocation, setSelectedLocation] = React.useState("EVWRENI");
   const [open, setOpen] = React.useState(false);
   const [openT, setOpenT] = React.useState(false);
@@ -175,13 +174,6 @@ export default function ProductionDashboard({
     const yyyy = now.getFullYear();
     dayFromURL = `${dd}-${mm}-${yyyy}`;
   }
-
-  // Convert dd-MM-yyyy to yyyy-M-d for fetchActuals
-  function toApiDate(str: string | null) {
-    if (!str) return "";
-    const [dd, mm, yyyy] = str.split("-");
-    return `${yyyy}-${parseInt(mm)}-${parseInt(dd)}`;
-  }
   // console.dir(chartData, { depth: null });
 
   // Set initial state from query params
@@ -189,39 +181,6 @@ export default function ProductionDashboard({
     selectedQueryParams.length > 0 ? selectedQueryParams : []
   );
   const [filterT, setFilterT] = React.useState(["net", "gross"]);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const apiDate = toApiDate(dayFromURL);
-        const data = await fetchActuals(apiDate);
-        setActuals({
-          grossActual: data.grossactual,
-          grossTarget: data.grosstarget,
-          netActual: data.netactual,
-          netTarget: data.nettarget,
-        });
-      } catch {
-        setActuals({});
-      }
-    };
-    fetchData();
-  }, [dayFromURL]);
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchCumYear();
-        setYearCum({
-          netActual: data.netactual,
-          netTarget: data.nettarget,
-        });
-      } catch {
-        setYearCum({});
-      }
-    };
-    fetchData();
-  }, []);
 
   // Function to update selected locations
   const toggleSelection = (currentValue: string) =>
@@ -414,8 +373,8 @@ export default function ProductionDashboard({
             <Card className="font-mono col-span-full p-4 flex flex-col sm:grid @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm w-full">
               <div className="flex flex-col gap-y-1">
                 {[
-                  { text: "Natural Gas", value: "$3.05" },
-                  { text: "Brent", value: "$68.69" },
+                  { text: "Natural Gas", value: "$3.10" },
+                  { text: "Brent", value: "$71.90" },
                 ].map(({ text, value }) => (
                   <p key={text}>
                     <span>{text}:</span>
@@ -425,7 +384,7 @@ export default function ProductionDashboard({
               </div>
               <div className="flex flex-col gap-y-1 sm:items-end">
                 {[
-                  { text: "Days since last LTI", value: "2,758" },
+                  { text: "Days since last LTI", value: "2,759" },
                   { text: "TFP Incidents YTD", value: "12 MECH. | 1 TPI" },
                   { text: "Rotating Equipment Availability", value: "92%" },
                 ].map(({ text, value }) => (
@@ -439,23 +398,23 @@ export default function ProductionDashboard({
             <ProductionCard
               title="Gross Liquid Production"
               description="Barrels of Liquid Per Day"
-              actual={actuals.grossActual ?? 0}
-              target={actuals.grossTarget ?? 0}
+              actual={prodCum.grossactual ?? 0}
+              target={prodCum.grosstarget ?? 0}
               unit="blpd"
             />
             <ProductionCard
               title="Net Oil Production"
               description="Barrels of Oil Per Day"
-              actual={actuals.netActual ?? 0}
-              target={actuals.netTarget ?? 0}
+              actual={prodCum.netactual ?? 0}
+              target={prodCum.nettarget ?? 0}
               unit="bopd"
             />
             <ProductionCard
               title="Year to Date Oil Production"
               description="Barrels of Oil"
               // actual={result.cumulativeNetUpToDate}
-              actual={yearCum.netActual ?? 0}
-              target={yearCum.netTarget ?? 0}
+              actual={prodCumYear.netactual ?? 0}
+              target={prodCumYear.nettarget ?? 0}
               unit="bbls"
               hideProgress
             />
@@ -525,7 +484,7 @@ export default function ProductionDashboard({
                 </Card>
               </div>
               <div className="col-span-1">
-                <GasFlaringTable />
+                <GasFlaringTable gasFlared={gasFlared} />
               </div>
             </div>
             <div className="col-span-full print:hidden">

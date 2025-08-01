@@ -7,7 +7,7 @@ pnpm build
 if [ $? -eq 0 ]; then
   git add .
   git commit -m "$COMMIT_MSG"
-  git push
+  git push -u origin main
 
   # Check if the push was successful immediately after the push
   if [ $? -eq 0 ]; then

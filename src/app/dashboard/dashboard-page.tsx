@@ -414,9 +414,8 @@ export default function ProductionDashboard({
               description="Barrels of Oil"
               // actual={result.cumulativeNetUpToDate}
               actual={prodCumYear.netactual ?? 0}
-              target={prodCumYear.nettarget ?? 0}
+              target={18000000}
               unit="bbls"
-              hideProgress
             />
             <Card>
               <Carousel className="w-full min-h-[150px]">

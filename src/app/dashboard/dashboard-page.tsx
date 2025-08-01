@@ -414,8 +414,8 @@ export default function ProductionDashboard({
               description="Barrels of Oil"
               // actual={result.cumulativeNetUpToDate}
               actual={prodCumYear.netactual ?? 0}
-              target={18000000}
-              unit="bbls"
+              target={prodCumYear.nettarget ?? 0}
+              unit="bbl"
             />
             <Card>
               <Carousel className="w-full min-h-[150px]">
@@ -459,7 +459,7 @@ export default function ProductionDashboard({
                   <p className="font-semibold text-2xl">
                     {(storageData?.availullage ?? 0).toLocaleString("en-US")}
                     <span className="font-mono ml-1 text-base tracking-tighter font-normal text-muted-foreground">
-                      bbls
+                      bbl
                     </span>
                   </p>
                 </Card>
@@ -468,7 +468,7 @@ export default function ProductionDashboard({
                   <p className="font-semibold text-2xl">
                     335,643
                     <span className="font-mono ml-1 text-base tracking-tighter font-normal text-muted-foreground">
-                      bbls
+                      bbl
                     </span>
                   </p>
                 </Card>
@@ -477,7 +477,7 @@ export default function ProductionDashboard({
                   <p className="font-semibold text-2xl">
                     329,097
                     <span className="font-mono ml-1 text-base tracking-tighter font-normal text-muted-foreground">
-                      bbls
+                      bbl
                     </span>
                   </p>
                 </Card>

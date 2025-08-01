@@ -27,7 +27,7 @@ export function ProductionCard({
   description,
   actual = 0,
   target = 0,
-  unit = "bbls",
+  unit = "bbl",
   footer,
   hideProgress = false,
 }: ProductionCardProps) {

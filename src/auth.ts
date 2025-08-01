@@ -5,16 +5,16 @@ import { z } from 'zod';
 import { User } from './lib/definitions';
  
 async function getUser(email: string, password:string): Promise<User | undefined> {
-   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/logina?publickey=${process.env.NEXT_PUBLIC_API_KEY}&username=${encodeURIComponent(email)}&pwd=${encodeURIComponent(password)}`;
-
+   const apiUrl = `${process.env.NEXT_PUBLIC_API_AUTH_URL}?email=${email}&pwd=${password}`;
+   
    try {
     const res = await fetch(apiUrl, { method: "GET" });
     const result = await res.json();
-    if (result.status === "Success" && result.code === "0") {
+    if (result.status === "PP") {
     return {
-      id: email,
-      name: email,
-      email: email,
+      id: result.id,
+      name: result.surname,
+      email: result.username,
       password: '',
     }}
   } catch {

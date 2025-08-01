@@ -44,7 +44,7 @@ export function TankLevelChart({
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="uppercase">{title}</CardTitle>
+        <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       {chartData.length !== 0 ? (

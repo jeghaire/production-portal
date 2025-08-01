@@ -12,7 +12,7 @@ import {
   TankLevelChartEntry,
   TransformedEntry,
 } from "@/lib/definitions";
-import { formatToApiDateFormat, formatToUrlDate } from "@/lib/utils";
+import { formatToApiDateFormat } from "@/lib/utils";
 
 async function getDailyTankLevel(date: string) {
   try {
@@ -171,9 +171,10 @@ export default async function ProductionDashboardPage({
   // If 'day' is not provided, use yesterday's date formatted as dd-MM-yyyy
   // This ensures that the date is always in the correct format for the API
   const {
-    day = formatToUrlDate(
-      new Date(new Date().setDate(new Date().getDate() - 1))
-    ),
+    // day = formatToUrlDate(
+    //   new Date(new Date().setDate(new Date().getDate() - 1))
+    // ),
+    day = "01-08-2025",
   } = await searchParams;
   // Ensure day is always a string
   const dayStr = Array.isArray(day) ? day[0] : day;

@@ -29,6 +29,7 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRef } from "react";
 import { rankItem } from "@tanstack/match-sorter-utils";
 
 function customGlobalFilterFn(row: any, columnId: string, filterValue: string) {
@@ -109,25 +110,33 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);
 
-  // Sync from table filter to URL param
+  // Sync from table filter to URL param (only update loc param, preserve others like tab)
+  // Debounce router.replace for URL param sync
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   React.useEffect(() => {
-    // Only update URL if the filter is changed by the user (not by URL effect)
-    // For each filter in columnFilters, update the corresponding param
     const currentParams = new URLSearchParams(searchParams.toString());
-    let changed = false;
+    let locChanged = false;
+
     Object.entries(columnParamMap).forEach(([col, param]) => {
       const filter = columnFilters.find((f) => f.id === col);
-      currentParams.delete(param);
-      if (filter && Array.isArray(filter.value) && filter.value.length > 0) {
-        filter.value.forEach((v: string) => currentParams.append(param, v));
-        changed = true;
+      const prevValues = searchParams.getAll(param);
+      const newValues = Array.isArray(filter?.value) ? filter!.value : [];
+
+      if (JSON.stringify(prevValues) !== JSON.stringify(newValues)) {
+        currentParams.delete(param);
+        newValues.forEach((v: string) => currentParams.append(param, v));
+        locChanged = true;
       }
     });
-    // If all filters are cleared, remove the param
-    if (changed || columnFilters.length === 0) {
-      router.replace(`${pathname}?${currentParams.toString()}`, {
-        scroll: false,
-      });
+
+    if (locChanged) {
+      const newUrl = `${pathname}?${currentParams.toString()}`;
+      if (window.location.search !== `?${currentParams.toString()}`) {
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+        debounceRef.current = setTimeout(() => {
+          router.replace(newUrl, { scroll: false });
+        }, 300); // 300ms debounce
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [columnFilters]);

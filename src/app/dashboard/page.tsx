@@ -203,9 +203,10 @@ export default async function ProductionDashboardPage({
     const result: OutputFormat = {};
 
     data.forEach((entry) => {
-      // Convert the '/Date(...)' string to YYYY-MM-DD
+      // Convert the '/Date(...)' string to YYYY-MM-DD (UTC, no timezone shift)
       const timestamp = Number(entry.producedate.match(/\d+/)?.[0]); // extract number from /Date(...)
-      const date = new Date(timestamp).toISOString().split("T")[0]; // format to YYYY-MM-DD
+      const d = new Date(timestamp);
+      const date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
       const transformedEntry: TransformedEntry = {
         date,

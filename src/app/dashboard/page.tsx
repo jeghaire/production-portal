@@ -162,7 +162,7 @@ export default async function ProductionDashboardPage({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   // If 'day' is not provided, use today's date formatted as dd-MM-yyyy
-  const { day = format(new Date(), "dd-MM-yyyy") } = await searchParams
+  const { day = format(new Date(), "dd-MM-yyyy") } = await searchParams;
   const session = await auth();
 
   if (!session) {
@@ -209,7 +209,7 @@ export default async function ProductionDashboardPage({
 
       const transformedEntry: TransformedEntry = {
         date,
-        stringsTotal: entry.stringsTotal ?? entry.stringsup,
+        stringsTotal: entry.stringsTotal,
         stringsUp: entry.stringsup,
         gross: entry.grossactual,
         net: entry.netactual,

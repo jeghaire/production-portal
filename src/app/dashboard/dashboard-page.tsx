@@ -288,6 +288,7 @@ export default function ProductionDashboard({
             net: 0,
             gross: 0,
             stringsUp: 0,
+            stringsTotal: 0,
             netTarget: 0,
             // New temporary variables for BSW calculation
             _totalWaterVolume: 0,
@@ -304,6 +305,7 @@ export default function ProductionDashboard({
         aggregatedData[index].net += entry.net;
         aggregatedData[index].gross += entry.gross;
         aggregatedData[index].stringsUp += entry.stringsUp;
+        aggregatedData[index].stringsTotal += entry.stringsTotal || 0;
         // aggregatedData[index].netTarget = NET_TARGET;
 
         // Add netTarget from current location
@@ -327,11 +329,6 @@ export default function ProductionDashboard({
   };
 
   const aggregatedData = getAggregatedData(filteredChartData);
-
-  // const withAvailableStringsData = aggregatedData.map((item) => ({
-  //   ...item,
-  //   stringsTotal: Math.floor(Math.random() * (157 - 156 + 1)) + 157,
-  // }));
 
   const carouselData = getActualsWithTarget(
     sortedChartData,
@@ -372,8 +369,8 @@ export default function ProductionDashboard({
             <Card className="font-mono col-span-full p-4 flex flex-col sm:grid @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm w-full">
               <div className="flex flex-col gap-y-1">
                 {[
-                  { text: "Natural Gas", value: "$3.17" },
-                  { text: "Brent", value: "$69.21" },
+                  { text: "Natural Gas", value: "$3.05" },
+                  { text: "Brent", value: "$69.73" },
                 ].map(({ text, value }) => (
                   <p key={text}>
                     <span>{text}:</span>
@@ -383,8 +380,8 @@ export default function ProductionDashboard({
               </div>
               <div className="flex flex-col gap-y-1 sm:items-end">
                 {[
-                  { text: "Days since last LTI", value: "2,759" },
-                  { text: "TFP Incidents YTD", value: "12 MECH. | 1 TPI" },
+                  { text: "Days since last LTI", value: "2,762" },
+                  { text: "TFP Incidents YTD", value: "13 MECH. | 1 TPI" },
                   { text: "Rotating Equipment Availability", value: "95%" },
                 ].map(({ text, value }) => (
                   <p key={text}>
@@ -532,21 +529,25 @@ export default function ProductionDashboard({
                         aria-expanded={open}
                         className="w-full md:w-[200px] justify-between"
                       >
-                        {selectedValues.length > 0
-                          ? (() => {
-                              const selectedLabels = filterT
-                                .map(
-                                  (value) =>
-                                    options.find(
-                                      (framework) => framework.value === value
-                                    )?.label
-                                )
-                                .filter(Boolean); // Removes any undefined values
-                              return selectedLabels.length > 2
-                                ? `${selectedLabels.slice(0, 2).join(", ")}...`
-                                : selectedLabels.join(", ");
-                            })()
-                          : "Filter Chart"}
+                        {selectedValues.length > 0 ? (
+                          (() => {
+                            const selectedLabels = filterT
+                              .map(
+                                (value) =>
+                                  options.find(
+                                    (framework) => framework.value === value
+                                  )?.label
+                              )
+                              .filter(Boolean); // Removes any undefined values
+                            return selectedLabels.length > 2
+                              ? `${selectedLabels.slice(0, 2).join(", ")}...`
+                              : selectedLabels.join(", ");
+                          })()
+                        ) : (
+                          <span className="text-muted-foreground">
+                            Select Type
+                          </span>
+                        )}
                         <IconSelector className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </PopoverTrigger>
@@ -591,29 +592,26 @@ export default function ProductionDashboard({
                   ? loc.find((framework) => framework.value === value)
                       ?.label
                   : "Select location..."} */}
-                        {selectedValues.length > 0
-                          ? // ? selectedValues
-                            //     .map(
-                            //       (value) =>
-                            //         loc.find((framework) => framework.value === value)
-                            //           ?.label
-                            //     )
-                            //     .join(", ")
-                            (() => {
-                              const selectedLabels = selectedValues
-                                .map(
-                                  (value) =>
-                                    loc.find(
-                                      (framework) => framework.value === value
-                                    )?.label
-                                )
-                                .filter(Boolean); // Removes any undefined values
+                        {selectedValues.length > 0 ? (
+                          (() => {
+                            const selectedLabels = selectedValues
+                              .map(
+                                (value) =>
+                                  loc.find(
+                                    (framework) => framework.value === value
+                                  )?.label
+                              )
+                              .filter(Boolean); // Removes any undefined values
 
-                              return selectedLabels.length > 2
-                                ? `${selectedLabels.slice(0, 2).join(", ")}...`
-                                : selectedLabels.join(", ");
-                            })()
-                          : "ALL LOCATIONS"}
+                            return selectedLabels.length > 2
+                              ? `${selectedLabels.slice(0, 2).join(", ")}...`
+                              : selectedLabels.join(", ");
+                          })()
+                        ) : (
+                          <span className="text-muted-foreground">
+                            Select Location
+                          </span>
+                        )}
                         <IconSelector className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </PopoverTrigger>
@@ -904,13 +902,12 @@ export default function ProductionDashboard({
                           type="monotone"
                           stroke="var(--color-emerald-600)"
                           strokeWidth={2}
-                          // dot={
-                          //   !isMobile && {
-                          //     fill: "var(--color-stringsUp)",
-                          //     r: 1,
-                          //   }
-                          // }
-                          dot={false}
+                          dot={
+                            !isMobile && {
+                              fill: "var(--color-stringsUp)",
+                              r: 1,
+                            }
+                          }
                           activeDot={{
                             r: 4,
                           }}

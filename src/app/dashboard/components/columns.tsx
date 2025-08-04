@@ -127,13 +127,13 @@ export const columns: ColumnDef<ProductionData>[] = [
     },
   },
   {
-    id: "Strings Available",
+    id: "Strings Total",
     accessorKey: "stringsTotal",
-    header: "Strings Available",
+    header: "Strings Total",
     cell: ({ row }) => {
       return (
         <span>
-          {(row.getValue("Strings Available") as number)?.toLocaleString()}
+          {(row.getValue("Strings Total") as number)?.toLocaleString()}
         </span>
       );
     },

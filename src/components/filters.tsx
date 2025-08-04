@@ -294,7 +294,9 @@ function FilterBase({ searchParams }: FilterProps) {
               }}
               disabled={activeTab !== "range"}
             />
-            <Label htmlFor="list-all">ALL LOCATIONS</Label>
+            <Label htmlFor="list-all" className="text-muted-foreground">
+              ALL LOCATIONS
+            </Label>
           </div>
 
           {LOCATIONS.map((list) => (

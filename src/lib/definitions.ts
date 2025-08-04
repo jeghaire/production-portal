@@ -97,8 +97,8 @@ export type RawDataEntry = {
   createduser: string;
   allocation: number;
   grossactualraw: number;
-  stringsTotal: number | null;
-  stringsDown: number | null;
+  stringsTotal: number;
+  stringsDown: number;
   omlnid: number;
   oml: string;
   fieldname: string;

@@ -28,8 +28,7 @@ import {
 
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
-
-// import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { rankItem } from "@tanstack/match-sorter-utils";
 
 function customGlobalFilterFn(row: any, columnId: string, filterValue: string) {
@@ -54,10 +53,8 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
+  const { columns, data } = props;
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -68,18 +65,72 @@ export function DataTable<TData, TValue>({
     React.useState<GlobalFilterTableState>();
   const [sorting, setSorting] = React.useState<SortingState>([]);
 
-  // const router = useRouter();
-  // const searchParams = useSearchParams();
+  // --- Two-way sync for location filter and loc URL param ---
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
-  // const selectedQueryParams = searchParams.getAll("loc");
+  // Map between column name and URL param
+  const columnParamMap: Record<string, string> = {
+    Location: "loc",
+    // Add more mappings here if needed
+  };
+  const paramColumnMap = Object.fromEntries(
+    Object.entries(columnParamMap).map(([col, param]) => [param, col])
+  );
 
-  // const columnParamMap: Record<string, string> = {
-  //   Location: "loc",
-  //   // Add more mappings here if needed
-  // };
-  // const paramColumnMap = Object.fromEntries(
-  //   Object.entries(columnParamMap).map(([col, param]) => [param, col])
-  // );
+  // Sync from URL param to table filter
+  React.useEffect(() => {
+    // For each param in paramColumnMap, update the corresponding column filter
+    let changed = false;
+    const newFilters = [...columnFilters];
+    Object.entries(paramColumnMap).forEach(([param, col]) => {
+      const urlValues = searchParams.getAll(param);
+      const filterIdx = newFilters.findIndex((f) => f.id === col);
+      if (urlValues.length > 0) {
+        if (
+          filterIdx === -1 ||
+          JSON.stringify(newFilters[filterIdx].value) !==
+            JSON.stringify(urlValues)
+        ) {
+          if (filterIdx === -1) {
+            newFilters.push({ id: col, value: urlValues });
+          } else {
+            newFilters[filterIdx] = { id: col, value: urlValues };
+          }
+          changed = true;
+        }
+      } else if (filterIdx !== -1) {
+        newFilters.splice(filterIdx, 1);
+        changed = true;
+      }
+    });
+    if (changed) setColumnFilters(newFilters);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  // Sync from table filter to URL param
+  React.useEffect(() => {
+    // Only update URL if the filter is changed by the user (not by URL effect)
+    // For each filter in columnFilters, update the corresponding param
+    const currentParams = new URLSearchParams(searchParams.toString());
+    let changed = false;
+    Object.entries(columnParamMap).forEach(([col, param]) => {
+      const filter = columnFilters.find((f) => f.id === col);
+      currentParams.delete(param);
+      if (filter && Array.isArray(filter.value) && filter.value.length > 0) {
+        filter.value.forEach((v: string) => currentParams.append(param, v));
+        changed = true;
+      }
+    });
+    // If all filters are cleared, remove the param
+    if (changed || columnFilters.length === 0) {
+      router.replace(`${pathname}?${currentParams.toString()}`, {
+        scroll: false,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [columnFilters]);
 
   const table = useReactTable({
     data,

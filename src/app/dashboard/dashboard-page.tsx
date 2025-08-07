@@ -138,6 +138,7 @@ type Props = {
     nettarget?: number;
   };
   gasFlared: GasProductionResponse;
+  staticCardData?: any;
 };
 
 export default function ProductionDashboard({
@@ -147,6 +148,7 @@ export default function ProductionDashboard({
   prodCum,
   prodCumYear,
   gasFlared,
+  staticCardData,
 }: Props) {
   // const [selectedLocation, setSelectedLocation] = React.useState("EVWRENI");
   const [open, setOpen] = React.useState(false);
@@ -354,11 +356,7 @@ export default function ProductionDashboard({
 
   return (
     <>
-      <Tabs
-        defaultValue="day"
-        value={activeTab}
-        onValueChange={handleTabChange}
-      >
+      <Tabs value={activeTab} onValueChange={handleTabChange}>
         <TabsList className="m-4 mb-0">
           <TabsTrigger value="day">By Day</TabsTrigger>
           <TabsTrigger value="range">By Range</TabsTrigger>
@@ -369,20 +367,32 @@ export default function ProductionDashboard({
             <Card className="font-mono col-span-full p-4 flex flex-col sm:grid @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm w-full">
               <div className="flex flex-col gap-y-1">
                 {[
-                  { text: "Natural Gas", value: "$3.05" },
-                  { text: "Brent", value: "$69.73" },
-                ].map(({ text, value }) => (
-                  <p key={text}>
-                    <span>{text}:</span>
+                  {
+                    label: "Natural Gas",
+                    value: `$${staticCardData?.naturalGas}`,
+                  },
+                  { label: "Brent", value: `$${staticCardData?.brent}` },
+                ].map(({ label, value }) => (
+                  <p key={label}>
+                    <span>{label}:</span>
                     <span className="ml-1 font-medium">{value}</span>
                   </p>
                 ))}
               </div>
               <div className="flex flex-col gap-y-1 sm:items-end">
                 {[
-                  { text: "Days since last LTI", value: "2,762" },
-                  { text: "TFP Incidents YTD", value: "13 MECH. | 1 TPI" },
-                  { text: "Rotating Equipment Availability", value: "95%" },
+                  {
+                    text: "Days since last LTI",
+                    value: staticCardData?.daysSinceLastLTI,
+                  },
+                  {
+                    text: "TFP Incidents YTD",
+                    value: `${staticCardData?.tfpIncidentsYTD?.mechanical} MECH. | ${staticCardData?.tfpIncidentsYTD?.tpi} TPI`,
+                  },
+                  {
+                    text: "Rotating Equipment Availability",
+                    value: `${staticCardData?.rotatingEquipmentAvailability}%`,
+                  },
                 ].map(({ text, value }) => (
                   <p key={text}>
                     <span>{text}:</span>

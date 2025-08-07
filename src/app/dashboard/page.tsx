@@ -15,6 +15,23 @@ import {
 import { formatToApiDateFormat } from "@/lib/utils";
 import { format } from "date-fns";
 
+// Fetch static card data from gist
+async function getStaticCardData() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_STATIC_CARD_URL}?cache-bust=${Date.now()}`
+    );
+    if (!res.ok) {
+      // const errorText = await res.text();
+      // console.error("Static card fetch failed:", res.status, errorText);
+      return null;
+    }
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
 async function getDailyTankLevel(date: string) {
   try {
     const res = await fetch(
@@ -181,15 +198,23 @@ export default async function ProductionDashboardPage({
   const getGasFlaring = getGasFlaringData(toApiDate2(day.toString()));
 
   // Initiate all requests in parallel
-  const [tankLevel, prodRawData, storageRaw, prodCum, prodCumYear, gasFlared] =
-    await Promise.all([
-      dailyTankLevelData,
-      productionData,
-      dailyStorageData,
-      prodCumData,
-      prodCumYearData,
-      getGasFlaring,
-    ]);
+  const [
+    tankLevel,
+    prodRawData,
+    storageRaw,
+    prodCum,
+    prodCumYear,
+    gasFlared,
+    staticCardData,
+  ] = await Promise.all([
+    dailyTankLevelData,
+    productionData,
+    dailyStorageData,
+    prodCumData,
+    prodCumYearData,
+    getGasFlaring,
+    getStaticCardData(),
+  ]);
 
   function transformTankData(rawData: RawTankEntry[]): TankLevelChartEntry[] {
     return rawData.map((entry) => ({
@@ -247,6 +272,7 @@ export default async function ProductionDashboardPage({
           prodCum={prodCum}
           prodCumYear={prodCumYear}
           gasFlared={gasFlared}
+          staticCardData={staticCardData}
         />
       </Suspense>
     </>

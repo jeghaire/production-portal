@@ -59,6 +59,7 @@ import {
   TankLevelChartEntry,
 } from "@/lib/definitions";
 import GasFlaringTable from "@/components/gas-flaring-card";
+import { differenceInDays, startOfDay } from "date-fns";
 
 const options = [
   { label: "NET", value: "net" },
@@ -354,6 +355,11 @@ export default function ProductionDashboard({
     router.replace(`?${params.toString()}`, { scroll: false });
   };
 
+  const daysSinceLastLTI = differenceInDays(
+    startOfDay(new Date()),
+    startOfDay(new Date(staticCardData?.lastLTIDate))
+  );
+
   return (
     <>
       <Tabs value={activeTab} onValueChange={handleTabChange}>
@@ -383,7 +389,7 @@ export default function ProductionDashboard({
                 {[
                   {
                     text: "Days since last LTI",
-                    value: staticCardData?.daysSinceLastLTI,
+                    value: daysSinceLastLTI,
                   },
                   {
                     text: "TFP Incidents YTD",

@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { User } from './lib/definitions';
  
 async function getUser(email: string, password:string): Promise<User | undefined> {
-   const apiUrl = `${process.env.NEXT_PUBLIC_API_AUTH_URL}?email=${encodeURIComponent(email)}&pwd=${encodeURIComponent(password)}`;
+   const apiUrl = `${process.env.API_AUTH_URL}?email=${encodeURIComponent(email)}&pwd=${encodeURIComponent(password)}`;
    
    try {
     const res = await fetch(apiUrl, { method: "GET" });

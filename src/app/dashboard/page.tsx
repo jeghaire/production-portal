@@ -19,7 +19,7 @@ import { format } from "date-fns";
 async function getStaticCardData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STATIC_CARD_URL}?cache-bust=${Date.now()}`
+      `${process.env.STATIC_CARD_URL}?cache-bust=${Date.now()}`
     );
     if (!res.ok) {
       // const errorText = await res.text();
@@ -35,7 +35,7 @@ async function getStaticCardData() {
 async function getDailyTankLevel(date: string) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/dailyTank?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`
+      `${process.env.API_URL}/dailyTank?publickey=${process.env.API_KEY}&datecreated=${date}`
     );
 
     if (!res.ok) {
@@ -53,7 +53,7 @@ async function getDailyTankLevel(date: string) {
 async function getDailyProductionData() {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/dailyprod?publickey=${process.env.NEXT_PUBLIC_API_KEY}`
+      `${process.env.API_URL}/dailyprod?publickey=${process.env.API_KEY}`
     );
 
     if (!res.ok) {
@@ -71,7 +71,7 @@ async function getDailyProductionData() {
 async function getDailyStorageData(date: string) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/dailystorage?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`
+      `${process.env.API_URL}/dailystorage?publickey=${process.env.API_KEY}&datecreated=${date}`
     );
 
     if (!res.ok) {
@@ -87,7 +87,7 @@ async function getDailyStorageData(date: string) {
 }
 
 async function getDailyProdCumData(date: string) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/dailyProdCum?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`;
+  const url = `${process.env.API_URL}/dailyProdCum?publickey=${process.env.API_KEY}&datecreated=${date}`;
 
   try {
     const res = await fetch(url);
@@ -106,7 +106,7 @@ async function getDailyProdCumData(date: string) {
 }
 
 async function getDailyProdCumYearData() {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/dailyProdCumYear?publickey=${process.env.NEXT_PUBLIC_API_KEY}`;
+  const url = `${process.env.API_URL}/dailyProdCumYear?publickey=${process.env.API_KEY}`;
 
   try {
     const res = await fetch(url);
@@ -125,7 +125,7 @@ async function getDailyProdCumYearData() {
 }
 
 async function getGasFlaringData(date: string) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/dailyGasFlared?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`;
+  const url = `${process.env.API_URL}/dailyGasFlared?publickey=${process.env.API_KEY}&datecreated=${date}`;
 
   try {
     const res = await fetch(url);

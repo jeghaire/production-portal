@@ -1,7 +1,7 @@
 import { ChartDataEntry, LocationEntry, xProductionData, xTotals } from "./definitions";
 
 export async function fetchActuals(date: string) {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/dailyProdCum?publickey=${process.env.NEXT_PUBLIC_API_KEY}&datecreated=${date}`;
+  const url = `${process.env.API_URL}/dailyProdCum?publickey=${process.env.API_KEY}&datecreated=${date}`;
   const res = await fetch(url);
 
   if (!res.ok) // throw new Error("Failed to fetch actuals");
@@ -20,7 +20,7 @@ export async function fetchActuals(date: string) {
 }
 
 export async function fetchCumYear() {
-  const url = `${process.env.NEXT_PUBLIC_API_URL}/dailyProdCumYear?publickey=${process.env.NEXT_PUBLIC_API_KEY}`;
+  const url = `${process.env.API_URL}/dailyProdCumYear?publickey=${process.env.API_KEY}`;
   const res = await fetch(url);
 
   if (!res.ok) // throw new Error("Failed to fetch cumulative year data");

@@ -68,7 +68,10 @@ export function ProductionCard({
                   : Number(target.toFixed(2)).toLocaleString()}
               </span>
             </p>
-            <Progress value={actualToTargetPercentage} className="mt-1 h-1.5" />
+            <Progress
+              value={Math.max(0, Math.min(100, actualToTargetPercentage))}
+              className="mt-1 h-1.5"
+            />
           </>
         )}
       </CardContent>

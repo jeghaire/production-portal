@@ -13,17 +13,15 @@ import {
   TransformedEntry,
 } from "@/lib/definitions";
 import { formatToApiDateFormat } from "@/lib/utils";
-import { format } from "date-fns";
+import { format, startOfDay, differenceInDays } from "date-fns";
 
-// Fetch static card data from gist
-async function getStaticCardData() {
+async function getStaticCardData(cacheBust: number) {
   try {
     const res = await fetch(
-      `${process.env.STATIC_CARD_URL}?cache-bust=${Date.now()}`
+      `${process.env.STATIC_CARD_URL}?cache-bust=${cacheBust}`,
+      { cache: "no-store" }
     );
     if (!res.ok) {
-      // const errorText = await res.text();
-      // console.error("Static card fetch failed:", res.status, errorText);
       return null;
     }
     return await res.json();
@@ -37,16 +35,10 @@ async function getDailyTankLevel(date: string) {
     const res = await fetch(
       `${process.env.API_URL}/dailyTank?publickey=${process.env.API_KEY}&datecreated=${date}`
     );
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Tank level fetch failed:", res.status, errorText);
-      return []; // Fallback: empty array
-    }
-
+    if (!res.ok) return [];
     return await res.json();
   } catch {
-    return []; // Fallback: empty array
+    return [];
   }
 }
 
@@ -55,13 +47,7 @@ async function getDailyProductionData() {
     const res = await fetch(
       `${process.env.API_URL}/dailyprod?publickey=${process.env.API_KEY}`
     );
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Production data fetch failed:", res.status, errorText);
-      return [];
-    }
-
+    if (!res.ok) return [];
     return await res.json();
   } catch {
     return [];
@@ -73,13 +59,7 @@ async function getDailyStorageData(date: string) {
     const res = await fetch(
       `${process.env.API_URL}/dailystorage?publickey=${process.env.API_KEY}&datecreated=${date}`
     );
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Storage data fetch failed:", res.status, errorText);
-      return [];
-    }
-
+    if (!res.ok) return [];
     return await res.json();
   } catch {
     return [];
@@ -88,16 +68,9 @@ async function getDailyStorageData(date: string) {
 
 async function getDailyProdCumData(date: string) {
   const url = `${process.env.API_URL}/dailyProdCum?publickey=${process.env.API_KEY}&datecreated=${date}`;
-
   try {
     const res = await fetch(url);
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Storage data fetch failed:", res.status, errorText);
-      return [];
-    }
-
+    if (!res.ok) return [];
     const data = await res.json();
     return data[0];
   } catch {
@@ -107,16 +80,9 @@ async function getDailyProdCumData(date: string) {
 
 async function getDailyProdCumYearData() {
   const url = `${process.env.API_URL}/dailyProdCumYear?publickey=${process.env.API_KEY}`;
-
   try {
     const res = await fetch(url);
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Storage data fetch failed:", res.status, errorText);
-      return [];
-    }
-
+    if (!res.ok) return [];
     const data = await res.json();
     return data[0];
   } catch {
@@ -126,18 +92,10 @@ async function getDailyProdCumYearData() {
 
 async function getGasFlaringData(date: string) {
   const url = `${process.env.API_URL}/dailyGasFlared?publickey=${process.env.API_KEY}&datecreated=${date}`;
-
   try {
     const res = await fetch(url);
-
-    if (!res.ok) {
-      const errorText = await res.text();
-      console.error("Storage data fetch failed:", res.status, errorText);
-      return [];
-    }
-
-    const data = await res.json();
-    return data;
+    if (!res.ok) return [];
+    return await res.json();
   } catch {
     return [];
   }
@@ -157,14 +115,12 @@ function toApiDate2(str: string) {
 }
 
 function formatEnduranceDays(value: number): number | string {
-  // If it's a whole number, return as integer
   if (Number.isInteger(value)) return value;
-  // Otherwise, round to 2 decimal places
   return value.toFixed(2);
 }
 
 function transformStorageData(raw: RawStorageEntry[]): StorageSummary | null {
-  const entry = raw[0]; // assuming one entry per day
+  const entry = raw[0];
   if (!entry) return null;
 
   return {
@@ -178,26 +134,16 @@ export default async function ProductionDashboardPage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  // If 'day' is not provided, use today's date formatted as dd-MM-yyyy
   const { day = format(new Date(), "dd-MM-yyyy") } = await searchParams;
   const session = await auth();
+  if (!session) redirect("/login");
 
-  if (!session) {
-    redirect("/login"); // Redirect if no session
-  }
+  const apiDate = formatToApiDateFormat(day.toString());
+  const apiDate1 = toApiDate(day.toString());
+  const apiDate2 = toApiDate2(day.toString());
 
-  const dailyTankLevelData = getDailyTankLevel(
-    formatToApiDateFormat(day.toString())
-  );
-  const dailyStorageData = getDailyStorageData(
-    formatToApiDateFormat(day.toString())
-  );
-  const productionData = getDailyProductionData();
-  const prodCumData = getDailyProdCumData(toApiDate(day.toString()));
-  const prodCumYearData = getDailyProdCumYearData();
-  const getGasFlaring = getGasFlaringData(toApiDate2(day.toString()));
+  const cacheBust = Date.now();
 
-  // Initiate all requests in parallel
   const [
     tankLevel,
     prodRawData,
@@ -205,33 +151,49 @@ export default async function ProductionDashboardPage({
     prodCum,
     prodCumYear,
     gasFlared,
-    staticCardData,
+    staticCardDataRaw,
   ] = await Promise.all([
-    dailyTankLevelData,
-    productionData,
-    dailyStorageData,
-    prodCumData,
-    prodCumYearData,
-    getGasFlaring,
-    getStaticCardData(),
+    getDailyTankLevel(apiDate),
+    getDailyProductionData(),
+    getDailyStorageData(apiDate),
+    getDailyProdCumData(apiDate1),
+    getDailyProdCumYearData(),
+    getGasFlaringData(apiDate2),
+    getStaticCardData(cacheBust),
   ]);
+
+  let staticCardData = staticCardDataRaw;
+  let daysSinceLastLTI: number | null = null;
+
+  if (staticCardData?.lastLTIDate) {
+    daysSinceLastLTI = differenceInDays(
+      startOfDay(new Date()),
+      startOfDay(new Date(staticCardData.lastLTIDate))
+    );
+  }
+
+  staticCardData = {
+    ...staticCardData,
+    daysSinceLastLTI,
+  };
 
   function transformTankData(rawData: RawTankEntry[]): TankLevelChartEntry[] {
     return rawData.map((entry) => ({
       tankID: `Tank ${entry.tanknumber}`,
       water: entry.waterbottom,
-      oil: entry.tanklevel, //parseFloat((entry.tanklevel - entry.waterbottom).toFixed(3)),
+      oil: entry.tanklevel,
     }));
   }
 
   function transformData(data: RawDataEntry[]): OutputFormat {
     const result: OutputFormat = {};
-
     data.forEach((entry) => {
-      // Convert the '/Date(...)' string to YYYY-MM-DD (UTC, no timezone shift)
-      const timestamp = Number(entry.producedate.match(/\d+/)?.[0]); // extract number from /Date(...)
+      const timestamp = Number(entry.producedate.match(/\d+/)?.[0]);
       const d = new Date(timestamp);
-      const date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      const date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}-${String(d.getDate()).padStart(2, "0")}`;
 
       const transformedEntry: TransformedEntry = {
         date,
@@ -243,17 +205,9 @@ export default async function ProductionDashboardPage({
       };
 
       const fieldName = entry.fieldname.replace(/\r?\n/g, "").trim();
-
-      if (!result[fieldName]) {
-        result[fieldName] = [];
-      }
-
+      if (!result[fieldName]) result[fieldName] = [];
       result[fieldName].push(transformedEntry);
-      // if (result[fieldName].length < 2) {
-      //   result[fieldName].push(transformedEntry);
-      // }
     });
-
     return result;
   }
 

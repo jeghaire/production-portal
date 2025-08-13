@@ -55,11 +55,11 @@ import { parseUrlDate } from "@/components/filters";
 import {
   GasProductionResponse,
   OutputFormat,
+  StaticCardData,
   StorageSummary,
   TankLevelChartEntry,
 } from "@/lib/definitions";
 import GasFlaringTable from "@/components/gas-flaring-card";
-import { differenceInDays, startOfDay } from "date-fns";
 
 const options = [
   { label: "NET", value: "net" },
@@ -100,8 +100,6 @@ const netTargetByLocation: Record<string, number> = {
   "UZERE WEST": 3471.81,
 };
 
-// const NET_TARGET = 48571;
-
 const loc = [
   { label: "AFIESERE", value: "AFIESERE" },
   { label: "ERIEMU", value: "ERIEMU" },
@@ -139,7 +137,7 @@ type Props = {
     nettarget?: number;
   };
   gasFlared: GasProductionResponse;
-  staticCardData?: any;
+  staticCardData?: StaticCardData;
 };
 
 export default function ProductionDashboard({
@@ -151,23 +149,18 @@ export default function ProductionDashboard({
   gasFlared,
   staticCardData,
 }: Props) {
-  // const [selectedLocation, setSelectedLocation] = React.useState("EVWRENI");
   const [open, setOpen] = React.useState(false);
   const [openT, setOpenT] = React.useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const isMobile = useIsMobile();
-  // Get initial tab from URL (default to 'day')
   const initialTab = searchParams.get("tab") || "day";
 
-  // Local state for immediate tab changes
   const [activeTab, setActiveTab] = React.useState(initialTab);
 
-  // Extract selected locations from query params
   const selectedQueryParams = searchParams.getAll("loc");
   const from = searchParams.get("from");
   const to = searchParams.get("to");
-  // Get day param or default to previous day
   let dayFromURL = searchParams.get("day");
   if (!dayFromURL) {
     const now = new Date();
@@ -177,22 +170,19 @@ export default function ProductionDashboard({
     const yyyy = now.getFullYear();
     dayFromURL = `${dd}-${mm}-${yyyy}`;
   }
-  // console.dir(chartData, { depth: null });
+  // console.dir(chartData, { depth: null })
 
-  // Set initial state from query params
   const [selectedValues, setSelectedValues] = React.useState(
     selectedQueryParams.length > 0 ? selectedQueryParams : []
   );
   const [filterT, setFilterT] = React.useState(["net", "gross"]);
 
-  // Function to update selected locations
   const toggleSelection = (currentValue: string) =>
     setSelectedValues((prev) => {
       const newSelectedValues = prev.includes(currentValue)
         ? prev.filter((value) => value !== currentValue)
         : [...prev, currentValue];
 
-      // Update the URL query parameters
       const params = new URLSearchParams(searchParams);
       params.delete("loc");
       newSelectedValues.forEach((value) => params.append("loc", value));
@@ -221,7 +211,6 @@ export default function ProductionDashboard({
   const fromDate = from ? parseUrlDate(from) : null;
   const toDate = to ? parseUrlDate(to) : null;
 
-  // Sort locations alphabetically and entries by date ascending
   const sortedChartData = Object.keys(chartData)
     .sort((a, b) => a.localeCompare(b))
     .reduce((acc, key) => {
@@ -245,8 +234,8 @@ export default function ProductionDashboard({
 
   function formatDateToDDMMYYYY(dateString: string) {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0"); // day with leading zero
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // month with leading zero (0-based)
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   }
@@ -272,11 +261,6 @@ export default function ProductionDashboard({
     });
   });
 
-  // const result = getProductionTotals(
-  //   chartData,
-  //   formatToApiDateFormat(dayFromURL)
-  // );
-
   const getAggregatedData = (filteredData: Record<string, any[]>) => {
     const locations =
       selectedValues.length > 0 ? selectedValues : Object.keys(chartData);
@@ -293,37 +277,29 @@ export default function ProductionDashboard({
             stringsUp: 0,
             stringsTotal: 0,
             netTarget: 0,
-            // New temporary variables for BSW calculation
             _totalWaterVolume: 0,
             _totalLiquidVolume: 0,
           };
         }
 
-        // For BSW, we need to calculate water volume and sum it properly
         const waterVolume = entry.gross * (entry.bsw / 100);
         aggregatedData[index]._totalWaterVolume += waterVolume;
         aggregatedData[index]._totalLiquidVolume += entry.gross;
 
-        // Other metrics can be summed directly
         aggregatedData[index].net += entry.net;
         aggregatedData[index].gross += entry.gross;
         aggregatedData[index].stringsUp += entry.stringsUp;
         aggregatedData[index].stringsTotal += entry.stringsTotal || 0;
-        // aggregatedData[index].netTarget = NET_TARGET;
-
-        // Add netTarget from current location
         aggregatedData[index].netTarget += netTargetByLocation[location] || 0;
       });
     });
 
-    // Now calculate the actual BSW percentage for each time period
     aggregatedData.forEach((entry) => {
       if (entry._totalLiquidVolume > 0) {
         entry.bsw = (entry._totalWaterVolume / entry._totalLiquidVolume) * 100;
       } else {
-        entry.bsw = 0; // Handle division by zero case
+        entry.bsw = 0;
       }
-      // Remove the temporary variables (optional)
       delete entry._totalWaterVolume;
       delete entry._totalLiquidVolume;
     });
@@ -339,26 +315,18 @@ export default function ProductionDashboard({
     formatToApiDateFormat(dayFromURL)
   );
 
-  // Sync local state when URL changes (like back/forward navigation)
   React.useEffect(() => {
     const urlTab = searchParams.get("tab") || "day";
     setActiveTab(urlTab);
   }, [searchParams]);
 
   const handleTabChange = (newTab: string) => {
-    // Update local state immediately for responsive UI
     setActiveTab(newTab);
 
-    // Update URL in the background
     const params = new URLSearchParams(searchParams);
     params.set("tab", newTab);
     router.replace(`?${params.toString()}`, { scroll: false });
   };
-
-  const daysSinceLastLTI = differenceInDays(
-    startOfDay(new Date()),
-    startOfDay(new Date(staticCardData?.lastLTIDate))
-  );
 
   return (
     <>
@@ -370,18 +338,29 @@ export default function ProductionDashboard({
 
         <TabsContent value="day">
           <section className="p-4 grid grid-cols-1 @xl:grid-cols-2 @6xl:grid-cols-4 @7xl:grid-cols-4 gap-3">
-            <Card className="font-mono col-span-full p-4 flex flex-col sm:grid @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm w-full">
+            <Card className="col-span-full p-4 flex flex-col sm:grid @sm:grid-cols-2 gap-x-8 gap-y-1 ml-auto text-sm w-full">
               <div className="flex flex-col gap-y-1">
                 {[
                   {
                     label: "Natural Gas",
-                    value: `$${staticCardData?.naturalGas}`,
+                    value:
+                      staticCardData?.naturalGas != null &&
+                      staticCardData?.naturalGas !== undefined
+                        ? `$${staticCardData.naturalGas}`
+                        : "--",
                   },
-                  { label: "Brent", value: `$${staticCardData?.brent}` },
+                  {
+                    label: "Brent",
+                    value:
+                      staticCardData?.brent != null &&
+                      staticCardData?.brent !== undefined
+                        ? `$${staticCardData.brent}`
+                        : "--",
+                  },
                 ].map(({ label, value }) => (
                   <p key={label}>
                     <span>{label}:</span>
-                    <span className="ml-1 font-medium">{value}</span>
+                    <span className="ml-1 font-medium font-mono ">{value}</span>
                   </p>
                 ))}
               </div>
@@ -389,20 +368,34 @@ export default function ProductionDashboard({
                 {[
                   {
                     text: "Days since last LTI",
-                    value: daysSinceLastLTI,
+                    value:
+                      staticCardData?.naturalGas != null &&
+                      staticCardData?.naturalGas !== undefined
+                        ? staticCardData?.daysSinceLastLTI
+                        : "--",
                   },
                   {
                     text: "TFP Incidents YTD",
-                    value: `${staticCardData?.tfpIncidentsYTD?.mechanical} MECH. | ${staticCardData?.tfpIncidentsYTD?.tpi} TPI`,
+                    value:
+                      staticCardData?.naturalGas != null &&
+                      staticCardData?.naturalGas !== undefined
+                        ? `${staticCardData?.tfpIncidentsYTD?.mechanical} MECH. | ${staticCardData?.tfpIncidentsYTD?.tpi} TPI`
+                        : "--",
                   },
                   {
                     text: "Rotating Equipment Availability",
-                    value: `${staticCardData?.rotatingEquipmentAvailability}%`,
+                    value:
+                      staticCardData?.naturalGas != null &&
+                      staticCardData?.naturalGas !== undefined
+                        ? `${staticCardData?.rotatingEquipmentAvailability}%`
+                        : "--",
                   },
                 ].map(({ text, value }) => (
                   <p key={text}>
                     <span>{text}:</span>
-                    <span className="ml-1 font-medium">{value}</span>
+                    <span className="ml-1 font-medium font-mono ">
+                      {value ?? "--"}
+                    </span>
                   </p>
                 ))}
               </div>
@@ -512,30 +505,7 @@ export default function ProductionDashboard({
               <CardHeader className="flex flex-col @max-md:px-5 @xl:flex-row pb-5">
                 <div className="flex flex-col space-y-1 space-x-1 @7xl:flex-row flex-1">
                   <CardTitle>OML 30 Production Perfomance</CardTitle>
-                  {/* <CardDescription>
-                Showing total Oil Production for {selectedMonth[0] || "January"}{" "}
-                {selectedYear[0] || 2025}
-              </CardDescription> */}
                 </div>
-                {/* <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-            <SelectTrigger
-              className="w-[160px] rounded-lg sm:ml-auto"
-              aria-label="Select a value"
-            >
-              <SelectValue placeholder="Select a location" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl">
-              {Object.keys(chartData).map((location) => (
-                <SelectItem
-                  key={location}
-                  value={location}
-                  className="rounded-lg"
-                >
-                  {location}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select> */}
                 <div className="flex max-md:mt-2 md:flex-col flex-wrap gap-2 @md:flex-row print:hidden">
                   <Popover open={openT} onOpenChange={setOpenT}>
                     <PopoverTrigger asChild>
@@ -554,7 +524,7 @@ export default function ProductionDashboard({
                                     (framework) => framework.value === value
                                   )?.label
                               )
-                              .filter(Boolean); // Removes any undefined values
+                              .filter(Boolean);
                             return selectedLabels.length > 2
                               ? `${selectedLabels.slice(0, 2).join(", ")}...`
                               : selectedLabels.join(", ");
@@ -604,10 +574,6 @@ export default function ProductionDashboard({
                         aria-expanded={open}
                         className="w-full md:w-[200px] justify-between"
                       >
-                        {/* {value
-                  ? loc.find((framework) => framework.value === value)
-                      ?.label
-                  : "Select location..."} */}
                         {selectedValues.length > 0 ? (
                           (() => {
                             const selectedLabels = selectedValues
@@ -617,7 +583,7 @@ export default function ProductionDashboard({
                                     (framework) => framework.value === value
                                   )?.label
                               )
-                              .filter(Boolean); // Removes any undefined values
+                              .filter(Boolean);
 
                             return selectedLabels.length > 2
                               ? `${selectedLabels.slice(0, 2).join(", ")}...`
@@ -641,10 +607,6 @@ export default function ProductionDashboard({
                               <CommandItem
                                 key={framework.value}
                                 value={framework.value}
-                                // onSelect={(currentValue) => {
-                                //   setValue(currentValue === value ? "" : currentValue);
-                                //   setOpen(false);
-                                // }}
                                 onSelect={() =>
                                   toggleSelection(framework.value)
                                 }
@@ -674,7 +636,6 @@ export default function ProductionDashboard({
                       config={chartConfig}
                       className="aspect-auto h-[500px] w-full pb-5"
                     >
-                      {/* <AreaChart data={chartData[selectedLocation]}> */}
                       <AreaChart
                         data={aggregatedData}
                         syncId="chartSync"
@@ -838,7 +799,6 @@ export default function ProductionDashboard({
             <Card className="col-span-full @7xl:col-span-2 pb-0">
               <CardHeader>
                 <CardTitle>String Status</CardTitle>
-                {/* <CardDescription>{`Chart Data displayed for ${fromDate} to ${toDate}`}</CardDescription> */}
               </CardHeader>
               {aggregatedData.length > 0 ? (
                 <>
@@ -851,7 +811,6 @@ export default function ProductionDashboard({
                         syncId="chartSync"
                         accessibilityLayer
                         data={aggregatedData}
-                        // data={withAvailableStringsData}
                         margin={{
                           right: 4,
                           top: 4,

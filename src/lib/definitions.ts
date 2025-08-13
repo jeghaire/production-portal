@@ -139,3 +139,11 @@ export type xTotals = {
   totalNetForDay: number;
   cumulativeNetUpToDate: number;
 };
+
+export interface StaticCardData {
+  naturalGas: number;
+  brent: number;
+  tfpIncidentsYTD: { mechanical: number; tpi: number };
+  rotatingEquipmentAvailability: number;
+  daysSinceLastLTI: number | null;
+}

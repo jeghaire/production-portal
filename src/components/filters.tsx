@@ -164,10 +164,13 @@ function FilterBase({ searchParams }: FilterProps) {
       {activeTab === "range" && (
         <div className="flex p-2 gap-3 flex-wrap">
           <div className="flex flex-col flex-1 space-y-1">
-            <Label className="text-sm w-fit">Start Date</Label>
+            <Label className="text-sm w-fit" htmlFor="start-date-picker">
+              Start Date
+            </Label>
             <Popover modal>
               <PopoverTrigger asChild>
                 <Button
+                  id="start-date-picker"
                   variant="outline"
                   className={cn(
                     "w-full max-w-[170] text-left text-sm font-normal",
@@ -202,10 +205,13 @@ function FilterBase({ searchParams }: FilterProps) {
           </div>
 
           <div className="flex flex-col flex-1 space-y-1">
-            <Label className="text-sm w-fit">End Date</Label>
+            <Label className="text-sm w-fit" htmlFor="end-date-picker">
+              End Date
+            </Label>
             <Popover modal>
               <PopoverTrigger asChild>
                 <Button
+                  id="end-date-picker"
                   variant="outline"
                   className={cn(
                     "w-full max-w-[170] text-left text-sm font-normal",
@@ -241,10 +247,13 @@ function FilterBase({ searchParams }: FilterProps) {
       {activeTab === "day" && (
         <div className="p-2">
           <div className="flex flex-col space-y-1">
-            <Label className="text-sm w-fit">Date</Label>
+            <Label className="text-sm w-fit" htmlFor="date-picker">
+              Date
+            </Label>
             <Popover modal>
               <PopoverTrigger asChild>
                 <Button
+                  id="date-picker"
                   variant="outline"
                   className={cn(
                     "w-full max-w-[170] text-left text-sm font-normal",
@@ -278,8 +287,10 @@ function FilterBase({ searchParams }: FilterProps) {
       {/* Location Filter - Only shown for 'range' tab */}
       {/* Location Filter - Only shown for 'range' tab, but space retained for layout */}
       {activeTab === "range" ? (
-        <div className="h-[290px] mt-2 p-2">
-          <Label className="text-sm mb-2">Locations</Label>
+        <div className="h-[290px] mt-2 p-2" id="locations-filter">
+          <Label className="text-sm mb-2" htmlFor="locations-filter">
+            Locations
+          </Label>
           <div className="flex items-center space-x-2 py-1">
             <Checkbox
               id="list-all"

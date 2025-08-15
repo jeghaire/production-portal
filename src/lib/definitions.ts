@@ -55,12 +55,10 @@ type GasProductionEntry = {
 
 export type GasProductionResponse = GasProductionEntry[];
 
-
 export interface StorageSummary {
   enduranceDays: number | string;
   availullage: number;
 }
-
 
 export type ChartDataEntry = { date: string; net: number };
 
@@ -146,4 +144,12 @@ export interface StaticCardData {
   tfpIncidentsYTD: { mechanical: number; tpi: number };
   rotatingEquipmentAvailability: number;
   daysSinceLastLTI: number | null;
+}
+
+export interface PriceData {
+  prices: {
+    brent: string;
+    naturalGas: string;
+  };
+  cached: boolean;
 }

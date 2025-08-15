@@ -55,6 +55,7 @@ import { parseUrlDate } from "@/components/filters";
 import {
   GasProductionResponse,
   OutputFormat,
+  PriceData,
   StaticCardData,
   StorageSummary,
   TankLevelChartEntry,
@@ -138,6 +139,7 @@ type Props = {
   };
   gasFlared: GasProductionResponse;
   staticCardData?: StaticCardData;
+  commodityPrices?: PriceData;
 };
 
 export default function ProductionDashboard({
@@ -148,56 +150,54 @@ export default function ProductionDashboard({
   prodCumYear,
   gasFlared,
   staticCardData,
+  commodityPrices,
 }: Props) {
   const [open, setOpen] = React.useState(false);
   const [openT, setOpenT] = React.useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
   const isMobile = useIsMobile();
-  const initialTab = searchParams.get("tab") || "day";
 
+  const initialTab = searchParams.get("tab") || "day";
   const [activeTab, setActiveTab] = React.useState(initialTab);
 
-  const selectedQueryParams = searchParams.getAll("loc");
-  const from = searchParams.get("from");
-  const to = searchParams.get("to");
-  let dayFromURL = searchParams.get("day");
-  if (!dayFromURL) {
-    const now = new Date();
-    // now.setDate(now.getDate() - 1);
-    const dd = String(now.getDate()).padStart(2, "0");
-    const mm = String(now.getMonth() + 1).padStart(2, "0");
-    const yyyy = now.getFullYear();
-    dayFromURL = `${dd}-${mm}-${yyyy}`;
-  }
-  // console.dir(chartData, { depth: null })
+  const selectedQueryParams = React.useMemo(
+    () => searchParams.getAll("loc"),
+    [searchParams]
+  );
+  const from = React.useMemo(() => searchParams.get("from"), [searchParams]);
+  const to = React.useMemo(() => searchParams.get("to"), [searchParams]);
+
+  const dayFromURL = React.useMemo(() => {
+    let day = searchParams.get("day");
+    if (!day) {
+      const now = new Date();
+      const dd = String(now.getDate()).padStart(2, "0");
+      const mm = String(now.getMonth() + 1).padStart(2, "0");
+      const yyyy = now.getFullYear();
+      day = `${dd}-${mm}-${yyyy}`;
+    }
+    return day;
+  }, [searchParams]);
 
   const [selectedValues, setSelectedValues] = React.useState(
     selectedQueryParams.length > 0 ? selectedQueryParams : []
   );
   const [filterT, setFilterT] = React.useState(["net", "gross"]);
 
-  const toggleSelection = (currentValue: string) =>
-    setSelectedValues((prev) => {
-      const newSelectedValues = prev.includes(currentValue)
+  const toggleSelection = (currentValue: string) => {
+    setSelectedValues((prev) =>
+      prev.includes(currentValue)
         ? prev.filter((value) => value !== currentValue)
-        : [...prev, currentValue];
-
-      const params = new URLSearchParams(searchParams);
-      params.delete("loc");
-      newSelectedValues.forEach((value) => params.append("loc", value));
-
-      router.replace(`?${params.toString()}`, { scroll: false });
-
-      return newSelectedValues;
-    });
+        : [...prev, currentValue]
+    );
+  };
 
   const toggleFilterT = (newItem: string) => {
-    setFilterT(
-      (prevItems) =>
-        prevItems.includes(newItem)
-          ? prevItems.filter((item) => item !== newItem) // Remove if exists
-          : [...prevItems, newItem] // Add if not exists
+    setFilterT((prevItems) =>
+      prevItems.includes(newItem)
+        ? prevItems.filter((item) => item !== newItem)
+        : [...prevItems, newItem]
     );
   };
 
@@ -206,126 +206,152 @@ export default function ProductionDashboard({
     setSelectedValues((prev) =>
       JSON.stringify(prev) !== JSON.stringify(incoming) ? incoming : prev
     );
-  }, [selectedQueryParams]);
+    setActiveTab(searchParams.get("tab") || "day");
+  }, [selectedQueryParams, searchParams]);
 
-  const fromDate = from ? parseUrlDate(from) : null;
-  const toDate = to ? parseUrlDate(to) : null;
+  React.useEffect(() => {
+    const params = new URLSearchParams(searchParams);
 
-  const sortedChartData = Object.keys(chartData)
-    .sort((a, b) => a.localeCompare(b))
-    .reduce((acc, key) => {
-      acc[key] = [...chartData[key]].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      );
-      return acc;
-    }, {} as OutputFormat);
+    params.delete("loc");
+    selectedValues.forEach((value) => params.append("loc", value));
 
-  const tableData = Object.entries(sortedChartData)
-    .flatMap(([key, items]) =>
-      items.map((item) => ({ ...item, location: key }))
-    )
-    .filter((item) => {
-      const itemDate = new Date(item.date);
-      return (
-        (!fromDate || itemDate >= fromDate) && (!toDate || itemDate <= toDate)
-      );
-    })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    params.set("tab", activeTab);
 
-  function formatDateToDDMMYYYY(dateString: string) {
+    router.replace(`?${params.toString()}`, { scroll: false });
+  }, [selectedValues, activeTab, searchParams, router]);
+
+  const fromDate = React.useMemo(
+    () => (from ? parseUrlDate(from) : null),
+    [from]
+  );
+  const toDate = React.useMemo(() => (to ? parseUrlDate(to) : null), [to]);
+
+  const sortedChartData = React.useMemo(() => {
+    return Object.keys(chartData)
+      .sort((a, b) => a.localeCompare(b))
+      .reduce((acc, key) => {
+        acc[key] = [...chartData[key]].sort(
+          (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+        );
+        return acc;
+      }, {} as OutputFormat);
+  }, [chartData]);
+
+  const tableData = React.useMemo(() => {
+    return Object.entries(sortedChartData)
+      .flatMap(([key, items]) =>
+        items.map((item) => ({ ...item, location: key }))
+      )
+      .filter((item) => {
+        const itemDate = new Date(item.date);
+        return (
+          (!fromDate || itemDate >= fromDate) && (!toDate || itemDate <= toDate)
+        );
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }, [sortedChartData, fromDate, toDate]);
+
+  const formatDateToDDMMYYYY = React.useCallback((dateString: string) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
-  }
+  }, []);
 
-  const tableDataDaily = Object.entries(sortedChartData)
-    .flatMap(([key, items]) =>
-      items.map((item) => ({ ...item, location: key }))
-    )
-    .filter((item) => {
-      const formattedItemDate = formatDateToDDMMYYYY(item.date);
-      return formattedItemDate === dayFromURL;
-    })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const tableDataDaily = React.useMemo(() => {
+    return Object.entries(sortedChartData)
+      .flatMap(([key, items]) =>
+        items.map((item) => ({ ...item, location: key }))
+      )
+      .filter((item) => {
+        const formattedItemDate = formatDateToDDMMYYYY(item.date);
+        return formattedItemDate === dayFromURL;
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }, [sortedChartData, dayFromURL, formatDateToDDMMYYYY]);
 
-  const filteredChartData: Record<string, any[]> = {};
-
-  Object.entries(sortedChartData).forEach(([location, entries]) => {
-    filteredChartData[location] = entries.filter((entry) => {
-      const entryDate = new Date(entry.date);
-      return (
-        (!fromDate || entryDate >= fromDate) && (!toDate || entryDate <= toDate)
-      );
-    });
-  });
-
-  const getAggregatedData = (filteredData: Record<string, any[]>) => {
-    const locations =
-      selectedValues.length > 0 ? selectedValues : Object.keys(chartData);
-    const aggregatedData: Record<string, any>[] = [];
-
-    locations.forEach((location) => {
-      filteredData[location].forEach((entry: any, index: number) => {
-        if (!aggregatedData[index]) {
-          aggregatedData[index] = {
-            date: entry.date,
-            bsw: 0,
-            net: 0,
-            gross: 0,
-            stringsUp: 0,
-            stringsTotal: 0,
-            netTarget: 0,
-            _totalWaterVolume: 0,
-            _totalLiquidVolume: 0,
-          };
-        }
-
-        const waterVolume = entry.gross * (entry.bsw / 100);
-        aggregatedData[index]._totalWaterVolume += waterVolume;
-        aggregatedData[index]._totalLiquidVolume += entry.gross;
-
-        aggregatedData[index].net += entry.net;
-        aggregatedData[index].gross += entry.gross;
-        aggregatedData[index].stringsUp += entry.stringsUp;
-        aggregatedData[index].stringsTotal += entry.stringsTotal || 0;
-        aggregatedData[index].netTarget += netTargetByLocation[location] || 0;
+  const filteredChartData = React.useMemo(() => {
+    const result: Record<string, any[]> = {};
+    Object.entries(sortedChartData).forEach(([location, entries]) => {
+      result[location] = entries.filter((entry) => {
+        const entryDate = new Date(entry.date);
+        return (
+          (!fromDate || entryDate >= fromDate) &&
+          (!toDate || entryDate <= toDate)
+        );
       });
     });
+    return result;
+  }, [sortedChartData, fromDate, toDate]);
 
-    aggregatedData.forEach((entry) => {
-      if (entry._totalLiquidVolume > 0) {
-        entry.bsw = (entry._totalWaterVolume / entry._totalLiquidVolume) * 100;
-      } else {
-        entry.bsw = 0;
-      }
-      delete entry._totalWaterVolume;
-      delete entry._totalLiquidVolume;
-    });
+  const getAggregatedData = React.useCallback(
+    (filteredData: Record<string, any[]>) => {
+      const locations =
+        selectedValues.length > 0 ? selectedValues : Object.keys(chartData);
+      const aggregatedData: Record<string, any>[] = [];
 
-    return aggregatedData;
-  };
+      locations.forEach((location) => {
+        filteredData[location]?.forEach((entry: any, index: number) => {
+          if (!aggregatedData[index]) {
+            aggregatedData[index] = {
+              date: entry.date,
+              bsw: 0,
+              net: 0,
+              gross: 0,
+              stringsUp: 0,
+              stringsTotal: 0,
+              netTarget: 0,
+              _totalWaterVolume: 0,
+              _totalLiquidVolume: 0,
+            };
+          }
 
-  const aggregatedData = getAggregatedData(filteredChartData);
+          const waterVolume = entry.gross * (entry.bsw / 100);
+          aggregatedData[index]._totalWaterVolume += waterVolume;
+          aggregatedData[index]._totalLiquidVolume += entry.gross;
 
-  const carouselData = getActualsWithTarget(
-    sortedChartData,
-    netTargetByLocation,
-    formatToApiDateFormat(dayFromURL)
+          aggregatedData[index].net += entry.net;
+          aggregatedData[index].gross += entry.gross;
+          aggregatedData[index].stringsUp += entry.stringsUp;
+          aggregatedData[index].stringsTotal += entry.stringsTotal || 0;
+          aggregatedData[index].netTarget += netTargetByLocation[location] || 0;
+        });
+      });
+
+      aggregatedData.forEach((entry) => {
+        if (entry._totalLiquidVolume > 0) {
+          entry.bsw =
+            (entry._totalWaterVolume / entry._totalLiquidVolume) * 100;
+        } else {
+          entry.bsw = 0;
+        }
+        delete entry._totalWaterVolume;
+        delete entry._totalLiquidVolume;
+      });
+
+      return aggregatedData;
+    },
+    [selectedValues, chartData]
   );
 
-  React.useEffect(() => {
-    const urlTab = searchParams.get("tab") || "day";
-    setActiveTab(urlTab);
-  }, [searchParams]);
+  const aggregatedData = React.useMemo(
+    () => getAggregatedData(filteredChartData),
+    [filteredChartData, getAggregatedData]
+  );
+
+  const carouselData = React.useMemo(
+    () =>
+      getActualsWithTarget(
+        sortedChartData,
+        netTargetByLocation,
+        formatToApiDateFormat(dayFromURL)
+      ),
+    [sortedChartData, dayFromURL]
+  );
 
   const handleTabChange = (newTab: string) => {
     setActiveTab(newTab);
-
-    const params = new URLSearchParams(searchParams);
-    params.set("tab", newTab);
-    router.replace(`?${params.toString()}`, { scroll: false });
   };
 
   return (
@@ -343,52 +369,47 @@ export default function ProductionDashboard({
                 {[
                   {
                     label: "Natural Gas",
-                    value:
-                      staticCardData?.naturalGas != null &&
-                      staticCardData?.naturalGas !== undefined
+                    value: commodityPrices?.prices?.naturalGas
+                      ? `${commodityPrices?.prices?.naturalGas}`
+                      : staticCardData?.naturalGas
                         ? `$${staticCardData.naturalGas}`
                         : "--",
                   },
                   {
                     label: "Brent",
-                    value:
-                      staticCardData?.brent != null &&
-                      staticCardData?.brent !== undefined
+                    value: commodityPrices?.prices?.brent
+                      ? `${commodityPrices?.prices?.brent}`
+                      : staticCardData?.brent
                         ? `$${staticCardData.brent}`
                         : "--",
                   },
                 ].map(({ label, value }) => (
                   <p key={label}>
                     <span>{label}:</span>
-                    <span className="ml-1 font-medium font-mono ">{value}</span>
+                    <span className="ml-1 font-medium font-mono">{value}</span>
                   </p>
                 ))}
               </div>
+
               <div className="flex flex-col gap-y-1 sm:items-end">
                 {[
                   {
                     text: "Days since last LTI",
-                    value:
-                      staticCardData?.naturalGas != null &&
-                      staticCardData?.naturalGas !== undefined
-                        ? staticCardData?.daysSinceLastLTI
-                        : "--",
+                    value: staticCardData?.daysSinceLastLTI
+                      ? staticCardData?.daysSinceLastLTI
+                      : "--",
                   },
                   {
                     text: "TFP Incidents YTD",
-                    value:
-                      staticCardData?.naturalGas != null &&
-                      staticCardData?.naturalGas !== undefined
-                        ? `${staticCardData?.tfpIncidentsYTD?.mechanical} MECH. | ${staticCardData?.tfpIncidentsYTD?.tpi} TPI`
-                        : "--",
+                    value: staticCardData?.tfpIncidentsYTD?.mechanical
+                      ? `${staticCardData?.tfpIncidentsYTD?.mechanical} MECH. | ${staticCardData?.tfpIncidentsYTD?.tpi} TPI`
+                      : "--",
                   },
                   {
                     text: "Rotating Equipment Availability",
-                    value:
-                      staticCardData?.naturalGas != null &&
-                      staticCardData?.naturalGas !== undefined
-                        ? `${staticCardData?.rotatingEquipmentAvailability}%`
-                        : "--",
+                    value: staticCardData?.rotatingEquipmentAvailability
+                      ? `${staticCardData?.rotatingEquipmentAvailability}%`
+                      : "--",
                   },
                 ].map(({ text, value }) => (
                   <p key={text}>

@@ -15,11 +15,22 @@ import {
 import { formatToApiDateFormat } from "@/lib/utils";
 import { format, startOfDay, differenceInDays } from "date-fns";
 
+async function getCommodityPrices() {
+  try {
+    const res = await fetch(`${process.env.BASE_URL}/api/get-oil-prices`);
+    if (!res.ok) {
+      return null;
+    }
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
 async function getStaticCardData(cacheBust: number) {
   try {
     const res = await fetch(
-      `${process.env.STATIC_CARD_URL}?cache-bust=${cacheBust}`,
-      { cache: "no-store" }
+      `${process.env.STATIC_CARD_URL}?cache-bust=${cacheBust}`
     );
     if (!res.ok) {
       return null;
@@ -152,6 +163,7 @@ export default async function ProductionDashboardPage({
     prodCumYear,
     gasFlared,
     staticCardDataRaw,
+    commodityPrices,
   ] = await Promise.all([
     getDailyTankLevel(apiDate),
     getDailyProductionData(),
@@ -160,6 +172,7 @@ export default async function ProductionDashboardPage({
     getDailyProdCumYearData(),
     getGasFlaringData(apiDate2),
     getStaticCardData(cacheBust),
+    getCommodityPrices(),
   ]);
 
   let staticCardData = staticCardDataRaw;
@@ -227,6 +240,7 @@ export default async function ProductionDashboardPage({
           prodCumYear={prodCumYear}
           gasFlared={gasFlared}
           staticCardData={staticCardData}
+          commodityPrices={commodityPrices}
         />
       </Suspense>
     </>

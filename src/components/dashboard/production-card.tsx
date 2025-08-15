@@ -69,6 +69,9 @@ export function ProductionCard({
               </span>
             </p>
             <Progress
+              role="progressbar"
+              id={title.replace(/\s+/g, "-").toLowerCase()}
+              aria-label={title}
               value={Math.max(0, Math.min(100, actualToTargetPercentage))}
               className="mt-1 h-1.5"
             />

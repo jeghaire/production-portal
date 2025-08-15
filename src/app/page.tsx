@@ -1,6 +1,11 @@
 // "use client";
 
 import { redirect } from "next/navigation";
+
+export default function Page() {
+  redirect("/dashboard");
+}
+
 // import { useState, useEffect } from "react";
 // import {
 //   subscribeUser,
@@ -146,7 +151,3 @@ import { redirect } from "next/navigation";
 //     </div>
 //   );
 // }
-
-export default function Page() {
-  redirect("/dashboard");
-}
